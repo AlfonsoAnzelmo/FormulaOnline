@@ -1,4 +1,4 @@
-package unisa.it.formulaonline.gestioneSegnalazione.service;
+package unisa.it.formulaonline.ricerca.service;
 
 public interface RicercaService {
 }

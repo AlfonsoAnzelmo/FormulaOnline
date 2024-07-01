@@ -1,4 +1,4 @@
-package unisa.it.formulaonline.gestione.controller;
+package unisa.it.formulaonline.ricerca.controller;
 
 public class RicercaController {
 }

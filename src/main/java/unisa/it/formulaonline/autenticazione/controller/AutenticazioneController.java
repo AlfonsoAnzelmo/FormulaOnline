@@ -1,4 +1,4 @@
-package unisa.it.formulaonline.gestioneSegnalazione.controller;
+package unisa.it.formulaonline.autenticazione.controller;
 
 public class AutenticazioneController {
 }
