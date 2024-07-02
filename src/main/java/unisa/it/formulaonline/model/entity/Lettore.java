@@ -1,5 +1,6 @@
 package unisa.it.formulaonline.model.entity;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Lettore {
@@ -9,6 +10,8 @@ public class Lettore {
     private String nickname;
     private String scuderiaPref;
     private Boolean moderatore;
+    private Date dataFineSospensione;
+
 
     public Lettore(Integer idLettore, String email, String password, String nickname, String scuderiaPref, Boolean moderatore) {
         this.idLettore = idLettore;
@@ -18,6 +21,18 @@ public class Lettore {
         this.scuderiaPref = scuderiaPref;
         this.moderatore = moderatore;
     }
+
+    public Lettore() {
+    }
+
+    public Date getDataFineSospensione() {
+        return dataFineSospensione;
+    }
+
+    public void setDataFineSospensione(Date dataFineSospensione) {
+        this.dataFineSospensione = dataFineSospensione;
+    }
+
 
     public Integer getIdLettore() {
         return idLettore;

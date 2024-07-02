@@ -61,6 +61,7 @@ public class CategoriaDAO {
 
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 categoria.setCreatore(lettore);
+                categoriaList.add(categoria);
             }
             return categoriaList;
 
