@@ -8,8 +8,8 @@ create table lettore(
     email varchar(50) not null,
     pass varchar(50) not null,
     nickname varchar(30) not null, 
-    scuderiaPreferita varchar(30) not null,
-    dataFineSospensione date not null,
+    scuderiaPreferita varchar(30),
+    dataFineSospensione date,
     moderatore tinyint not null
     
 );
@@ -27,7 +27,6 @@ create table discussione(
 	idDiscussione int primary key,
 	numeroCommenti int not null,
     categoria int not null,
-    corpo varchar(250) not null,
     titolo varchar(50) not null,
     autore int not null,
     foreign key (categoria) references categoria(idCategoria),
