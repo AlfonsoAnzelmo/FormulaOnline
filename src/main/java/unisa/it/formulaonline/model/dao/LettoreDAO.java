@@ -1,4 +1,4 @@
 package unisa.it.formulaonline.model.dao;
 
-public class UtenteDAO {
+public class LettoreDAO {
 }
