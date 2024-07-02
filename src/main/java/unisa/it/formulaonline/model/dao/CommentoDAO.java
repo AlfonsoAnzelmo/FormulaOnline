@@ -27,7 +27,7 @@ public class CommentoDAO {
                 commento.setIdCommento(rs.getInt(1));
                 commento.setCorpo(rs.getString(2));
 
-                Discussione discussione = discussioneDAO.doRetrieveById(rs.getString(3));
+                Discussione discussione = discussioneDAO.doRetrieveById(rs.getInt(3));
                 commento.setDiscussione(discussione);
 
                 commento.setDataCommento(rs.getDate(4));
@@ -57,7 +57,7 @@ public class CommentoDAO {
                 commento.setIdCommento(rs.getInt(1));
                 commento.setCorpo(rs.getString(2));
 
-                Discussione discussione = discussioneDAO.doRetrieveById(rs.getString(3));
+                Discussione discussione = discussioneDAO.doRetrieveById(rs.getInt(3));
                 commento.setDiscussione(discussione);
 
                 commento.setDataCommento(rs.getDate(4));

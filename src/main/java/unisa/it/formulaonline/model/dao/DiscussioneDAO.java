@@ -99,4 +99,42 @@ public class DiscussioneDAO {
         }
     }
 
+    public void doUpdate(Discussione discussione, int idDiscussione) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    " UPDATE formulaonlinedb.discussione "+
+                            " SET categoria = ?, titolo = ?" +
+                            "  WHERE idDiscussione=? ");
+
+            ps.setInt(1, discussione.getCategoria().getIdCategoria());
+            ps.setString(2, discussione.getTitolo());
+            ps.setInt(3, idDiscussione);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doDelete(int idDiscussione) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE FROM formulaonlinedb.discussione WHERE idDiscussione=?",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, idDiscussione);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("DELETE error.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
