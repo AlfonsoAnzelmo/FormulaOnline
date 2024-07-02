@@ -1,6 +1,5 @@
 package unisa.it.formulaonline.model.dao;
 
-import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Discussione;
 import unisa.it.formulaonline.model.entity.Lettore;
@@ -10,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommentoDAO {
-    private LettoreDAO lettoreDAO;
+    private LettoreDAO lettoreDAO = new LettoreDAO();
 
-    private DiscussioneDAO discussioneDAO;
+    private DiscussioneDAO discussioneDAO = new DiscussioneDAO();
 
     public Commento doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -97,5 +96,42 @@ public class CommentoDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void doUpdate(Commento commento, int idCommento) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    " UPDATE formulaonlinedb.commento "+
+                            " SET corpo = ? " +
+                            "  WHERE idCommento=? ");
+
+            ps.setString(1, commento.getCorpo());
+            ps.setInt(2, idCommento);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doDelete(int idCommento) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE FROM formulaonlinedb.commento WHERE idCommento=?",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, idCommento);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("DELETE error.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

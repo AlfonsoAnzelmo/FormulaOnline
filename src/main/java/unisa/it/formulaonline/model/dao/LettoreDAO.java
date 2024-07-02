@@ -89,4 +89,46 @@ public class LettoreDAO {
         }
     }
 
+
+    public void doUpdate(Lettore lettore, int idLettore) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    " UPDATE formulaonlinedb.lettore "+
+                            " SET email = ?, pass = ? , nickname = ? ,scuderiaPreferita = ?,dataFineSospensione = ?,moderatore = ? " +
+                            "  WHERE idLettore=? ");
+
+            ps.setString(1, lettore.getEmail());
+            ps.setString(2, lettore.getEmail());
+            ps.setString(3, lettore.getNickname());
+            ps.setString(4, lettore.getScuderiaPref());
+            ps.setDate(5, (Date) lettore.getDataFineSospensione());
+            ps.setBoolean(6, lettore.getModeratore());
+            ps.setInt(7, idLettore);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doDelete(int idLettore) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE FROM formulaonlinedb.lettore WHERE idLettore=?",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, idLettore);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("DELETE error.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

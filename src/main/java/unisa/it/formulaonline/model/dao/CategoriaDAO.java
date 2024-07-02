@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CategoriaDAO {
 
-    private LettoreDAO lettoreDAO;
+    private LettoreDAO lettoreDAO = new LettoreDAO();
 
     public Categoria doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -90,6 +90,46 @@ public class CategoriaDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void doUpdate(Categoria categoria, int idCategoria) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    " UPDATE formulaonlinedb.categoria "+
+                            " SET creatore = ?, categoriaPadre = ? , nome = ? ,descrizione = ? " +
+                            "  WHERE idCategoria=? ");
+
+            ps.setInt(1, categoria.getCreatore().getIdLettore());
+            ps.setInt(2, categoria.getCategoriaPadre().getIdCategoria());
+            ps.setString(3, categoria.getNome());
+            ps.setString(4, categoria.getDescrizione());
+            ps.setInt(5, idCategoria);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doDelete(int idCategoria){
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE FROM formulaonlinedb.categoria WHERE idCategoria=?",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, idCategoria);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("DELETE error.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
