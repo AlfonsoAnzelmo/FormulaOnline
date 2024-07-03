@@ -8,10 +8,7 @@ public class AreaUtenteServiceImpl implements AreaUtenteService{
 
 
     /**
-     * Preso un lettore lo elegge a moderatore
-     * @param eletto
-     * @return il lettore eletto, il relativo parametro "moderatore" sarà vero se è l'elezione è avvenuta con successo
-     * falso altrimenti
+     * {@inheritDoc}
      */
     @Override
     public Lettore nominaModeratore(Lettore eletto) {
@@ -21,10 +18,7 @@ public class AreaUtenteServiceImpl implements AreaUtenteService{
     }
 
     /**
-     * Modifica ed aggiorna i dati di un lettore già esistente
-     * @param idLettore relativo al lettore da modificare
-     * @param lettore
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public Lettore aggiornaLettore(int idLettore, Lettore lettore) {
@@ -34,8 +28,7 @@ public class AreaUtenteServiceImpl implements AreaUtenteService{
     }
 
     /**
-     * Elimina un lettore partendo dal suo codice
-     * @param idLettore
+     * {@inheritDoc}
      */
     @Override
     public void eliminaLettore(int idLettore) {

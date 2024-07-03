@@ -9,10 +9,7 @@ public class AutenticazioneServiceImpl implements AutenticazioneService{
     LettoreDAO lettoreDAO = new LettoreDAO();
 
     /**
-     * Metodo che permette il login di un utente se i dati sono corretti e se non è sospeso.
-     * @param email
-     * @param password
-     * @return Lettore se le condizioni precendenti sono state rispettate, {@code null} altrimenti
+     * {@inheritDoc}
      */
     @Override
     public Lettore login(String email, String password) {

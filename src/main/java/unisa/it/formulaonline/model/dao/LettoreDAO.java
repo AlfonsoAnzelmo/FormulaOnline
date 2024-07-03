@@ -97,7 +97,7 @@ public class LettoreDAO {
     }
 
 
-    public void doSave(Lettore lettore) {
+    public Lettore doSave(Lettore lettore) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO formulaonlinedb.lettore (email, pass, nickname, scuderiaPreferita, moderatore, dataFineSospensione)" +
@@ -113,7 +113,11 @@ public class LettoreDAO {
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
-
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+            lettore.setIdLettore(id);
+            return lettore;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -161,4 +165,22 @@ public class LettoreDAO {
         }
     }
 
+    //per controllare che l'utente esista
+    public boolean checkExists(String email, String nickname) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE FROM formulaonlinedb.lettore WHERE email=? OR nickname=?",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, email);
+            ps.setString(2, nickname);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
