@@ -116,6 +116,32 @@ public class CategoriaDAO {
     }
 
     /**
+     * assegna alle categorie individuate da categoria padre la categoria "senza categoria"
+     * @param idCategoriaPadre
+     */
+    public void doUpdateByCategoriaPadre(int idCategoriaPadre) {
+
+        Categoria no_categoria = doRetrieveById(1) ;
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    " UPDATE formulaonlinedb.categoria "+
+                            " SET categoriaPadre = ? " +
+                            "  WHERE categoriaPadre=? ");
+
+            ps.setInt(1, no_categoria.getIdCategoria());
+            ps.setInt(2, idCategoriaPadre);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      *  elimina la categoira selezionata e le sottocategorie
      * @param idCategoria
      */
@@ -142,17 +168,7 @@ public class CategoriaDAO {
      */
     public void doDeleteAlternativo(int idCategoria){
 
-        Categoria no_categoria = doRetrieveById(1) ;
-        List<Categoria> listCategorie = doRetrieveAll() ;
-
-        for(Categoria categoria: listCategorie){
-            if(categoria.getCategoriaPadre().getIdCategoria() == idCategoria){
-
-                categoria.setCategoriaPadre(no_categoria);
-                doUpdate(categoria, categoria.getIdCategoria());
-            }
-        }
-
+        doUpdateByCategoriaPadre(idCategoria);
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "DELETE FROM formulaonlinedb.categoria WHERE idCategoria=?",

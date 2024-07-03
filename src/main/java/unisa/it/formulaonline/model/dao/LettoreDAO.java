@@ -1,7 +1,5 @@
 package unisa.it.formulaonline.model.dao;
 
-import unisa.it.formulaonline.model.entity.Categoria;
-import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.sql.*;
