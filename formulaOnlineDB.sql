@@ -1,10 +1,11 @@
+
 drop database if exists formulaOnlineDB;
 create database formulaOnlineDB;
 
 use formulaOnlineDB;
 
 create table lettore(
-	idLettore int primary key not null,
+	idLettore int auto_increment primary key not null ,
     email varchar(50) not null,
     pass varchar(50) not null,
     nickname varchar(30) not null, 
@@ -14,7 +15,7 @@ create table lettore(
     
 );
 create table categoria (
-    idCategoria int primary key,
+    idCategoria int auto_increment primary key,
     nome varchar(50) not null,
     descrizione varchar(300),
     categoriaPadre int,
@@ -26,7 +27,7 @@ create table categoria (
 );
 
 create table discussione(
-	idDiscussione int primary key,
+	idDiscussione int auto_increment primary key,
 	numeroCommenti int not null,
     categoria int not null,
     titolo varchar(50) not null,
@@ -40,7 +41,7 @@ create table discussione(
 );
 
 create table commento ( 
-    idCommento int primary key,
+    idCommento int auto_increment primary key,
     corpo varchar(500) not null,
     discussione int not null,
     foreign key (discussione) references discussione(idDiscussione),
@@ -68,8 +69,3 @@ create table segnalazione(
 		on delete cascade,
     primary key(lettore, commento)
 );
-
-
-
-
-
