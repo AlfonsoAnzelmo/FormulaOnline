@@ -117,6 +117,22 @@ public class CommentoDAO {
         }
     }
 
+    public void doUpdateByAutore(int idAutore, int idNewAutore){
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    " UPDATE formulaonlinedb.commento "+
+                            " SET autore = ? " +
+                            "  WHERE autore = ?");
+            ps.setInt(1, idAutore);
+            ps.setInt(2, idNewAutore);
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void doDelete(int idCommento) {
 
         try (Connection con = ConPool.getConnection()) {

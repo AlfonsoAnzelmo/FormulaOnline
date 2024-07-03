@@ -116,15 +116,15 @@ public class LettoreDAO {
     }
 
     public void doDelete(int idLettore) {
-
         commentoDAO.doDeleteByAutore(idLettore) ;
-
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "DELETE FROM formulaonlinedb.lettore WHERE idLettore=?",
                     Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, idLettore);
 
+            CommentoDAO cd = new CommentoDAO();
+            cd.doUpdateByAutore(idLettore, 1);
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("DELETE error.");
             }
