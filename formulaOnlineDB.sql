@@ -21,7 +21,7 @@ create table categoria (
     foreign key(categoriaPadre) references categoria(idCategoria),
     creatore int not null default 0,
     foreign key(creatore) references lettore(idLettore) 
-		--on delete set default
+		-- on delete set default
 		on update cascade
 );
 
@@ -36,7 +36,7 @@ create table discussione(
 		on delete cascade,
 	foreign key (autore) references lettore(idLettore)
 		on update cascade
-		--on delete set 1
+		-- on delete set 1
 );
 
 create table commento ( 
@@ -48,7 +48,7 @@ create table commento (
     autore int not null,
     foreign key (autore) references Lettore(idLettore)
 		on update cascade
-		--on delete set default non funziona con innodb
+		-- on delete set default non funziona con innodb
 );
 
 
@@ -59,10 +59,10 @@ create table segnalazione(
     corpo varchar(250) not null,
     Foreign key(lettore) references lettore(idLettore)
 		on update cascade,
-		--on delete set default,
+		-- on delete set default,
     Foreign key(moderatore) references lettore(idLettore)
 		on update cascade,
-		--on delete set default,
+		-- on delete set default,
     Foreign key(commento) references commento(idCommento)
 		on update cascade
 		on delete cascade,
