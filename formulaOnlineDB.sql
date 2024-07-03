@@ -1,10 +1,11 @@
+
 drop database if exists formulaOnlineDB;
 create database formulaOnlineDB;
 
 use formulaOnlineDB;
 
 create table lettore(
-	idLettore int primary key not null,
+	idLettore int auto_increment primary key not null ,
     email varchar(50) not null,
     pass varchar(50) not null,
     nickname varchar(30) not null, 
@@ -14,48 +15,57 @@ create table lettore(
     
 );
 create table categoria (
-    idCategoria int primary key,
+    idCategoria int auto_increment primary key,
     nome varchar(50) not null,
     descrizione varchar(300),
     categoriaPadre int,
     foreign key(categoriaPadre) references categoria(idCategoria),
-    creatore int not null,
-    foreign key(creatore) references lettore(idLettore)
+    creatore int not null default 0,
+    foreign key(creatore) references lettore(idLettore) 
+		-- on delete set default
+		on update cascade
 );
 
 create table discussione(
-	idDiscussione int primary key,
+	idDiscussione int auto_increment primary key,
 	numeroCommenti int not null,
     categoria int not null,
     titolo varchar(50) not null,
     autore int not null,
-    foreign key (categoria) references categoria(idCategoria),
+    foreign key (categoria) references categoria(idCategoria)
+		on update cascade
+		on delete cascade,
 	foreign key (autore) references lettore(idLettore)
+		on update cascade
+		-- on delete set 1
 );
 
 create table commento ( 
-    idCommento int primary key,
+    idCommento int auto_increment primary key,
     corpo varchar(500) not null,
     discussione int not null,
     foreign key (discussione) references discussione(idDiscussione),
     dataCommento date not null,
     autore int not null,
     foreign key (autore) references Lettore(idLettore)
+		on update cascade
+		-- on delete set default non funziona con innodb
 );
 
 
 create table segnalazione(
-	lettore int not null,
-	moderatore int not null,
+	lettore int not null default 0,
+	moderatore int not null default 0,
     commento int not null,
     corpo varchar(250) not null,
-    Foreign key(lettore) references lettore(idLettore),
-    Foreign key(moderatore) references lettore(idLettore),
-    Foreign key(commento) references commento(idCommento),
+    Foreign key(lettore) references lettore(idLettore)
+		on update cascade,
+		-- on delete set default,
+    Foreign key(moderatore) references lettore(idLettore)
+		on update cascade,
+		-- on delete set default,
+    Foreign key(commento) references commento(idCommento)
+		on update cascade
+		on delete cascade,
     primary key(lettore, commento)
 );
-
-
-
-
-

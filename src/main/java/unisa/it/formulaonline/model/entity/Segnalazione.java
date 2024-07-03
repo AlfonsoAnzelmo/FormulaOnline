@@ -6,6 +6,9 @@ public class Segnalazione {
     private String corpo;
     private Lettore gestita;
 
+    public Segnalazione() {
+    }
+
     public Segnalazione(Commento commento, Lettore autore, String corpo) {
         this.commento = commento;
         this.autore = autore;
