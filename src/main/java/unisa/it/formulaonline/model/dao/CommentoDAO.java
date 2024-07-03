@@ -133,5 +133,20 @@ public class CommentoDAO {
         }
     }
 
+    public void doDeleteByAutore(int idAutore){
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE FROM formulaonlinedb.commento WHERE autore=?",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, idAutore);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("DELETE error.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

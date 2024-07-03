@@ -115,7 +115,43 @@ public class CategoriaDAO {
         }
     }
 
+    /**
+     *  elimina la categoira selezionata e le sottocategorie
+     * @param idCategoria
+     */
     public void doDelete(int idCategoria){
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE FROM formulaonlinedb.categoria WHERE idCategoria=?",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, idCategoria);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("DELETE error.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     *  elimina la categoira selezionata e assegna alle sottocategorie "senza categoria padre"
+     * @param idCategoria
+     */
+    public void doDeleteAlternativo(int idCategoria){
+
+        Categoria no_categoria = doRetrieveById(1) ;
+        List<Categoria> listCategorie = doRetrieveAll() ;
+
+        for(Categoria categoria: listCategorie){
+            if(categoria.getCategoriaPadre().getIdCategoria() == idCategoria){
+
+                categoria.setCategoriaPadre(no_categoria);
+                doUpdate(categoria, categoria.getIdCategoria());
+            }
+        }
 
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(

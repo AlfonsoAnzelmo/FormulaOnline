@@ -1,6 +1,7 @@
 package unisa.it.formulaonline.model.dao;
 
 import unisa.it.formulaonline.model.entity.Categoria;
+import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.sql.*;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class LettoreDAO {
 
+    private CommentoDAO commentoDAO = new CommentoDAO();
 
     public Lettore doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -116,6 +118,8 @@ public class LettoreDAO {
     }
 
     public void doDelete(int idLettore) {
+
+        commentoDAO.doDeleteByAutore(idLettore) ;
 
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
