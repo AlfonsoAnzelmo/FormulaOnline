@@ -1,12 +1,9 @@
 package unisa.it.formulaonline.model.dao;
 
-import unisa.it.formulaonline.model.entity.Commento;
-import unisa.it.formulaonline.model.entity.Lettore;
 import unisa.it.formulaonline.model.entity.Segnalazione;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SegnalazioneDAO {
     private LettoreDAO ld;
@@ -81,7 +78,7 @@ public class SegnalazioneDAO {
         }
     }
 
-    public void doSave(Segnalazione s){
+    public Segnalazione doSave(Segnalazione s){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
                     con.prepareStatement("INSERT INTO segnalazione (lettore, moderatore, commento, corpo) value(?,?,?,?)");
@@ -91,6 +88,7 @@ public class SegnalazioneDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return s;
     }
 
     public void doDelete(int lettore, int commento){
@@ -116,6 +114,21 @@ public class SegnalazioneDAO {
                     + ", commento='" + s.getCommento().getIdCommento() + "', corpo='" + s.getCorpo()
                     + "' where lettore=" + s.getAutore() + "and commento='"+ s.getCommento().getIdCommento() +"';";
             st.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Boolean doExists(int lettore, int commento){
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT lettore, commento FROM segnalazione WHERE lettore=? AND commento=?");
+            ps.setInt(1, lettore);
+            ps.setInt(2, commento);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return true;
+            return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
