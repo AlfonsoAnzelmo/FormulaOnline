@@ -12,9 +12,8 @@ public class Discussione {
     public Discussione() {
     }
 
-    public Discussione(int idDiscussione, int numeroCommenti, Categoria categoria,
+    public Discussione(int numeroCommenti, Categoria categoria,
                        String titolo, Lettore lettore) {
-        this.idDiscussione = idDiscussione;
         this.numeroCommenti = numeroCommenti;
         this.categoria = categoria;
         this.titolo = titolo;

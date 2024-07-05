@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneImplementazione;
-import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneService;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneSerice;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
@@ -23,9 +23,9 @@ public class EliminaDiscussioneServlet extends HttpServlet {
         String indirizzo = "/index.jsp";
         if(idDiscussioneStr != null && lettore != null){   //controlla che i parametri siano validi
             if(lettore.getModeratore()){
-                GestioneDiscussioneService ds = new GestioneDiscussioneImplementazione();
+                GestioneDiscussioneSerice ds = new GestioneDiscussioneImplementazione();
                 int idDiscussione = Integer.parseInt(idDiscussioneStr);
-                ds.cancellaDiscussione(idDiscussione);
+                ds.eliminaDiscussione(idDiscussione);
             }
         }
         resp.sendRedirect(indirizzo);

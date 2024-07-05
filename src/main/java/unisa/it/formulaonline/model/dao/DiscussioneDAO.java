@@ -174,7 +174,7 @@ public class DiscussioneDAO {
         }
     }
 
-    public void doUpdate(Discussione discussione, int idDiscussione) {
+    public Discussione doUpdate(Discussione discussione, int idDiscussione) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     " UPDATE formulaonlinedb.discussione "+
@@ -189,7 +189,7 @@ public class DiscussioneDAO {
                 throw new RuntimeException("INSERT error.");
             }
 
-
+            return discussione;
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -5,6 +5,16 @@ import java.util.Objects;
 
 public class Commento {
 
+    public Commento(){
+
+    }
+    public Commento(String corpo, Discussione discussione, Date dataCommento, Lettore autore) {
+        this.corpo = corpo;
+        this.discussione = discussione;
+        this.dataCommento = dataCommento;
+        this.autore = autore;
+    }
+
     private int idCommento;
     private String corpo;
 

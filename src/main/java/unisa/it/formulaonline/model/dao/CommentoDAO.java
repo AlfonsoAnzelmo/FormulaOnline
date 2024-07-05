@@ -77,7 +77,7 @@ public class CommentoDAO {
     }
 
 
-    public void doSave(Commento commento) {
+    public Commento doSave(Commento commento) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO formulaonlinedb.commento (corpo,discussione,dataCommento,autore)" +
@@ -91,13 +91,13 @@ public class CommentoDAO {
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
-
+            return commento;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void doUpdate(Commento commento, int idCommento) {
+    public Commento doUpdate(Commento commento, int idCommento) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     " UPDATE formulaonlinedb.commento "+
@@ -115,6 +115,7 @@ public class CommentoDAO {
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return commento;
     }
 
     public void doUpdateByAutore(int idAutore, int idNewAutore){
