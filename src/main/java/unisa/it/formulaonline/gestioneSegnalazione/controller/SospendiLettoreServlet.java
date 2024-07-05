@@ -23,17 +23,21 @@ public class SospendiLettoreServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String lp = req.getParameter("lettore");
         String cp = req.getParameter("commento");
+        String sp = req.getParameter("segnalazione");
+
         if(lp!=null && cp!=null){
             Lettore m = (Lettore) req.getSession().getAttribute("lettore");
-            if (m.getModeratore()){
+
+            if (m!=null && m.getModeratore()){
                 int idA = Integer.parseInt(lp);
                 int idC = Integer.parseInt(cp);
+                int idS = Integer.parseInt(sp);
                 GestioneSegnalazioneService gs = new GestioneSegnalazioneServiceImpl();
                 Lettore l = new Lettore();
                 l.setIdLettore(idA);
                 Commento c = new Commento();
                 c.setIdCommento(idC);
-                Segnalazione s = new Segnalazione(c,l,null);
+                Segnalazione s = new Segnalazione(idS, c, l, null);
                 Date data = Date.valueOf(req.getParameter("data"));
                 gs.sospendiLettore(s, data);
             }

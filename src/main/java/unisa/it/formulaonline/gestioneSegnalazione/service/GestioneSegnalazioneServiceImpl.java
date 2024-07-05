@@ -7,6 +7,7 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import unisa.it.formulaonline.model.entity.Segnalazione;
 
 import java.sql.Date;
+import java.util.List;
 
 public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneService{
 
@@ -16,11 +17,7 @@ public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneServ
      */
     @Override
     public Segnalazione creaSegnalazione(Segnalazione segnalazione) {
-        //controlla se il lettore ha già effettuato la segnalazione
-        //se non esiste
-        if(!sd.doExists(segnalazione.getAutore().getIdLettore(), segnalazione.getCommento().getIdCommento()))
-            return sd.doSave(segnalazione);
-        return null;
+        return sd.doSave(segnalazione);
     }
 
     /**
@@ -46,4 +43,13 @@ public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneServ
     public void eliminaSegnalazione(Segnalazione segnalazione) {
         sd.doDelete(segnalazione.getAutore().getIdLettore(), segnalazione.getCommento().getIdCommento());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Segnalazione> visualizzaSegnalazioni() {
+        return null;
+    }
+
 }

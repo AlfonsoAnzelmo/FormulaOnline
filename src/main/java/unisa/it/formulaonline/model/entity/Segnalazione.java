@@ -1,12 +1,16 @@
 package unisa.it.formulaonline.model.entity;
 
 public class Segnalazione {
+    private int idSegnalazione;
     private Commento commento;
     private Lettore autore;
     private String corpo;
-    private Lettore gestita;
 
     public Segnalazione() {
+    }
+
+    public Segnalazione(int idSegnalazione) {
+        this.idSegnalazione = idSegnalazione;
     }
 
     public Segnalazione(Commento commento, Lettore autore, String corpo) {
@@ -15,11 +19,11 @@ public class Segnalazione {
         this.corpo = corpo;
     }
 
-    public Segnalazione(Commento commento, Lettore autore, String corpo, Lettore gestita) {
+    public Segnalazione(int idSegnalazione, Commento commento, Lettore autore, String corpo) {
+        this.idSegnalazione = idSegnalazione;
         this.commento = commento;
         this.autore = autore;
         this.corpo = corpo;
-        this.gestita = gestita;
     }
 
     public Commento getCommento() {
@@ -46,11 +50,11 @@ public class Segnalazione {
         this.corpo = corpo;
     }
 
-    public Lettore getGestita() {
-        return gestita;
+    public int getIdSegnalazione() {
+        return idSegnalazione;
     }
 
-    public void setGestita(Lettore gestita) {
-        this.gestita = gestita;
+    public void setIdSegnalazione(int idSegnalazione) {
+        this.idSegnalazione = idSegnalazione;
     }
 }

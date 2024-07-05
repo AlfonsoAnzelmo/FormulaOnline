@@ -6,14 +6,14 @@ use formulaOnlineDB;
 
 create table lettore(
 	idLettore int auto_increment primary key not null ,
-    email varchar(50) not null,
+    email varchar(50) not null unique,
     pass varchar(50) not null,
-    nickname varchar(30) not null, 
+    nickname varchar(30) not null unique,
     scuderiaPreferita varchar(30),
     dataFineSospensione date,
     moderatore tinyint not null
-    
 );
+
 create table categoria (
     idCategoria int auto_increment primary key,
     nome varchar(50) not null,
@@ -21,7 +21,7 @@ create table categoria (
     categoriaPadre int,
     foreign key(categoriaPadre) references categoria(idCategoria),
     creatore int not null default 0,
-    foreign key(creatore) references lettore(idLettore) 
+    foreign key(creatore) references lettore(idLettore)
 		-- on delete set default
 		on update cascade
 );
@@ -54,18 +54,14 @@ create table commento (
 
 
 create table segnalazione(
-	lettore int not null default 0,
-	moderatore int not null default 0,
+    idSegnalazione int primary key,
+	lettore int not null,
     commento int not null,
     corpo varchar(250) not null,
     Foreign key(lettore) references lettore(idLettore)
-		on update cascade,
-		-- on delete set default,
-    Foreign key(moderatore) references lettore(idLettore)
-		on update cascade,
-		-- on delete set default,
-    Foreign key(commento) references commento(idCommento)
 		on update cascade
 		on delete cascade,
-    primary key(lettore, commento)
+    Foreign key(commento) references commento(idCommento)
+		on update cascade
+		on delete cascade
 );
