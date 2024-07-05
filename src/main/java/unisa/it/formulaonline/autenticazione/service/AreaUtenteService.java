@@ -15,7 +15,7 @@ public interface AreaUtenteService {
      * Modifica ed aggiorna i dati di un lettore già esistente
      * @param idLettore relativo al lettore da modificare
      * @param lettore
-     * @return
+     * @return il lettore aggiornato oppure null se la modifica non è andata a buon fine
      */
     public Lettore aggiornaLettore(int idLettore, Lettore lettore);
 
