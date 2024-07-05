@@ -5,8 +5,11 @@ import unisa.it.formulaonline.model.entity.Lettore;
 public interface RegistrazioneService {
     /**
      * si occupa di registrare e salvare un nuovo lettore
-     * @param lettore da registrare
-     * @return il lettore con i campi aggiornati
+     * @param email
+     * @param password
+     * @param nickname
+     * @param scuderiaPreferita
+     * @return il lettore con i campi registrati
      */
-    public Lettore registraLettore(Lettore lettore);
+    public Lettore registraLettore(String email, String password, String nickname, String scuderiaPreferita);
 }

@@ -9,13 +9,12 @@ public class RegistrazioneServiceImpl implements RegistrazioneService{
      * {@inheritDoc}
      */
     @Override
-    public Lettore registraLettore(Lettore lettore) {
+    public Lettore registraLettore(String email, String password, String nickname, String scuderiaPreferita) {
         LettoreDAO ld = new LettoreDAO();
         //se l'email e il nickname non esistono
-        if (!ld.checkExists(lettore.getEmail(), lettore.getNickname()))
-            lettore = ld.doSave(lettore);
-        else
-            lettore = null;
+        Lettore lettore = null;
+        if (!ld.checkExists(email, nickname))
+            lettore = ld.doSave(email, password, nickname, scuderiaPreferita);
         return lettore;
     }
 }
