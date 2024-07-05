@@ -72,7 +72,7 @@ public class CategoriaDAO {
     }
 
 
-    public void doSave(Categoria categoria) {
+    public Categoria doSave(Categoria categoria) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO formulaonlinedb.categoria (nome,descrizione,categoriaPadre,creatore)" +
@@ -86,13 +86,13 @@ public class CategoriaDAO {
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
-
+        return; categoria;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void doUpdate(Categoria categoria, int idCategoria) {
+    public Categoria doUpdate(Categoria categoria, int idCategoria) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     " UPDATE formulaonlinedb.categoria "+
@@ -109,7 +109,7 @@ public class CategoriaDAO {
                 throw new RuntimeException("INSERT error.");
             }
 
-
+            return categoria;
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }

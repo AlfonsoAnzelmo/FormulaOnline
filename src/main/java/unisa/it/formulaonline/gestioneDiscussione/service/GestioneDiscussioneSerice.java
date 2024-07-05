@@ -15,7 +15,7 @@ public interface GestioneDiscussioneSerice {
 
     Commento aggiungiCommento(int idDiscussione, String corpo, int idAutore);
     Commento modificaCommento(String corpo, int idCommento);
-    void rimuoviCommento(int idCommento);
+    void rimuoviCommento(int idCommento, int idDiscussione);
 
 
 

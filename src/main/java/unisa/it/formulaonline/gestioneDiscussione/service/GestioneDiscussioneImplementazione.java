@@ -55,6 +55,7 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
     public Commento aggiungiCommento(int idDiscussione, String corpo, int idAutore) {
         Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
         Lettore lettore = lettoreDAO.doRetrieveById(idAutore);
+        discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);
         return commentoDAO.doSave(new Commento(corpo, discussione, new Date(), lettore));
 
     }
@@ -67,7 +68,9 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
     }
 
     @Override
-    public void rimuoviCommento(int idCommento) {
+    public void rimuoviCommento(int idCommento, int idDiscussione) {
+        Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
         commentoDAO.doDelete(idCommento);
+        discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);
     }
 }

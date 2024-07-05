@@ -31,20 +31,20 @@ public class ModifcaCategoriaDiscussioneServlet extends HttpServlet {
         String lettore = req.getParameter("lettore");
         String categoriaNome = req.getParameter("categoriaNome");
         String categoriaDescrizione = req.getParameter("categoriaDescrizione");
-        String categoriaPadreID = req.getParameter("categoriaPadre");
+        String categoriaPadre = req.getParameter("categoriaPadre");
+        String categoria = req.getParameter("categoriaPadre");
 
         if (lettore != null && categoriaNome.length() > 0 && categoriaDescrizione.length() > 0
-                && categoriaPadreID.length() > 0) {
+                && categoriaPadre.length() > 0 && categoria.length() > 0) {
             Lettore l = (Lettore) req.getSession().getAttribute("lettore");
 
-            int idCategoriaPadre = Integer.parseInt(categoriaPadreID);
-            GestioneCategoriaDiscussioneService gestioneCategoriaDiscussioneService = new GestioneCategoriaDiscussioneImplementazione();
-            Categoria categoriaPadre = gestioneCategoriaDiscussioneService.retrieveById(idCategoriaPadre);
+            int idCategoriaPadre = Integer.parseInt(categoriaPadre);
+            int idCategoria = Integer.parseInt(categoria);
+
 
             if (l.getModeratore()) {
-                Categoria categoria = new Categoria(categoriaNome, categoriaDescrizione, categoriaPadre, l);
                 GestioneCategoriaDiscussioneService gs = new GestioneCategoriaDiscussioneImplementazione();
-                gs.modificaCategoriaDiscussione(categoria, categoria.getIdCategoria());
+                gs.modificaCategoriaDiscussione(idCategoria, categoriaNome, categoriaDescrizione, idCategoriaPadre);
             }
 
         }

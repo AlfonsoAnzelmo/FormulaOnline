@@ -40,7 +40,7 @@ public class EliminaCategoriaDiscussione extends HttpServlet {
 
             if(l.getModeratore()) {
                 GestioneCategoriaDiscussioneService gs = new GestioneCategoriaDiscussioneImplementazione();
-                gs.cancellaCategoriaDiscussione(idCategoria);
+                gs.eliminaCategoria(idCategoria);
             }
 
         }
