@@ -1,9 +1,5 @@
 package unisa.it.formulaonline.gestioneDiscussione.service;
 
-import unisa.it.formulaonline.autenticazione.service.AreaUtenteService;
-import unisa.it.formulaonline.autenticazione.service.AreaUtenteServiceImpl;
-import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneImplementazione;
-import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneService;
 import unisa.it.formulaonline.model.dao.CategoriaDAO;
 import unisa.it.formulaonline.model.dao.CommentoDAO;
 import unisa.it.formulaonline.model.dao.DiscussioneDAO;
@@ -16,17 +12,17 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.util.Date;
 import java.util.List;
 
-public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSerice {
+public class GestioneDiscussioneImplementazione implements GestioneDiscussioneService {
 
     private DiscussioneDAO discussioneDAO = new DiscussioneDAO();
     private CommentoDAO commentoDAO = new CommentoDAO();
-    private GestioneCategoriaDiscussioneService gestioneCategoriaDiscussione = new GestioneCategoriaDiscussioneImplementazione();
-    private AreaUtenteService areaUtenteService = new AreaUtenteServiceImpl();
+    private CategoriaDAO categoriaDAO = new CategoriaDAO();
+    private LettoreDAO lettoreDAO = new LettoreDAO();
 
     @Override
     public Discussione creaDiscussione(String titolo, int idCategoria, int idAutore, String commento) {
-        Categoria categoria = gestioneCategoriaDiscussione.ottienieCategoriaDaId(idCategoria);
-        Lettore lettore = areaUtenteService.ottieniLettoreDaId(idAutore) ;
+        Categoria categoria = categoriaDAO.doRetrieveById(idCategoria);
+        Lettore lettore = lettoreDAO.doRetrieveById(idAutore) ;
 
         Discussione discussione = discussioneDAO.doSave(new Discussione(1, categoria, titolo, lettore));
         commentoDAO.doSave(new Commento(commento, discussione, new Date(), lettore));
@@ -36,7 +32,7 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
 
     @Override
     public Discussione modificaDiscussione(String titolo, int nuovaCategoria, int idDiscussione) {
-        Categoria categoria = gestioneCategoriaDiscussione.ottienieCategoriaDaId(nuovaCategoria);
+        Categoria categoria = categoriaDAO.doRetrieveById(nuovaCategoria);
 
         Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
         discussione.setTitolo(titolo);
@@ -51,15 +47,14 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
 
     @Override
     public List<Discussione> ottieniDiscussioniDaCategoria(int idCategoria) {
-        Categoria categoria = gestioneCategoriaDiscussione.ottienieCategoriaDaId(idCategoria);
-        return discussioneDAO.doRetrieveAllByCategoria(categoria) ;
-
+        Categoria categoria = categoriaDAO.doRetrieveById(idCategoria);
+        return discussioneDAO.doRetrieveAllByCategoria(categoria);
     }
 
     @Override
     public Commento aggiungiCommento(int idDiscussione, String corpo, int idAutore) {
         Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
-        Lettore lettore = areaUtenteService.ottieniLettoreDaId(idAutore);
+        Lettore lettore = lettoreDAO.doRetrieveById(idAutore);
         discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);
         return commentoDAO.doSave(new Commento(corpo, discussione, new Date(), lettore));
 

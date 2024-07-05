@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneImplementazione;
-import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneSerice;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneService;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class CreaDiscussioneServlet extends HttpServlet {
             if(!titolo.isEmpty() && !corpo.isEmpty()){
 
                 int idCategoria = Integer.parseInt(categoria) ;
-                GestioneDiscussioneSerice ds = new GestioneDiscussioneImplementazione();
+                GestioneDiscussioneService ds = new GestioneDiscussioneImplementazione();
                 ds.creaDiscussione(titolo, idCategoria, l.getIdLettore(), corpo);
             }
         }
