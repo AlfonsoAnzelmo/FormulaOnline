@@ -44,7 +44,9 @@ create table commento (
     idCommento int auto_increment primary key,
     corpo varchar(500) not null,
     discussione int not null,
-    foreign key (discussione) references discussione(idDiscussione),
+    foreign key (discussione) references discussione(idDiscussione)
+                      on update cascade
+                      on delete cascade,
     dataCommento date not null,
     autore int not null,
     foreign key (autore) references Lettore(idLettore)

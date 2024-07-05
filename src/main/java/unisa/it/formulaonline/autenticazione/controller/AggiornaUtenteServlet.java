@@ -4,9 +4,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import unisa.it.formulaonline.autenticazione.service.AreaUtenteService;
-import unisa.it.formulaonline.autenticazione.service.AreaUtenteServiceImpl;
+import unisa.it.formulaonline.autenticazione.service.LettoreService;
+import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
@@ -32,7 +31,7 @@ public class AggiornaUtenteServlet extends HttpServlet {
         ){
             Lettore l = (Lettore) req.getSession().getAttribute("lettore");
             Lettore aggiornato = new Lettore(l.getIdLettore(), email, password, nickname, scuderia, l.getModeratore());
-            AreaUtenteService as = new AreaUtenteServiceImpl();
+            LettoreService as = new LettoreServiceImpl();
             l = as.aggiornaLettore(l.getIdLettore(), aggiornato);
 
             //aggiornamento andato a buon fine

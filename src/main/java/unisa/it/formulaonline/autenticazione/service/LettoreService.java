@@ -2,7 +2,7 @@ package unisa.it.formulaonline.autenticazione.service;
 
 import unisa.it.formulaonline.model.entity.Lettore;
 
-public interface AreaUtenteService {
+public interface LettoreService {
     /**
      * Preso un lettore già esistente lo elegge a moderatore
      * @param eletto

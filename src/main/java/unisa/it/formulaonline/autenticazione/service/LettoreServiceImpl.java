@@ -3,7 +3,7 @@ package unisa.it.formulaonline.autenticazione.service;
 import unisa.it.formulaonline.model.dao.LettoreDAO;
 import unisa.it.formulaonline.model.entity.Lettore;
 
-public class AreaUtenteServiceImpl implements AreaUtenteService{
+public class LettoreServiceImpl implements LettoreService {
     LettoreDAO lettoreDAO = new LettoreDAO();
 
 
@@ -33,5 +33,10 @@ public class AreaUtenteServiceImpl implements AreaUtenteService{
     @Override
     public void eliminaLettore(int idLettore) {
         lettoreDAO.doDelete(idLettore);
+    }
+
+    @Override
+    public Lettore ottieniLettoreDaId(int idLettore) {
+        return lettoreDAO.doRetrieveById(idLettore);
     }
 }
