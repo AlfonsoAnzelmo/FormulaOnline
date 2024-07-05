@@ -39,6 +39,36 @@ public class LettoreDAO {
         }
     }
 
+    public Lettore doRetrieveByEmailPassword(String email, String password){
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT l.idLettore, l.email,l.pass, l.nickname, l.scuderiaPreferita, l.moderatore, l.dataFineSospensione" +
+                            "  FROM formulaonlinedb.lettore l  " +
+                            " WHERE l.email = ? AND l.pass = ?");
+
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                rs.getInt(1);
+                Lettore lettore1 = new Lettore();
+                lettore1.setIdLettore(rs.getInt(1));
+                lettore1.setEmail(rs.getString(2));
+                lettore1.setPassword(rs.getString(3));
+                lettore1.setNickname(rs.getString(4));
+                lettore1.setModeratore(rs.getBoolean(5));
+                lettore1.setDataFineSospensione(rs.getDate(6));
+
+
+                return lettore1;
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Lettore> doRetrieveAll() {
         List<Lettore> lettoreList = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
@@ -67,7 +97,7 @@ public class LettoreDAO {
     }
 
 
-    public void doSave(Lettore lettore) {
+    public Lettore doSave(Lettore lettore) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO formulaonlinedb.lettore (email, pass, nickname, scuderiaPreferita, moderatore, dataFineSospensione)" +
@@ -83,7 +113,11 @@ public class LettoreDAO {
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
-
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+            lettore.setIdLettore(id);
+            return lettore;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -131,4 +165,22 @@ public class LettoreDAO {
         }
     }
 
+    //per controllare che l'utente esista
+    public boolean checkExists(String email, String nickname) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "DELETE FROM formulaonlinedb.lettore WHERE email=? OR nickname=?",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, email);
+            ps.setString(2, nickname);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
