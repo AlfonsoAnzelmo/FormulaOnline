@@ -111,9 +111,32 @@ public class DiscussioneDAO {
         }
     }
 
+    public Discussione doSave(Discussione discussione) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO formulaonlinedb.discussione (numeroCommenti, categoria, titolo, autore)" +
+                            "  VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
+            ps.setInt(1, discussione.getNumeroCommenti());
+            ps.setInt(2, discussione.getCategoria().getIdCategoria());
+            ps.setString(3,discussione.getTitolo());
+            ps.setInt(4, discussione.getLettore().getIdLettore());
 
-        public void doSave(Discussione discussione, Commento commento) {
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            ResultSet rs = ps.getResultSet();
+            if(rs.next()){
+                discussione.setIdDiscussione(rs.getInt("idDiscussione"));
+                return discussione;
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Discussione doSave(Discussione discussione, Commento commento) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO formulaonlinedb.commento (corpo, discussione, dataCommento, autore)" +
@@ -140,6 +163,12 @@ public class DiscussioneDAO {
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
+            ResultSet rs = ps.getResultSet();
+            if(rs.next()){
+                discussione.setIdDiscussione(rs.getInt("idDiscussione"));
+                return discussione;
+            }
+            return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

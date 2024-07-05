@@ -4,9 +4,22 @@ import java.util.Objects;
 
 public class Discussione {
     private int idDiscussione, numeroCommenti;
+
     private Categoria categoria;
-    private String corpo, titolo;
+    private String titolo;
     private Lettore lettore;
+
+    public Discussione() {
+    }
+
+    public Discussione(int idDiscussione, int numeroCommenti, Categoria categoria,
+                       String titolo, Lettore lettore) {
+        this.idDiscussione = idDiscussione;
+        this.numeroCommenti = numeroCommenti;
+        this.categoria = categoria;
+        this.titolo = titolo;
+        this.lettore = lettore;
+    }
 
     public int getIdDiscussione() {
         return idDiscussione;
@@ -32,14 +45,6 @@ public class Discussione {
         this.categoria = categoria;
     }
 
-    public String getCorpo() {
-        return corpo;
-    }
-
-    public void setCorpo(String corpo) {
-        this.corpo = corpo;
-    }
-
     public String getTitolo() {
         return titolo;
     }
@@ -62,7 +67,6 @@ public class Discussione {
                 "idDiscussione=" + idDiscussione +
                 ", numeroCommenti=" + numeroCommenti +
                 ", categoria=" + categoria +
-                ", corpo='" + corpo + '\'' +
                 ", titolo='" + titolo + '\'' +
                 ", lettore=" + lettore +
                 '}';
@@ -73,11 +77,11 @@ public class Discussione {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Discussione that = (Discussione) o;
-        return idDiscussione == that.idDiscussione && numeroCommenti == that.numeroCommenti && Objects.equals(categoria, that.categoria) && Objects.equals(corpo, that.corpo) && Objects.equals(titolo, that.titolo) && Objects.equals(lettore, that.lettore);
+        return idDiscussione == that.idDiscussione && numeroCommenti == that.numeroCommenti && Objects.equals(categoria, that.categoria) && Objects.equals(titolo, that.titolo) && Objects.equals(lettore, that.lettore);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idDiscussione, numeroCommenti, categoria, corpo, titolo, lettore);
+        return Objects.hash(idDiscussione, numeroCommenti, categoria, titolo, lettore);
     }
 }

@@ -28,7 +28,7 @@ create table categoria (
 
 create table discussione(
 	idDiscussione int auto_increment primary key,
-	numeroCommenti int not null,
+	numeroCommenti int not null default 0,
     categoria int not null,
     titolo varchar(50) not null,
     autore int not null,
