@@ -26,6 +26,7 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
 
         Discussione discussione = discussioneDAO.doSave(new Discussione(1, categoria, titolo, lettore));
         commentoDAO.doSave(new Commento(commento, discussione, new Date(), lettore));
+
         return discussione;
     }
 

@@ -24,4 +24,11 @@ public interface AreaUtenteService {
       * @param idLettore
      */
     public void eliminaLettore(int idLettore);
+
+
+    /**
+     * ottiene un lettore partendo dall'id
+     * @param idLettore
+     */
+    public Lettore ottieniLettoreDaId(int idLettore);
 }
