@@ -10,7 +10,6 @@ import java.util.List;
 
 public class CommentoDAO {
     private LettoreDAO lettoreDAO = new LettoreDAO();
-
     private DiscussioneDAO discussioneDAO = new DiscussioneDAO();
 
     public Commento doRetrieveById(int id) {
