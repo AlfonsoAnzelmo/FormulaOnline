@@ -7,7 +7,7 @@ import unisa.it.formulaonline.model.entity.Discussione;
 import java.util.List;
 
 public interface GestioneDiscussioneSerice {
-    Discussione creaDiscussione(Discussione discussione) ;
+    Discussione creaDiscussione(Discussione discussione, Commento commento) ;
     Discussione modificaDiscussione(Discussione discussione, int idDiscussione) ;
     Discussione cancellaDiscussione(int idDiscussione) ;
     List<Discussione> ottieniDiscussioniDaCategoria(Categoria categoria);

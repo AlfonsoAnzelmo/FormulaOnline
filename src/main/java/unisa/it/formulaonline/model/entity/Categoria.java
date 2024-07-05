@@ -4,6 +4,17 @@ import java.util.Objects;
 
 public class Categoria {
 
+    public Categoria(){
+
+    }
+
+    public Categoria(String nome, String descrizione, Categoria padre, Lettore creatore){
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.categoriaPadre =  padre;
+        this.creatore = creatore;
+    }
+
     private int idCategoria;
     private String nome, descrizione;
     private Categoria categoriaPadre;

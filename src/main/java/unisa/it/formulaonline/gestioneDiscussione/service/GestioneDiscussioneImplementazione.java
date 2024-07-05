@@ -9,43 +9,44 @@ import unisa.it.formulaonline.model.entity.Discussione;
 
 import java.util.List;
 
-public class GestioneDiscussioneImplementazione implements GestioneSegnalazioneService {
+public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSerice {
 
     private DiscussioneDAO discussioneDAO = new DiscussioneDAO();
     private CommentoDAO commentoDAO = new CommentoDAO();
 
 
-    Discussione creaDiscussione(Discussione discussione, Commento commento) {
+    public Discussione creaDiscussione(Discussione discussione, Commento commento) {
         discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);
         discussioneDAO.doSave(discussione, commento);
         return discussione;
     }
 
-    Discussione modificaDiscussione(Discussione discussione, int idDiscussione) {
+
+    public Discussione modificaDiscussione(Discussione discussione, int idDiscussione) {
         discussioneDAO.doUpdate(discussione, idDiscussione);
         return discussione;
     }
 
-    Discussione cancellaDiscussione(int idDiscussione) {
+    public Discussione cancellaDiscussione(int idDiscussione) {
         discussioneDAO.doDelete(idDiscussione);
         return discussioneDAO.doRetrieveById(idDiscussione);
     }
 
-    List<Discussione> ottieniDiscussioniDaCategoria(Categoria categoria) {
+    public List<Discussione> ottieniDiscussioniDaCategoria(Categoria categoria) {
         return discussioneDAO.doRetrieveAllByCategoria(categoria);
     }
 
-    Commento creaCommento(Commento commento) {
+    public Commento creaCommento(Commento commento) {
         commentoDAO.doSave(commento);
         return commento;
     }
 
-    Commento modificaCommento(Commento commento){
+    public Commento modificaCommento(Commento commento){
         commentoDAO.doUpdate(commento, commento.getIdCommento());
         return commento;
     }
 
-    void rimuoviCommento(Commento commento) {
+    public void rimuoviCommento(Commento commento) {
         commentoDAO.doDelete(commento.getIdCommento());
     }
 

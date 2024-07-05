@@ -11,4 +11,6 @@ public interface GestioneCategoriaDiscussioneService {
     Categoria creaCategoriaDiscussione(Categoria categoria) ;
     Categoria modificaCategoriaDiscussione(Categoria categoria, int idCategoria) ;
     void cancellaCategoriaDiscussione(int idCategoria) ;
+
+    Categoria retrieveById(int idCategoria);
 }

@@ -22,4 +22,9 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
     public void cancellaCategoriaDiscussione(int idCategoria) {
         categoriaDAO.doDeleteAlternativo(idCategoria);
     }
+
+    @Override
+    public Categoria retrieveById(int idCategoria) {
+        return categoriaDAO.doRetrieveById(idCategoria);
+    }
 }
