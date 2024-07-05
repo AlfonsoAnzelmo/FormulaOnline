@@ -30,8 +30,7 @@ public class RegistrazioneServlet extends HttpServlet {
                 && (5 <= nickname.length() && nickname.length() <= 30)){
             String scuderia = req.getParameter("scuderia");
             RegistrazioneService rs = new RegistrazioneServiceImpl();
-            Lettore l = new Lettore(null, email, password, nickname, scuderia, Boolean.FALSE);
-            l = rs.registraLettore(l);
+            Lettore l = rs.registraLettore(email, password, nickname, scuderia);
             //se l'utente è stato registrato con successo
             if(l.getIdLettore()!=null){
                 HttpSession session= req.getSession();
