@@ -1,17 +1,17 @@
 package unisa.it.formulaonline.gestioneCategoriaDiscussione.service;
 
+import unisa.it.formulaonline.autenticazione.service.AreaUtenteService;
+import unisa.it.formulaonline.autenticazione.service.AreaUtenteServiceImpl;
 import unisa.it.formulaonline.model.dao.CategoriaDAO;
-import unisa.it.formulaonline.model.dao.LettoreDAO;
 import unisa.it.formulaonline.model.entity.Categoria;
-import unisa.it.formulaonline.model.entity.Discussione;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 public class GestioneCategoriaDiscussioneImplementazione implements GestioneCategoriaDiscussioneService {
     private CategoriaDAO categoriaDAO = new CategoriaDAO();
-    private LettoreDAO lettoreDAO = new LettoreDAO();
+    private AreaUtenteService areaUtenteService = new AreaUtenteServiceImpl();
     @Override
     public Categoria creaCategoriaDiscussione(String nome, String descrizione, int categoriaPadreId, int autore) {
-        Lettore lettore = lettoreDAO.doRetrieveById(autore);
+        Lettore lettore = areaUtenteService.ottieniLettoreDaId(autore);
         Categoria categoriaPadre = categoriaDAO.doRetrieveById(categoriaPadreId) ;
         return categoriaDAO.doSave(new Categoria(nome, descrizione, categoriaPadre, lettore));
     }
@@ -37,4 +37,7 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
     public Categoria retrieveById(int idCategoria) {
         return categoriaDAO.doRetrieveById(idCategoria);
     }
+
+    @Override
+    public Categoria ottienieCategoriaDaId(int idCategoria) {return categoriaDAO.doRetrieveById(idCategoria);}
 }
