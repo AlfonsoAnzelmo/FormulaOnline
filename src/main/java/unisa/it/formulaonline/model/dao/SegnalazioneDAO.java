@@ -97,13 +97,11 @@ public class SegnalazioneDAO {
         return s;
     }
 
-    public void doDelete(int lettore, int commento){
+    public void doDelete(int idSegnalazione){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM formulaonlinedb.segnalazione WHERE lettore=? and commento=?",
-                    Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, lettore);
-            ps.setInt(2, commento);
+                    "DELETE FROM formulaonlinedb.segnalazione WHERE idSegnalazione=?");
+            ps.setInt(1, idSegnalazione);
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("DELETE error.");
             }

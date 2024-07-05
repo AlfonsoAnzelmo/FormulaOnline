@@ -11,27 +11,23 @@ import java.util.List;
 public interface GestioneSegnalazioneService {
     /**
      * Salva una nuova segnalazione
-     * @param segnalazione
      * @return la segnalazione se creata con successo, null altrimenti
      */
-    public Segnalazione creaSegnalazione(Segnalazione segnalazione);
+    public Segnalazione creaSegnalazione(int idCommento, int idAutore, String corpo);
 
     /**
      * risolve una segnalazione e sospende il lettore fino alla data decisa
-     * @param segnalazione
-     * @param dataFineSospensione
      */
-    public void sospendiLettore(Segnalazione segnalazione, Date dataFineSospensione);
+    public void sospendiLettore(int idSegnalazione, Date dataFineSospensione);
 
     /**
      * elimina la segnalazione dal sistema
-     * @param segnalazione
      */
-    public void eliminaSegnalazione(Segnalazione segnalazione);
+    public void eliminaSegnalazione(int idSegnalazione);
 
     /**
      * restituisce la lista di tutte le segnalazioni
-     * @return
+     * @return la lista delle segnalazioni, null se è vuota
      */
     public List<Segnalazione> ottieniSegnalazioni();
 
