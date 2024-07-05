@@ -39,7 +39,7 @@ public class LettoreDAO {
         }
     }
 
-    public Lettore doRetrieveByEmailPassword(String email, String password){
+    public Lettore doRetrieveByEmailPassword(String email, String password) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
                     con.prepareStatement("SELECT l.idLettore, l.email,l.pass, l.nickname, l.scuderiaPreferita, l.moderatore, l.dataFineSospensione" +
@@ -123,11 +123,36 @@ public class LettoreDAO {
         }
     }
 
+    public Lettore doSave(String email, String password, String nickname, String scuderiaPreferita) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO formulaonlinedb.lettore (email, pass, nickname, scuderiaPreferita)" +
+                            "  VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ps.setString(3, nickname);
+            ps.setString(4, scuderiaPreferita);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+            Lettore lettore = new Lettore(id, email, password, nickname, scuderiaPreferita, false);
+            lettore.setIdLettore(id);
+            return lettore;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void doUpdate(Lettore lettore, int idLettore) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    " UPDATE formulaonlinedb.lettore "+
+                    " UPDATE formulaonlinedb.lettore " +
                             " SET email = ?, pass = ? , nickname = ? ,scuderiaPreferita = ?,dataFineSospensione = ?,moderatore = ? " +
                             "  WHERE idLettore=? ");
 
@@ -144,7 +169,7 @@ public class LettoreDAO {
             }
 
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

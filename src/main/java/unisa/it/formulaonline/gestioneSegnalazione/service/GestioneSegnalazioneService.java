@@ -33,6 +33,6 @@ public interface GestioneSegnalazioneService {
      * restituisce la lista di tutte le segnalazioni
      * @return
      */
-    public List<Segnalazione> visualizzaSegnalazioni();
+    public List<Segnalazione> ottieniSegnalazioni();
 
 }

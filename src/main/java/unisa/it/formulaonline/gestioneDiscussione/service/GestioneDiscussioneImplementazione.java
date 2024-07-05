@@ -12,7 +12,7 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.util.Date;
 import java.util.List;
 
-public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSerice {
+public class GestioneDiscussioneImplementazione implements GestioneDiscussioneService {
 
     private DiscussioneDAO discussioneDAO = new DiscussioneDAO();
     private CommentoDAO commentoDAO = new CommentoDAO();
@@ -47,8 +47,7 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
     @Override
     public List<Discussione> ottieniDiscussioniDaCategoria(int idCategoria) {
         Categoria categoria = categoriaDAO.doRetrieveById(idCategoria);
-        return discussioneDAO.doRetrieveAllByCategoria(categoria) ;
-
+        return discussioneDAO.doRetrieveAllByCategoria(categoria);
     }
 
     @Override
