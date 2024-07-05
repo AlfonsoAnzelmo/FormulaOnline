@@ -78,11 +78,45 @@ public class DiscussioneDAO {
 
     }
 
+    public List<Discussione> doRetrieveAllByCategoria(Categoria categoria) {
+        List<Discussione> discussioneList = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT idDiscussione, numeroCommenti, categoria, titolo, autore" +
+                            "  FROM formulaonlinedb.discussione d" +
+                            " WHERE d.categoria = ?");
 
-    public void doSave(Discussione discussione, Commento commento) {
+            ResultSet rs = ps.executeQuery();
+            ps.setInt(1,categoria.getIdCategoria());
+            while (rs.next()) {
+                Discussione discussione = new Discussione();
+                discussione.setIdDiscussione(rs.getInt(1));
+                discussione.setNumeroCommenti(rs.getInt(2));
+
+                Categoria categoria1  = categoriaDAO.doRetrieveById(3);
+                discussione.setCategoria(categoria1);
+
+                discussione.setTitolo(rs.getString(4));
+
+                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
+                discussione.setLettore(lettore);
+
+                discussioneList.add(discussione);
+
+            }
+            return discussioneList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+        public void doSave(Discussione discussione, Commento commento) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO formulaonlinedb.commento ()" +
+                    "INSERT INTO formulaonlinedb.commento (corpo, discussione, dataCommento, autore)" +
                             "  VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, commento.getCorpo());
@@ -94,6 +128,18 @@ public class DiscussioneDAO {
                 throw new RuntimeException("INSERT error.");
             }
 
+            ps = con.prepareStatement(
+                    "INSERT INTO formulaonlinedb.discussione (numeroCommenti, categoria, titolo, autore)" +
+                            "  VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+
+            ps.setInt(1, discussione.getNumeroCommenti());
+            ps.setInt(2, discussione.getCategoria().getIdCategoria());
+            ps.setString(3,discussione.getTitolo());
+            ps.setInt(4, discussione.getLettore().getIdLettore());
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
