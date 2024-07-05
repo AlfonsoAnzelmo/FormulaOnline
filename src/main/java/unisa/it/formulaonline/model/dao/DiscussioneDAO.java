@@ -23,7 +23,7 @@ public class DiscussioneDAO {
                             " WHERE c.idDiscussione=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 rs.getInt(1);
                 Discussione discussione = new Discussione();
                 discussione.setIdDiscussione(rs.getInt(1));
@@ -137,4 +137,31 @@ public class DiscussioneDAO {
     }
 
 
+    public List<Discussione> doRetrieveByTitolo(String titolo) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT idDiscussione, numeroCommenti, categoria, titolo, autore" +
+                            "  FROM formulaonlinedb.discussione d  " +
+                            " WHERE d.titolo LIKE ?");
+            ps.setString(1, titolo);
+            ResultSet rs = ps.executeQuery();
+            List<Discussione> lista = new ArrayList<>();
+            while (rs.next()) {
+                rs.getInt(1);
+                Discussione discussione = new Discussione();
+                discussione.setIdDiscussione(rs.getInt(1));
+                discussione.setNumeroCommenti(rs.getInt(2));
+                Categoria categoria = categoriaDAO.doRetrieveById(rs.getInt(3));
+                discussione.setCategoria(categoria);
+                discussione.setTitolo(rs.getString(4));
+                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
+                discussione.setLettore(lettore);
+                lista.add(discussione);
+            }
+            return lista;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
