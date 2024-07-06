@@ -1,0 +1,19 @@
+html, body {
+    margin:0;
+    padding:0;
+    background-color: white;
+    height: 100%;
+}
+.main{
+    background-color: #f0f0f0;
+    /*height: 100%;*/
+}
+.btn-primary{
+    background-color: rgb(55, 142, 255);
+    color: white;
+    border-color: rgb(93, 161, 224);
+    
+}
+.btn-primary:hover{
+    background-color: rgb(31, 95, 231);
+}
