@@ -1,5 +1,7 @@
 package unisa.it.formulaonline.model.dao;
 
+import unisa.it.formulaonline.autenticazione.service.LettoreService;
+import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
 import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Discussione;
@@ -36,7 +38,6 @@ public class DiscussioneDAO {
 
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 discussione.setLettore(lettore);
-
                 return discussione;
             }
             return null;
@@ -45,6 +46,7 @@ public class DiscussioneDAO {
             throw new RuntimeException(e);
         }
     }
+
 
     public List<Discussione> doRetrieveAll() {
         List<Discussione> discussioneList = new ArrayList<>();
