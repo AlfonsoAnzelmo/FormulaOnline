@@ -17,7 +17,6 @@
                 Login lettore
             </h3>
         </div>
-
         <form action="login" method="post">
             <div class="row mb-3 form-floating">
                 <input name="email" type="text" class="form-control" id="validationMail" placeholder required>
