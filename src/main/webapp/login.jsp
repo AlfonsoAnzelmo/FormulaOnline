@@ -9,7 +9,7 @@
     <title>Formula Online</title>
 </head>
 <body>
-<%@include file="/WEB-INF/header.jsp"%>
+<%@ include file="/WEB-INF/header.jsp"%>
 <div class="container main h-100 pt-4 pb-4 justify-content-center">
     <div class="w-100 d-grid justify-content-center">
         <div class="row text-center p-3">

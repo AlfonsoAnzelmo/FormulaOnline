@@ -20,7 +20,12 @@
             <div class="col-11">
                 <div class="d-flex justify-content-between mb-4">
                     <p class="h1">${discussione.titolo}</p>
-                </div>
+                    <form method="post" action="modificaDiscussione">
+                        <input type="hidden" name="idDiscussione" value="${requestScope.discussione.idDiscussione}">
+                        <button class="btn btn-secondary" type="submit">
+                            Modifica discussione</button>
+                    </form>
+            </div>
                 <ol class="list-group">
                     <c:forEach items="${requestScope.commenti}" var="comm">
                         <li class="list-group-item">
@@ -31,18 +36,18 @@
                                         Data: ${comm.data}
                                     </small>
                                 </div>
-                                <div class="align-self-end row-cols-auto my-1">
+                                <div class="align-self-end my-1">
                                     <c:choose>
-                                        <c:when test="${sessionScope.lettore!=null}">
+                                        <c:when test="${sessionScope.lettore!=null && sessionScope.lettore.getModeratore()}">
                                             <form class="col" method="post" action="eliminaCommento">
                                                 <input type="hidden" name="codice" value="${commento.idCommento}">
-                                                <button class="btn btn-danger" type="submit">
+                                                <button class="btn btn-danger float-start" type="submit">
                                                     Elimina commento
                                                 </button>
                                             </form>
                                         </c:when>
                                     </c:choose>
-                                    <button type="button" class="btn btn-danger col my-1" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-danger col my-1 float-end" data-bs-toggle="modal"
                                         data-bs-target="#segnalaModal">
                                         Segnala
                                     </button>
@@ -61,8 +66,7 @@
                                                     <div class="modal-body">
                                                         <textarea class="form-control" id="motivazione"
                                                             name="motivazione" required></textarea>
-                                                        <input type="hidden" name="codice" value="${commento.idCommento"
-                                                            }>
+                                                        <input type="hidden" name="codice" value="${commento.idCommento}">
                                                     </div>
 
                                                     <div class="modal-footer">
@@ -86,7 +90,7 @@
                                 <p class="h6 p-1">Commenta:</p>
                                 <form action="commenta" method="post">
                                     <input type="hidden" id="idDiscussione" name="idDiscussione" value="${discussione.idDiscussione}">
-                                    <textarea class="form-control p-2" placeholder="Scrivi il tuo commento..." required></textarea>
+                                    <textarea class="form-control p-2" maxlength="500" placeholder="Scrivi il tuo commento..." required></textarea>
                                     <button class="btn btn-primary float-end mt-2">Commenta</button>
                                 </form>
                         </c:when>
