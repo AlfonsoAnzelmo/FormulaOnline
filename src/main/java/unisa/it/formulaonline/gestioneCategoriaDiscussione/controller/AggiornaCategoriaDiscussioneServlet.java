@@ -11,8 +11,8 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
 
-@WebServlet("/modificaCategoria")
-public class ModifcaCategoriaDiscussioneServlet extends HttpServlet {
+@WebServlet("/aggiornaCategoria")
+public class AggiornaCategoriaDiscussioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
@@ -31,7 +31,7 @@ public class ModifcaCategoriaDiscussioneServlet extends HttpServlet {
         String categoriaNome = req.getParameter("categoriaNome");
         String categoriaDescrizione = req.getParameter("categoriaDescrizione");
         String categoriaPadre = req.getParameter("categoriaPadre");
-        String categoria = req.getParameter("categoriaPadre");
+        String categoria = req.getParameter("categoria");
 
         if (lettore != null && categoriaNome.length() > 0 && categoriaDescrizione.length() > 0
                 && categoriaPadre.length() > 0 && categoria.length() > 0) {

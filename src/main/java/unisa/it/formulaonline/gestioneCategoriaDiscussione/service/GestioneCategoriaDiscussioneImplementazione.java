@@ -32,9 +32,8 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
     public void eliminaCategoria(int idCategoria) {
         categoriaDAO.doDeleteAlternativo(idCategoria);
     }
-
     @Override
-    public Categoria retrieveById(int idCategoria) {
+    public Categoria ottieniCategoriaDaId(int idCategoria) {
         return categoriaDAO.doRetrieveById(idCategoria);
     }
 }

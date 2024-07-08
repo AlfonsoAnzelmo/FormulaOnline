@@ -11,6 +11,5 @@ public interface GestioneCategoriaDiscussioneService {
     Categoria creaCategoriaDiscussione(String nome, String descrizione, int categoriaPadre, int autore) ;
     Categoria modificaCategoriaDiscussione(int idCategoria, String nome, String descrizione, int categoriaPadre) ;
     void eliminaCategoria(int idCategoria);
-
-    Categoria retrieveById(int idCategoria);
+    Categoria ottieniCategoriaDaId(int idCategoria);
 }
