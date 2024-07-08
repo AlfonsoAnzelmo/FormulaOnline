@@ -2,6 +2,8 @@ package unisa.it.formulaonline.autenticazione.service;
 
 import unisa.it.formulaonline.model.entity.Lettore;
 
+import java.util.Date;
+
 public interface LettoreService {
     /**
      * Preso un lettore già esistente lo elegge a moderatore
@@ -9,7 +11,7 @@ public interface LettoreService {
      * @return il lettore eletto, il relativo parametro "moderatore" sarà vero se è l'elezione è avvenuta con successo
      * falso altrimenti
      */
-    public Lettore nominaModeratore(Lettore eletto);
+    public Lettore nominaModeratore(int idLettore);
 
     /**
      * Modifica ed aggiorna i dati di un lettore già esistente
@@ -17,7 +19,8 @@ public interface LettoreService {
      * @param lettore
      * @return il lettore aggiornato oppure null se la modifica non è andata a buon fine
      */
-    public Lettore aggiornaLettore(int idLettore, Lettore lettore);
+    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,
+                                   String scuderiaPreferita, Boolean moderatore, Date dataFineSospensione);
 
     /**
      * Elimina un lettore partendo dal suo codice
