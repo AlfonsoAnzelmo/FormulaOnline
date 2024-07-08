@@ -45,6 +45,15 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
         discussioneDAO.doDelete(idDiscussione);
     }
 
+    /**
+     * @param idDiscussione
+     * @return
+     */
+    @Override
+    public Discussione ottieniDiscussioneDaId(int idDiscussione) {
+        return null;
+    }
+
     @Override
     public List<Discussione> ottieniDiscussioniDaCategoria(int idCategoria) {
         Categoria categoria = categoriaDAO.doRetrieveById(idCategoria);
@@ -72,5 +81,10 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
         Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
         commentoDAO.doDelete(idCommento);
         discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);
+    }
+
+    public Commento ottieniCommentoDaId(int idCommento){
+        Commento commento = new Commento();
+        return commento;
     }
 }

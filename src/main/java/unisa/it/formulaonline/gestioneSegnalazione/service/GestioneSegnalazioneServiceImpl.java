@@ -1,8 +1,12 @@
 package unisa.it.formulaonline.gestioneSegnalazione.service;
 
-import unisa.it.formulaonline.model.dao.CommentoDAO;
+import unisa.it.formulaonline.autenticazione.service.LettoreService;
+import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneImplementazione;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneService;
 import unisa.it.formulaonline.model.dao.LettoreDAO;
 import unisa.it.formulaonline.model.dao.SegnalazioneDAO;
+import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Lettore;
 import unisa.it.formulaonline.model.entity.Segnalazione;
 
@@ -11,25 +15,35 @@ import java.util.List;
 
 public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneService{
 
-    private SegnalazioneDAO sd = new SegnalazioneDAO();
+    private SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
+    LettoreDAO lettoreDAO = new LettoreDAO();
+    GestioneDiscussioneService discussioneService = new GestioneDiscussioneImplementazione();
     /**
      * {@inheritDoc}
      */
     @Override
-    public Segnalazione creaSegnalazione(Segnalazione segnalazione) {
-        return sd.doSave(segnalazione);
+    public Segnalazione creaSegnalazione(int idCommento, int idAutore, String corpo) {
+        Segnalazione s = segnalazioneDAO.doSave(idCommento, idAutore, corpo);
+        Commento c = discussioneService.ottieniCommentoDaId(idCommento);
+        s.setCommento(c);
+        return s;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void sospendiLettore(Segnalazione segnalazione, Date dataFineSospensione) {
-        LettoreDAO ld = new LettoreDAO();
-        Lettore l = segnalazione.getCommento().getAutore();
-        l.setDataFineSospensione(dataFineSospensione);
-        ld.doUpdate(l, l.getIdLettore());
-        sd.doUpdate(segnalazione);
+    public void sospendiLettore(int idSegnalazione, Date dataFineSospensione) {
+        Segnalazione segnalazione = segnalazioneDAO.doRetrieveById(idSegnalazione);
+//        lettoreService.ottieniLettoreDaId(segnalazione.getAutore().getIdLettore());
+        Lettore lettore = segnalazione.getCommento().getAutore();
+        lettore.setDataFineSospensione(dataFineSospensione);
+//        lettoreService.aggiornaLettore(lettore.getIdLettore(), );
+        lettoreDAO.doUpdate(lettore.getIdLettore(), lettore.getEmail(), lettore.getPassword(),
+                lettore.getNickname(), lettore.getScuderiaPref(), lettore.getModeratore(), dataFineSospensione);
+        segnalazioneDAO.doUpdate(segnalazione);
+        discussioneService.rimuoviCommento(segnalazione.getCommento().getIdCommento(), segnalazione.getCommento().
+                getDiscussione().getIdDiscussione());
         /*dovrebbe anche cancellare il commento mo che ci penso ed a cascata tutte le segnalazioni collegate
         CommentoDAO cd = new CommentoDAO();
         cd.doDelete(segnalazione.getCommento().getIdCommento());
@@ -40,16 +54,19 @@ public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneServ
      * {@inheritDoc}
      */
     @Override
-    public void eliminaSegnalazione(Segnalazione segnalazione) {
-        sd.doDelete(segnalazione.getAutore().getIdLettore(), segnalazione.getCommento().getIdCommento());
+    public void eliminaSegnalazione(int idSegnalazione) {
+        segnalazioneDAO.doDelete(idSegnalazione);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Segnalazione> visualizzaSegnalazioni() {
-        return null;
+    public List<Segnalazione> ottieniSegnalazioni() {
+        return segnalazioneDAO.doRetrieveAll();
     }
 
+    public Segnalazione ottieniSegnalazioneDaId(int idSegnalazione){
+        return segnalazioneDAO.doRetrieveById(idSegnalazione);
+    }
 }

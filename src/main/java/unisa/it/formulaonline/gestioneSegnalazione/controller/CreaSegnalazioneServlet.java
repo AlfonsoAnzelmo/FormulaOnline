@@ -20,7 +20,7 @@ import java.io.IOException;
 public class CreaSegnalazioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        super.doPost(req, resp);
     }
 
     /**
@@ -33,15 +33,17 @@ public class CreaSegnalazioneServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Lettore l = (Lettore) req.getSession().getAttribute("lettore");
-        String commento = req.getParameter("Commento");
+        String commentoStr = req.getParameter("commento");
         String corpo = req.getParameter("corpo");
-        if(corpo.length()>5 && commento!=null && l!=null){
-            int idCommento = Integer.parseInt(commento);
-            Commento c = new Commento();
-            c.setIdCommento(idCommento);    //crea un commento assegnandogli solo l'id perché è solo quello che serve alla fine
+        String indirizzo = "error_page.jsp";
+        if(corpo.length()>5 && commentoStr!=null && l!=null){
+            int idCommento = Integer.parseInt(commentoStr);
             GestioneSegnalazioneService gs = new GestioneSegnalazioneServiceImpl();
-            Segnalazione s=new Segnalazione(c, l, corpo);
-            gs.creaSegnalazione(s);
+            Segnalazione s = gs.creaSegnalazione(idCommento, l.getIdLettore(), corpo);
+            if(s!=null){
+                indirizzo = "segnalazione_effettuata.jsp";
+            }
         }
+        resp.sendRedirect(indirizzo);
     }
 }

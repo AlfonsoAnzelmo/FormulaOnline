@@ -15,16 +15,18 @@ import java.io.IOException;
 public class EliminaSegnalazioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        super.doPost(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getParameter("segnalazione")!=null){
+        Lettore l = (Lettore) req.getSession().getAttribute("lettore");
+        /*Se il parametro esiste e la richiesta è stata fatta da un moderatore*/
+        if(req.getParameter("segnalazione")!=null
+                && l.getModeratore()){
             int idS = Integer.parseInt(req.getParameter("segnalazione"));
             GestioneSegnalazioneService gs = new GestioneSegnalazioneServiceImpl();
-            Segnalazione s = new Segnalazione(idS);
-            gs.eliminaSegnalazione(s);
+            gs.eliminaSegnalazione(idS);
         }
     }
 }

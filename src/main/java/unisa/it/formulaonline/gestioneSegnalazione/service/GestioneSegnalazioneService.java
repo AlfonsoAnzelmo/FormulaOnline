@@ -31,4 +31,10 @@ public interface GestioneSegnalazioneService {
      */
     public List<Segnalazione> ottieniSegnalazioni();
 
+    /**
+     * restituisce la segnalazione indicata da id
+     * @return la segnalazione correlata, null se non esiste
+     */
+    public Segnalazione ottieniSegnalazioneDaId(int idSegnalazione);
+
 }
