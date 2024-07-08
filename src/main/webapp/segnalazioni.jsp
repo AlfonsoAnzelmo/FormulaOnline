@@ -58,7 +58,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Annulla"></button>
                                                 </div>
-                                                <form action="/sospendi" method="post">
+                                                <form action="sospendi" method="post">
                                                     <div class="modal-body">
                                                         <input id="dataFine" type="date" name="dataFineSospensione" />
                                                         <input type="hidden" name="codice"

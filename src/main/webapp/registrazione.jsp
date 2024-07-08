@@ -16,7 +16,7 @@
                 Registrazione lettore
             </h3>
         </div>
-        <form action="/registrazione" method="post">
+        <form action="registrazione" method="post">
             <div class="row mb-3 form-floating">
                 <input name="email" type="text" class="form-control" id="validationMail" placeholder required>
                 <label for="validationMail" class="form-label">e-mail</label>

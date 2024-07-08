@@ -17,7 +17,7 @@
                 Login lettore
             </h3>
         </div>
-        <form action="/login" method="post">
+        <form action="login" method="post">
             <div class="row mb-3 form-floating">
                 <input name="email" type="text" class="form-control" id="validationMail" placeholder required>
                 <label for="validationMail" class="form-label">e-mail</label>
@@ -31,7 +31,7 @@
             </div>
         </form>
         <small>
-        Non sei ancora iscritto? <a href="/registrazione.jsp" class="text-decoration-none">Iscriviti ora!</a>
+        Non sei ancora iscritto? <a href="registrazione.jsp" class="text-decoration-none">Iscriviti ora!</a>
         </small>
     </div>
 </div>
