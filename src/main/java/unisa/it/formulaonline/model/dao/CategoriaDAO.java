@@ -14,7 +14,7 @@ import java.util.List;
 public class CategoriaDAO {
 
     private GestioneCategoriaDiscussioneService gestioneCategoriaDiscussioneService = new GestioneCategoriaDiscussioneImplementazione();
-    private LettoreDAO lettoreDAO = new LettoreDAO();
+    private LettoreService lettoreService = new LettoreServiceImpl();
 
     public Categoria doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -35,7 +35,7 @@ public class CategoriaDAO {
                 Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
                 categoria.setCategoriaPadre(categoriaPadre);
 
-                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
+                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));
                 categoria.setCreatore(lettore);
 
                 return categoria;
@@ -64,7 +64,7 @@ public class CategoriaDAO {
                 Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
                 categoria.setCategoriaPadre(categoriaPadre);
 
-                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
+                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));
                 categoria.setCreatore(lettore);
                 categoriaList.add(categoria);
             }
