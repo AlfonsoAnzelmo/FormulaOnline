@@ -30,9 +30,10 @@ public class AggiornaUtenteServlet extends HttpServlet {
                 8<= password.length() && password.length()<=32
         ){
             Lettore l = (Lettore) req.getSession().getAttribute("lettore");
-            Lettore aggiornato = new Lettore(l.getIdLettore(), email, password, nickname, scuderia, l.getModeratore());
+//            Lettore aggiornato = new Lettore();
             LettoreService as = new LettoreServiceImpl();
-            l = as.aggiornaLettore(l.getIdLettore(), aggiornato);
+            l = as.aggiornaLettore(l.getIdLettore(), email, password, nickname, scuderia,
+                    l.getModeratore(), l.getDataFineSospensione());
 
             //aggiornamento andato a buon fine
             if(l!= null)

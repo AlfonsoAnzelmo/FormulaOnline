@@ -17,6 +17,7 @@ public interface GestioneDiscussioneService {
     Commento modificaCommento(String corpo, int idCommento);
     void rimuoviCommento(int idCommento, int idDiscussione);
 
+    Discussione ottieniDiscussioneDaId(int idDiscussione);
 
-
+    Commento ottieniCommentoDaId(int idCommento);
 }

@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 
             //se è un'amministratore è inviato alla pagina di amministrazione
             if(l.getModeratore()){
-                dest="./WEB-INF/admin/admin.jsp";//PLACEHOLDER, da sostituire
+                dest="./WEB-INF/admin/admin.jsp";//TODO PLACEHOLDER, da sostituire
                 req.getRequestDispatcher(dest).forward(req, resp);
 //                resp.sendRedirect(dest);
             }
