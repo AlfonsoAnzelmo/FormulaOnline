@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +31,7 @@
             </div>
         </form>
         <small>
-        Non sei ancora iscritto? <a href="/registrazione.html" class="text-decoration-none">Iscriviti ora!</a>
+        Non sei ancora iscritto? <a href="/registrazione.jsp" class="text-decoration-none">Iscriviti ora!</a>
         </small>
     </div>
 </div>
