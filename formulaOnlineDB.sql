@@ -47,7 +47,7 @@ create table commento (
     foreign key (discussione) references discussione(idDiscussione)
                       on update cascade
                       on delete cascade,
-    dataCommento date not null,
+    dataCommento datetime DEFAULT CURRENT_TIMESTAMP,
     autore int not null,
     foreign key (autore) references Lettore(idLettore)
 		on update cascade

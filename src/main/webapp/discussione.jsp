@@ -1,3 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="unisa.it.formulaonline.model.entity.Lettore"%>
+<%@ page import="unisa.it.formulaonline.model.entity.Discussione"%>
+<%@ page import="unisa.it.formulaonline.model.entity.Commento"%>
+<%@ page import="unisa.it.formulaonline.model.entity.Categoria"%>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 
 <head>
@@ -5,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="resources/css/formulaonline.css">
-    <title> - FormulaOnline</title>
+    <title>${discussione.titolo} - FormulaOnline</title>
 </head>
 
 <body>
