@@ -21,16 +21,16 @@ public class LettoreDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 rs.getInt(1);
-                Lettore lettore1 = new Lettore();
-                lettore1.setIdLettore(rs.getInt(1));
-                lettore1.setEmail(rs.getString(2));
-                lettore1.setPassword(rs.getString(3));
-                lettore1.setNickname(rs.getString(4));
-                lettore1.setModeratore(rs.getBoolean(5));
-                lettore1.setDataFineSospensione(rs.getDate(6));
+                Lettore lettore = new Lettore();
+                lettore.setIdLettore(rs.getInt(1));
+                lettore.setEmail(rs.getString(2));
+                lettore.setPassword(rs.getString(3));
+                lettore.setNickname(rs.getString(4));
+                lettore.setModeratore(rs.getBoolean(5));
+                lettore.setDataFineSospensione(new java.util.Date(rs.getDate(6).getTime()));
 
 
-                return lettore1;
+                return lettore;
             }
             return null;
 
@@ -51,16 +51,14 @@ public class LettoreDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 rs.getInt(1);
-                Lettore lettore1 = new Lettore();
-                lettore1.setIdLettore(rs.getInt(1));
-                lettore1.setEmail(rs.getString(2));
-                lettore1.setPassword(rs.getString(3));
-                lettore1.setNickname(rs.getString(4));
-                lettore1.setModeratore(rs.getBoolean(5));
-                lettore1.setDataFineSospensione(rs.getDate(6));
-
-
-                return lettore1;
+                Lettore lettore = new Lettore();
+                lettore.setIdLettore(rs.getInt(1));
+                lettore.setEmail(rs.getString(2));
+                lettore.setPassword(rs.getString(3));
+                lettore.setNickname(rs.getString(4));
+                lettore.setModeratore(rs.getBoolean(5));
+                lettore.setDataFineSospensione(new java.util.Date(rs.getDate(6).getTime()));
+                return lettore;
             }
             return null;
 
@@ -84,8 +82,7 @@ public class LettoreDAO {
                 lettore.setPassword(rs.getString(3));
                 lettore.setNickname(rs.getString(4));
                 lettore.setModeratore(rs.getBoolean(5));
-                lettore.setDataFineSospensione(rs.getDate(6));
-
+                lettore.setDataFineSospensione(new java.util.Date(rs.getDate(6).getTime()));
                 lettoreList.add(lettore);
             }
             return lettoreList;
@@ -149,19 +146,21 @@ public class LettoreDAO {
     }
 
 
-    public void doUpdate(Lettore lettore, int idLettore) {
+    public void doUpdate(int idLettore, String email, String password, String nickname, String scuderiaPreferita,
+                         Boolean moderatore, java.util.Date dataFineSospensione) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     " UPDATE formulaonlinedb.lettore " +
-                            " SET email = ?, pass = ? , nickname = ? ,scuderiaPreferita = ?,dataFineSospensione = ?,moderatore = ? " +
+                            " SET email = ?, pass = ?, nickname = ?, scuderiaPreferita = ?," +
+                            " dataFineSospensione = ?, moderatore = ? " +
                             "  WHERE idLettore=? ");
 
-            ps.setString(1, lettore.getEmail());
-            ps.setString(2, lettore.getEmail());
-            ps.setString(3, lettore.getNickname());
-            ps.setString(4, lettore.getScuderiaPref());
-            ps.setDate(5, (Date) lettore.getDataFineSospensione());
-            ps.setBoolean(6, lettore.getModeratore());
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ps.setString(3, nickname);
+            ps.setString(4, scuderiaPreferita);
+            ps.setDate(5, new Date(dataFineSospensione.getTime()));
+            ps.setBoolean(6, moderatore);
             ps.setInt(7, idLettore);
 
             if (ps.executeUpdate() != 1) {

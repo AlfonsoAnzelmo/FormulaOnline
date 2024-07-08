@@ -12,6 +12,15 @@ public class Lettore {
     private Boolean moderatore;
     private Date dataFineSospensione;
 
+    public Lettore(Integer idLettore, String email, String password, String nickname, String scuderiaPref, Boolean moderatore, Date dataFineSospensione) {
+        this.idLettore = idLettore;
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.scuderiaPref = scuderiaPref;
+        this.moderatore = moderatore;
+        this.dataFineSospensione = dataFineSospensione;
+    }
 
     public Lettore(Integer idLettore, String email, String password, String nickname, String scuderiaPref, Boolean moderatore) {
         this.idLettore = idLettore;

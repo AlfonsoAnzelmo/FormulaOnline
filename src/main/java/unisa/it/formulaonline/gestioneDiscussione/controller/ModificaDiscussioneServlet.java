@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneImplementazione;
-import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneSerice;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneService;
 import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Discussione;
 import unisa.it.formulaonline.model.entity.Lettore;
@@ -27,7 +27,7 @@ public class ModificaDiscussioneServlet extends HttpServlet {
         String autoreStr = req.getParameter("autore");
         /* controlla che i parametri esistano nella richiesta */
         if(idStr!=null && titolo!=null && categoriaStr!=null && numComStr!= null && autoreStr!=null){
-            GestioneDiscussioneSerice ds = new GestioneDiscussioneImplementazione();
+            GestioneDiscussioneService ds = new GestioneDiscussioneImplementazione();
             int idDiscussione = Integer.parseInt(idStr);
             int idCat = Integer.parseInt(categoriaStr);
             ds.modificaDiscussione(titolo, idCat, idDiscussione);

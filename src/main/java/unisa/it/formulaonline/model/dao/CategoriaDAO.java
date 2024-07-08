@@ -1,7 +1,7 @@
 package unisa.it.formulaonline.model.dao;
 
-import unisa.it.formulaonline.autenticazione.service.AreaUtenteService;
-import unisa.it.formulaonline.autenticazione.service.AreaUtenteServiceImpl;
+import unisa.it.formulaonline.autenticazione.service.LettoreService;
+import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
 import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneImplementazione;
 import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneService;
 import unisa.it.formulaonline.model.entity.Categoria;
@@ -14,7 +14,7 @@ import java.util.List;
 public class CategoriaDAO {
 
     private GestioneCategoriaDiscussioneService gestioneCategoriaDiscussioneService = new GestioneCategoriaDiscussioneImplementazione();
-    private AreaUtenteService areaUtenteService = new AreaUtenteServiceImpl();
+    private LettoreService lettoreService = new LettoreServiceImpl();
 
     public Categoria doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -35,7 +35,7 @@ public class CategoriaDAO {
                 Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
                 categoria.setCategoriaPadre(categoriaPadre);
 
-                Lettore lettore = areaUtenteService.ottieniLettoreDaId(rs.getInt(5));
+                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));
                 categoria.setCreatore(lettore);
 
                 return categoria;
@@ -64,7 +64,7 @@ public class CategoriaDAO {
                 Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
                 categoria.setCategoriaPadre(categoriaPadre);
 
-                Lettore lettore = areaUtenteService.ottieniLettoreDaId(rs.getInt(5));
+                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));
                 categoria.setCreatore(lettore);
                 categoriaList.add(categoria);
             }
