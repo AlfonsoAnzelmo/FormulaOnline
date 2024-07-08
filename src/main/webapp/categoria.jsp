@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="unisa.it.formulaonline.model.entity.Categoria"%>
-<%@ page import="unisa.it.formulaonline.model.entity.Discussione"%>
-<%@ page import="unisa.it.formulaonline.model.entity.Lettore"%>
+<%@ page import="unisa.it.formulaonline.model.entity.Categoria" %>
+<%@ page import="unisa.it.formulaonline.model.entity.Discussione" %>
+<%@ page import="unisa.it.formulaonline.model.entity.Lettore" %>
 <%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<%@include file="/WEB-INF/header.jsp"%>
+<%@include file="/WEB-INF/header.jsp" %>
 <div class="container main h-100 pt-4 pb-4">
     <div class="row d-flex justify-content-center h-100">
         <div class="col-10">
@@ -26,7 +26,8 @@
                         <form method="post" action="modificaCategoria">
                             <input type="hidden" name="idCategoria" value="${requestScope.categoria.idCategoria}">
                             <button class="btn btn-secondary" type="submit">
-                                Modifica categoria</button>
+                                Modifica categoria
+                            </button>
                         </form>
                     </c:when>
                 </c:choose>
@@ -34,23 +35,29 @@
             <div class=" mb-2">
                 <c:choose>
                     <c:when test="${sessionScope.lettore.getModeratore()}">
-                        <button class="btn btn-outline-secondary" href="creacategoria.jsp?idCategoria=${cat.idCategoria}">
-                            + Nuova Categoria
-                        </button>        
+                        <form method="post" action="nuovaCategoria">
+                            <input type="hidden" name="idCategoria" value="${requestScope.categoria.idCategoria}">
+                            <button class="btn btn-outline-secondary" type="submit">
+                                + Nuova Categoria
+                            </button>
+                        </form>
                     </c:when>
                 </c:choose>
-                <button class="btn btn-outline-secondary float-end" href="creadiscussione.jsp?idCategoria=${cat.idCategoria}">
-                    + Nuova Discussione
-                </button>
+                <form method="post" action="nuovaDiscussione">
+                    <input type="hidden" name="idCategoria" value="${requestScope.categoria.idCategoria}">
+                    <button class="btn btn-outline-secondary float-end">
+                        + Nuova Discussione
+                    </button>
+                </form>
             </div>
             <ol class="list-group w-100">
                 <c:forEach items="${requestScope.sottocategorie}" var="cat">
                     <li class="list-group-item">
                         <div class="" id="${cat.idCategoria}">
                             <a class="stretched-link" href="categoria?idCategoria=${cat.idCategoria}">
-                                ${cat.nome}</a>
+                                    ${cat.nome}</a>
                             <div class="m-2">
-                                ${cat.descrizione}
+                                    ${cat.descrizione}
                             </div>
                         </div>
                     </li>
@@ -62,9 +69,9 @@
                     <li class="list-group-item p-3">
                         <div class="" id="${dis.idDiscussione}">
                             <a class="stretched-link" href="discussione?idDiscussione=${dis.idDiscussione}">
-                                ${dis.titolo}</a>
+                                    ${dis.titolo}</a>
                             <div class="">
-                                ${dis.autore}
+                                    ${dis.autore}
                             </div>
                         </div>
                     </li>
