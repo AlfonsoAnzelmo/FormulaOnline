@@ -97,6 +97,23 @@ public class SegnalazioneDAO {
         return s;
     }
 
+    public Segnalazione doSave(int idLettore, int idCommento, String corpo){
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("INSERT INTO formulaonlinedb.segnalazione " +
+                            "(lettore, commento, corpo) value(?,?,?)");
+            if (ps.executeUpdate()!=1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            ResultSet rs = ps.getResultSet();
+            Segnalazione s = new Segnalazione();
+            s.setIdSegnalazione(rs.getInt("idSegnalazione"));
+            return s;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void doDelete(int idSegnalazione){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
