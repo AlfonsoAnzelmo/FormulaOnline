@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommentoDAO {
-    private LettoreDAO lettoreDAO = new LettoreDAO();
-    private DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+    private LettoreDAO lettoreDAO;
+    private DiscussioneDAO discussioneDAO;
 
     public Commento doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -20,17 +20,17 @@ public class CommentoDAO {
                             " WHERE c.idCommento=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 rs.getInt(1);
                 Commento commento = new Commento();
                 commento.setIdCommento(rs.getInt(1));
                 commento.setCorpo(rs.getString(2));
-
+                discussioneDAO = new DiscussioneDAO();
                 Discussione discussione = discussioneDAO.doRetrieveById(rs.getInt(3));
                 commento.setDiscussione(discussione);
 
-                commento.setDataCommento(rs.getDate(4));
-
+                commento.setDataCommento(rs.getTimestamp(4));
+                lettoreDAO = new LettoreDAO();
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 commento.setAutore(lettore);
 
@@ -55,12 +55,12 @@ public class CommentoDAO {
                 Commento commento = new Commento();
                 commento.setIdCommento(rs.getInt(1));
                 commento.setCorpo(rs.getString(2));
-
+                discussioneDAO = new DiscussioneDAO();
                 Discussione discussione = discussioneDAO.doRetrieveById(rs.getInt(3));
                 commento.setDiscussione(discussione);
 
                 commento.setDataCommento(rs.getDate(4));
-
+                lettoreDAO = new LettoreDAO();
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 commento.setAutore(lettore);
 
@@ -137,8 +137,7 @@ public class CommentoDAO {
 
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM formulaonlinedb.commento WHERE idCommento=?",
-                    Statement.RETURN_GENERATED_KEYS);
+                    "DELETE FROM formulaonlinedb.commento WHERE idCommento=?");
             ps.setInt(1, idCommento);
 
             if (ps.executeUpdate() != 1) {
@@ -152,8 +151,7 @@ public class CommentoDAO {
     public void doDeleteByAutore(int idAutore){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM formulaonlinedb.commento WHERE autore=?",
-                    Statement.RETURN_GENERATED_KEYS);
+                    "DELETE FROM formulaonlinedb.commento WHERE autore=?");
             ps.setInt(1, idAutore);
 
             if (ps.executeUpdate() != 1) {

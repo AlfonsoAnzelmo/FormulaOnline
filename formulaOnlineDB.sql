@@ -11,7 +11,7 @@ create table lettore(
     nickname varchar(30) not null unique,
     scuderiaPreferita varchar(30),
     dataFineSospensione date,
-    moderatore tinyint not null
+    moderatore tinyint not null default false
 );
 
 create table categoria (

@@ -1,9 +1,5 @@
 package unisa.it.formulaonline.model.dao;
 
-import unisa.it.formulaonline.autenticazione.service.LettoreService;
-import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
-import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneImplementazione;
-import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneService;
 import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Lettore;
 
@@ -13,8 +9,7 @@ import java.util.List;
 
 public class CategoriaDAO {
 
-    private GestioneCategoriaDiscussioneService gestioneCategoriaDiscussioneService = new GestioneCategoriaDiscussioneImplementazione();
-    private LettoreDAO lettoreDAO = new LettoreDAO();
+    private LettoreDAO lettoreDAO;
 
     public Categoria doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -25,7 +20,7 @@ public class CategoriaDAO {
 
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 rs.getInt(1);
                 Categoria categoria = new Categoria();
                 categoria.setIdCategoria(rs.getInt(1));
@@ -34,7 +29,7 @@ public class CategoriaDAO {
 
                 Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
                 categoria.setCategoriaPadre(categoriaPadre);
-
+                lettoreDAO = new LettoreDAO();
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 categoria.setCreatore(lettore);
 
@@ -64,6 +59,7 @@ public class CategoriaDAO {
                 Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
                 categoria.setCategoriaPadre(categoriaPadre);
 
+                lettoreDAO = new LettoreDAO();
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 categoria.setCreatore(lettore);
                 categoriaList.add(categoria);
@@ -80,8 +76,8 @@ public class CategoriaDAO {
     public Categoria doSave(Categoria categoria) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO formulaonlinedb.categoria (nome,descrizione,categoriaPadre,creatore)" +
-                            "  VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    "INSERT INTO formulaonlinedb.categoria (nome, descrizione, categoriaPadre, creatore)" +
+                            "  VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, categoria.getNome());
             ps.setString(2, categoria.getDescrizione());

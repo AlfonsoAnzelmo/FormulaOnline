@@ -32,7 +32,7 @@ public class RegistrazioneServlet extends HttpServlet {
             RegistrazioneService rs = new RegistrazioneServiceImpl();
             Lettore l = rs.registraLettore(email, password, nickname, scuderia);
             //se l'utente è stato registrato con successo
-            if(l.getIdLettore()!=null){
+            if(l!=null){
                 HttpSession session= req.getSession();
                 session.setAttribute("lettore", l);
                 dest="index.jsp";
