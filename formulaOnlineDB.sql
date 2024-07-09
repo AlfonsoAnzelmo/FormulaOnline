@@ -1,4 +1,3 @@
-
 drop database if exists formulaOnlineDB;
 create database formulaOnlineDB;
 
