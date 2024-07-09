@@ -175,6 +175,28 @@ public class LettoreDAO {
             throw new RuntimeException(e);
         }
     }
+    public void doUpdate(int idLettore, String email, String password, String nickname, String scuderiaPreferita) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    " UPDATE formulaonlinedb.lettore " +
+                            " SET email = ?, pass = ?, nickname = ?, scuderiaPreferita = ? " +
+                            " WHERE idLettore=? ");
+
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ps.setString(3, nickname);
+            ps.setString(4, scuderiaPreferita);
+            ps.setInt(5, idLettore);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void doDelete(int idLettore) {
         try (Connection con = ConPool.getConnection()) {

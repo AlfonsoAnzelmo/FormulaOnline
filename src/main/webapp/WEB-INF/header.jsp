@@ -23,7 +23,7 @@
                                 ${sessionScope.lettore.nickname}
                     </a>
                     <ul class="dropdown-menu" id="utenteDd">
-                        <li><a class="dropdown-item" href="areautente.jsp">Area Utente</a></li>
+                        <li><a class="dropdown-item" href="aggiornaLettore.jsp">Area Utente</a></li>
                         <li><a class="dropdown-item" href="logout">Logout</a></li>
                     </ul>
                 </div>

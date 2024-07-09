@@ -22,6 +22,8 @@ public interface LettoreService {
     public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,
                                    String scuderiaPreferita, Boolean moderatore, Date dataFineSospensione);
 
+    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,String scuderiaPreferita);
+
     /**
      * Elimina un lettore partendo dal suo codice
       * @param idLettore
