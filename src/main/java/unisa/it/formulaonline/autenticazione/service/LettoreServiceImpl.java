@@ -4,6 +4,7 @@ import unisa.it.formulaonline.model.dao.LettoreDAO;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.util.Date;
+import java.util.List;
 
 public class LettoreServiceImpl implements LettoreService {
 
@@ -63,5 +64,11 @@ public class LettoreServiceImpl implements LettoreService {
 
         LettoreDAO lettoreDAO = new LettoreDAO();
         return lettoreDAO.doRetrieveById(idLettore);
+    }
+
+    @Override
+    public List<Lettore> ottieniLettoriNonModeratori() {
+        LettoreDAO lettoreDAO = new LettoreDAO();
+        return lettoreDAO.doRetrieveAllNonModeratore();
     }
 }
