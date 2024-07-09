@@ -13,8 +13,14 @@ public class RegistrazioneServiceImpl implements RegistrazioneService{
         LettoreDAO ld = new LettoreDAO();
         //se l'email e il nickname non esistono
         Lettore lettore = null;
-        if (!ld.checkExists(email, nickname))
+        if(email!=null && password!=null && nickname!=null && scuderiaPreferita!=null){
+            if (!ld.checkExists(email, nickname) &&
+                    (5<=email.length() && (email.length()) <= 50)
+                    && ((8 <= password.length())) && (password.length() <= 32)
+                    && (5 <= nickname.length() && nickname.length() <= 30)){
             lettore = ld.doSave(email, password, nickname, scuderiaPreferita);
+            }
+        }
         return lettore;
     }
 }
