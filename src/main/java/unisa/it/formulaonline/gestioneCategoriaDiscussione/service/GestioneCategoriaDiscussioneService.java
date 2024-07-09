@@ -46,5 +46,5 @@ public interface GestioneCategoriaDiscussioneService {
      * @param idCategoria
      * @return la categoria cercata
      */
-    Categoria ottienieCategoriaDaId(int idCategoria);
+    Categoria ottieniCategoriaDaId(int idCategoria);
 }

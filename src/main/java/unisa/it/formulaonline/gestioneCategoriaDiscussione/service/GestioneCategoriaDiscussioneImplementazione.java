@@ -46,7 +46,7 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
     }
 
     @Override
-    public Categoria ottienieCategoriaDaId(int idCategoria) {
+    public Categoria ottieniCategoriaDaId(int idCategoria) {
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         return categoriaDAO.doRetrieveById(idCategoria);}
 }
