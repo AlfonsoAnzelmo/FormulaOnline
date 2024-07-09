@@ -28,50 +28,22 @@ public class AggiornaLettoreServlet extends HttpServlet {
         String nickname = req.getParameter("nickname");
         String scuderiaPreferita = req.getParameter("scuderiaPreferita");
 
+        if(email == null)
+            email = lettore.getEmail() ;
 
-        if(email != null && passowrd != null && nickname != null && scuderiaPreferita != null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), email, passowrd, nickname, scuderiaPreferita) ;
-        //caso in cui un solo campo è null
-        else if(email != null && passowrd != null && nickname != null && scuderiaPreferita == null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), email, passowrd, nickname, lettore.getScuderiaPref()) ;
-        else if(email != null && passowrd != null && nickname== null && scuderiaPreferita != null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), email, passowrd, lettore.getNickname(), scuderiaPreferita) ;
-        else if(email != null && passowrd ==  null && nickname != null && scuderiaPreferita != null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), email, lettore.getPassword(), lettore.getNickname(), scuderiaPreferita) ;
-        else if(email == null && passowrd != null && nickname != null && scuderiaPreferita != null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), lettore.getEmail(), lettore.getPassword(), lettore.getNickname(), scuderiaPreferita) ;
+        if(passowrd == null)
+            passowrd = lettore.getPassword() ;
 
-        //caso in cui due campi sono null
-        else if(email != null && passowrd != null && nickname == null && scuderiaPreferita == null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), email, passowrd , lettore.getNickname(), lettore.getScuderiaPref()) ;
-        else if(email != null && passowrd == null && nickname != null && scuderiaPreferita == null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), email, lettore.getPassword() , nickname, lettore.getScuderiaPref()) ;
-        else if(email == null && passowrd != null && nickname != null && scuderiaPreferita == null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), lettore.getEmail(), passowrd , nickname, lettore.getScuderiaPref()) ;
+        if(nickname == null)
+            nickname = lettore.getNickname() ;
 
-        else if(email != null && passowrd == null && nickname == null && scuderiaPreferita != null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), email, lettore.getPassword() , lettore.getNickname(), scuderiaPreferita) ;
-        else if(email == null && passowrd != null && nickname == null && scuderiaPreferita != null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), lettore.getEmail(), passowrd , lettore.getNickname(), scuderiaPreferita) ;
-        else if(email != null && passowrd == null && nickname == null && scuderiaPreferita != null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), email, lettore.getPassword() , lettore.getNickname(), scuderiaPreferita) ;
+        if(scuderiaPreferita == null)
+            scuderiaPreferita = lettore.getScuderiaPref() ;
 
-        else if(email == null && passowrd == null && nickname != null && scuderiaPreferita != null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), lettore.getEmail(), lettore.getPassword() , nickname, scuderiaPreferita) ;
+        Lettore lettore1 = lettoreService.aggiornaLettore(lettore.getIdLettore(), email, passowrd, nickname, scuderiaPreferita) ;
 
-        //caso in cui tre campi sono null
-        else if(email == null && passowrd == null && nickname == null && scuderiaPreferita != null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), lettore.getEmail(), lettore.getPassword() , lettore.getNickname(), scuderiaPreferita) ;
-        else if(email == null && passowrd == null && nickname != null && scuderiaPreferita == null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), lettore.getEmail(), lettore.getPassword() , nickname, lettore.getScuderiaPref()) ;
-        else if(email == null && passowrd != null && nickname == null && scuderiaPreferita == null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), lettore.getEmail(), passowrd , lettore.getNickname(), lettore.getScuderiaPref()) ;
-        else if(email != null && passowrd == null && nickname == null && scuderiaPreferita == null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), email, lettore.getPassword() , lettore.getNickname(), lettore.getScuderiaPref()) ;
 
-        else if(email != null && passowrd != null && nickname != null && scuderiaPreferita != null)
-            lettoreService.aggiornaLettore(lettore.getIdLettore(), email, passowrd , nickname, scuderiaPreferita) ;
-
+        req.getSession().setAttribute("lettore",lettore1);
 
         req.getRequestDispatcher("aggiornaLettore.jsp").forward(req, resp);
 

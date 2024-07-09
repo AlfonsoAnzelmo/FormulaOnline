@@ -28,7 +28,7 @@ public class NuovaDiscussioneServlet extends HttpServlet {
         if(catStr!=null && l!=null){
             GestioneCategoriaDiscussioneService cs = new GestioneCategoriaDiscussioneImplementazione();
             int catId = Integer.parseInt(catStr);
-            Categoria categoria = cs.ottienieCategoriaDaId(catId);
+            Categoria categoria = cs.ottieniCategoriaDaId(catId);
             if(categoria != null && l.getModeratore()){
                 RequestDispatcher rd = req.getRequestDispatcher(destinazione);
                 rd.forward(req, resp);
