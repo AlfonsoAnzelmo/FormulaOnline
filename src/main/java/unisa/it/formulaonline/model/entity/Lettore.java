@@ -31,6 +31,22 @@ public class Lettore {
         this.moderatore = moderatore;
     }
 
+    public Lettore(Integer idLettore, String email, String password, String nickname, String scuderiaPref) {
+        this.idLettore = idLettore;
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.scuderiaPref = scuderiaPref;
+        this.moderatore = moderatore;
+    }
+    public Lettore(String email, String password, String nickname, String scuderiaPref) {
+        this.idLettore = idLettore;
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.scuderiaPref = scuderiaPref;
+        this.moderatore = moderatore;
+    }
     public Lettore() {
     }
 

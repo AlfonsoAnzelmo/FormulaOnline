@@ -40,6 +40,18 @@ public class LettoreServiceImpl implements LettoreService {
      * {@inheritDoc}
      */
     @Override
+    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname, String scuderiaPreferita) {
+
+        LettoreDAO lettoreDAO = new LettoreDAO();
+
+        lettoreDAO.doUpdate(idLettore, email, password, nickname, scuderiaPreferita);
+        Lettore lettore = new Lettore(idLettore, email, password, nickname, scuderiaPreferita);
+        return lettore;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void eliminaLettore(int idLettore) {
         LettoreDAO lettoreDAO = new LettoreDAO();
 
