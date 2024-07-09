@@ -185,10 +185,7 @@ public class DiscussioneDAO {
             ps.setInt(1, discussione.getCategoria().getIdCategoria());
             ps.setString(2, discussione.getTitolo());
             ps.setInt(3, idDiscussione);
-
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("INSERT error.");
-            }
+            ps.executeUpdate();
 
             return discussione;
         }catch (SQLException e) {
@@ -197,16 +194,11 @@ public class DiscussioneDAO {
     }
 
     public void doDelete(int idDiscussione) {
-
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM formulaonlinedb.discussione WHERE idDiscussione=?",
-                    Statement.RETURN_GENERATED_KEYS);
+                    "DELETE FROM formulaonlinedb.discussione WHERE idDiscussione=?");
             ps.setInt(1, idDiscussione);
-
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("DELETE error.");
-            }
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

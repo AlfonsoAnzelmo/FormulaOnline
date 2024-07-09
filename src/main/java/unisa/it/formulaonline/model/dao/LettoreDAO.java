@@ -204,7 +204,7 @@ public class LettoreDAO {
                     "DELETE FROM formulaonlinedb.lettore WHERE idLettore=?");
             ps.setInt(1, idLettore);
             CommentoDAO commentoDAO = new CommentoDAO();
-            commentoDAO.doUpdateByAutore(idLettore, 1);
+            commentoDAO.doUpdateAutore(idLettore, 1);
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("DELETE error.");
             }

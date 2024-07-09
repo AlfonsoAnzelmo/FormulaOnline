@@ -111,7 +111,7 @@ public class CommentoDAO {
             ps.setInt(2, idCommento);
 
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("INSERT error.");
+                throw new RuntimeException("UPDATE error.");
             }
             commento.setIdCommento(idCommento);
             return commento;
@@ -120,7 +120,7 @@ public class CommentoDAO {
         }
     }
 
-    public void doUpdateByAutore(int idAutore, int idNewAutore){
+    public void doUpdateAutore(int idAutore, int idNewAutore){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     " UPDATE formulaonlinedb.commento "+
@@ -128,10 +128,7 @@ public class CommentoDAO {
                             "  WHERE autore = ?");
             ps.setInt(1, idNewAutore);
             ps.setInt(2, idAutore);
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("INSERT error.");
-            }
-
+            ps.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -159,10 +156,7 @@ public class CommentoDAO {
                     "DELETE FROM formulaonlinedb.commento WHERE autore=?",
                     Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, idAutore);
-
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("DELETE error.");
-            }
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

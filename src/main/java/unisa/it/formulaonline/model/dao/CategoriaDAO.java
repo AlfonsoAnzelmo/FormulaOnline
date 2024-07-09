@@ -25,7 +25,7 @@ public class CategoriaDAO {
 
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 rs.getInt(1);
                 Categoria categoria = new Categoria();
                 categoria.setIdCategoria(rs.getInt(1));
@@ -81,7 +81,7 @@ public class CategoriaDAO {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO formulaonlinedb.categoria (nome,descrizione,categoriaPadre,creatore)" +
-                            "  VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                            "  VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, categoria.getNome());
             ps.setString(2, categoria.getDescrizione());
@@ -124,7 +124,7 @@ public class CategoriaDAO {
      * assegna alle categorie individuate da categoria padre la categoria "senza categoria"
      * @param idCategoriaPadre
      */
-    public void doUpdateByCategoriaPadre(int idCategoriaPadre) {
+    public void doSetDefaultCategoriaPadre(int idCategoriaPadre) {
 
         Categoria no_categoria = doRetrieveById(1) ;
         try (Connection con = ConPool.getConnection()) {
@@ -135,11 +135,7 @@ public class CategoriaDAO {
 
             ps.setInt(1, no_categoria.getIdCategoria());
             ps.setInt(2, idCategoriaPadre);
-
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("INSERT error.");
-            }
-
+            ps.executeUpdate();
 
         }catch (SQLException e) {
             throw new RuntimeException(e);
@@ -157,10 +153,7 @@ public class CategoriaDAO {
                     "DELETE FROM formulaonlinedb.categoria WHERE idCategoria=?",
                     Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, idCategoria);
-
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("DELETE error.");
-            }
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -173,16 +166,12 @@ public class CategoriaDAO {
      */
     public void doDeleteAlternativo(int idCategoria){
 
-        doUpdateByCategoriaPadre(idCategoria);
+        doSetDefaultCategoriaPadre(idCategoria);
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM formulaonlinedb.categoria WHERE idCategoria=?",
-                    Statement.RETURN_GENERATED_KEYS);
+                    "DELETE FROM formulaonlinedb.categoria WHERE idCategoria=?");
             ps.setInt(1, idCategoria);
-
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("DELETE error.");
-            }
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
