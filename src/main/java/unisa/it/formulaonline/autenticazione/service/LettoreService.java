@@ -3,6 +3,7 @@ package unisa.it.formulaonline.autenticazione.service;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.util.Date;
+import java.util.List;
 
 public interface LettoreService {
     /**
@@ -36,4 +37,5 @@ public interface LettoreService {
      * @param idLettore
      */
     public Lettore ottieniLettoreDaId(int idLettore);
+    public List<Lettore> ottieniLettoriNonModeratori();
 }

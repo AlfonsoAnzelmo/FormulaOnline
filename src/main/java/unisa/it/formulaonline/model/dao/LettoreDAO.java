@@ -18,14 +18,17 @@ public class LettoreDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                rs.getInt(1);
                 Lettore lettore = new Lettore();
                 lettore.setIdLettore(rs.getInt(1));
                 lettore.setEmail(rs.getString(2));
                 lettore.setPassword(rs.getString(3));
                 lettore.setNickname(rs.getString(4));
-                lettore.setModeratore(rs.getBoolean(5));
-                lettore.setDataFineSospensione(new java.util.Date(rs.getDate(6).getTime()));
+                lettore.setScuderiaPref(rs.getString(5));
+                lettore.setModeratore(rs.getBoolean(6));
+                if(rs.getDate(7) == null)
+                    lettore.setDataFineSospensione(null);
+                else
+                    lettore.setDataFineSospensione(new java.util.Date(rs.getDate(7).getTime()));
 
 
                 return lettore;
@@ -78,14 +81,49 @@ public class LettoreDAO {
                             "  FROM formulaonlinedb.lettore l");
 
             ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Lettore lettore = new Lettore();
+                lettore.setIdLettore(rs.getInt(1));
+                lettore.setEmail(rs.getString(2));
+                lettore.setPassword(rs.getString(3));
+                lettore.setNickname(rs.getString(4));
+                lettore.setScuderiaPref(rs.getString(5));
+                lettore.setModeratore(rs.getBoolean(6));
+                if(rs.getDate(7) == null)
+                    lettore.setDataFineSospensione(null);
+                else
+                    lettore.setDataFineSospensione(new java.util.Date(rs.getDate(7).getTime()));
+                lettoreList.add(lettore);
+            }
+            return lettoreList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public List<Lettore> doRetrieveAllNonModeratore() {
+        List<Lettore> lettoreList = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT l.idLettore, l.email,l.pass, l.nickname, l.scuderiaPreferita, l.moderatore, l.dataFineSospensione" +
+                            "  FROM formulaonlinedb.lettore l" +
+                            " WHERE l.moderatore = 0");
+
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Lettore lettore = new Lettore();
                 lettore.setIdLettore(rs.getInt(1));
                 lettore.setEmail(rs.getString(2));
                 lettore.setPassword(rs.getString(3));
                 lettore.setNickname(rs.getString(4));
-                lettore.setModeratore(rs.getBoolean(5));
-                lettore.setDataFineSospensione(new java.util.Date(rs.getDate(6).getTime()));
+                lettore.setScuderiaPref(rs.getString(5));
+                lettore.setModeratore(rs.getBoolean(6));
+                if(rs.getDate(7) == null)
+                    lettore.setDataFineSospensione(null);
+                else
+                    lettore.setDataFineSospensione(new java.util.Date(rs.getDate(7).getTime()));
+
                 lettoreList.add(lettore);
             }
             return lettoreList;
@@ -162,7 +200,10 @@ public class LettoreDAO {
             ps.setString(2, password);
             ps.setString(3, nickname);
             ps.setString(4, scuderiaPreferita);
-            ps.setDate(5, new Date(dataFineSospensione.getTime()));
+            if(dataFineSospensione == null)
+                ps.setDate(5,null);
+            else ps.setDate(5, new Date(dataFineSospensione.getTime()));
+
             ps.setBoolean(6, moderatore);
             ps.setInt(7, idLettore);
 

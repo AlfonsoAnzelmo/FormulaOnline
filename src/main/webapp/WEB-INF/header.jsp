@@ -16,7 +16,21 @@
                     <a class="btn btn-outline-secondary" href="ricerca.jsp">Ricerca</a>
                 </form>
         <c:choose>
-            <c:when test="${sessionScope.lettore!=null}">
+            <c:when test="${lettore!=null && lettore.moderatore}">
+                <div class="nav-item px-3 dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       data-bs-target="#utenteDd" aria-expanded="false">
+                            ${sessionScope.lettore.nickname}
+                    </a>
+                    <ul class="dropdown-menu" >
+                        <li><a class="dropdown-item" href="listaUtenti">Lista utenti</a></li>
+                        <li><a class="dropdown-item" href="segnalazione">Segnalazioni</a></li>
+                        <li><a class="dropdown-item" href="aggiornaLettore.jsp">Area Utente</a></li>
+                        <li><a class="dropdown-item" href="logout">Logout</a></li>
+                    </ul>
+                </div>
+            </c:when>
+            <c:when test="${sessionScope.lettore!=null && !lettore.moderatore}">
                 <div class="nav-item px-3 dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            data-bs-target="#utenteDd" aria-expanded="false">
@@ -25,9 +39,11 @@
                     <ul class="dropdown-menu" id="utenteDd">
                         <li><a class="dropdown-item" href="aggiornaLettore.jsp">Area Utente</a></li>
                         <li><a class="dropdown-item" href="logout">Logout</a></li>
+
                     </ul>
                 </div>
             </c:when>
+
             <c:otherwise>
                 <a class="btn btn-primary" href="login.jsp">Login</a>
             </c:otherwise>
