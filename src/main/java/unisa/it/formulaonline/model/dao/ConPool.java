@@ -21,7 +21,7 @@ public class ConPool {
 			p.setUrl("jdbc:mysql://localhost:3306/formulaonlinedb?serverTimezone=" + TimeZone.getDefault().getID());
 			p.setDriverClassName("com.mysql.cj.jdbc.Driver");
 			p.setUsername("root");
-			p.setPassword("Galletta$1234");
+			p.setPassword("password");
 			p.setMaxActive(100);
 			p.setInitialSize(10);
 			p.setMinIdle(10);

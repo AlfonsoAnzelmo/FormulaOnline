@@ -1,6 +1,5 @@
 <%-- Created by IntelliJ IDEA. User: D'Antuono Date: 05/07/2024 Time: 22:16 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="unisa.it.formulaonline.model.entity.Lettore"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
@@ -18,19 +17,19 @@
                 </form>
         <c:choose>
             <c:when test="${sessionScope.lettore!=null}">
-            <div class="nav-item px-3 dropdown">
+                <div class="nav-item px-3 dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       data-bs-target="#utenteDd" aria-expanded="false">
-                            ${sessionScope.lettore.nickname}
+                           data-bs-target="#utenteDd" aria-expanded="false">
+                                ${sessionScope.lettore.nickname}
                     </a>
                     <ul class="dropdown-menu" id="utenteDd">
                         <li><a class="dropdown-item" href="areautente.jsp">Area Utente</a></li>
-                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        <li><a class="dropdown-item" href="logout">Logout</a></li>
                     </ul>
                 </div>
             </c:when>
             <c:otherwise>
-                <a class="nav-link px-3 align-self-end" href="login.jsp">Login</a>
+                <a class="btn btn-primary" href="login.jsp">Login</a>
             </c:otherwise>
         </c:choose>
 <!--

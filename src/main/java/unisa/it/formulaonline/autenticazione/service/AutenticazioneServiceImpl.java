@@ -15,8 +15,21 @@ public class AutenticazioneServiceImpl implements AutenticazioneService{
         LettoreDAO lettoreDAO = new LettoreDAO();
 
         Lettore l = lettoreDAO.doRetrieveByEmailPassword(email, password);
-        if (l!=null && l.getDataFineSospensione().before((new Date())))
-            return l;
+        /*Controlla se esiste*/
+        if (l!=null){
+            /*Se esiste controlla che non abbia mai ricevuto sospensioni*/
+            if(l.getDataFineSospensione()!=null){
+                /* Se ha ricevuto sospensioni controlla che siano scadute*/
+                if(l.getDataFineSospensione().before((new Date()))){
+                    return l;
+                }
+            }
+            /*Se non ha mai ricevuto sospensioni*/
+            else {
+               return l;
+            }
+        }
+        /* Se non esiste*/
         return null;
     }
 }

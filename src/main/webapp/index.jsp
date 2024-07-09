@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<%@include file="/WEB-INF/header.jsp" %>
+<%@include file="/WEB-INF/header.jsp"%>
 <div class="container main h-100 pt-4 pb-4">
     <h2>Benvenuto su</h2>
     <h1>FormulaOnline</h1>

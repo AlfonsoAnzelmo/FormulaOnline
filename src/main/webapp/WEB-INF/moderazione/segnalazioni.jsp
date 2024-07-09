@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="resources/css/formulaonline.css">
     <title>Visualizza Segnalazioni</title>
-    <script src="segnalazione.js"></script>
+    <script src="resources/js/segnalazione.js"></script>
 </head>
 
 <body>

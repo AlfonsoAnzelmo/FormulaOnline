@@ -1,7 +1,5 @@
 package unisa.it.formulaonline.model.dao;
 
-import unisa.it.formulaonline.autenticazione.service.LettoreService;
-import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
 import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Discussione;
@@ -12,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DiscussioneDAO {
-    private CategoriaDAO categoriaDAO = new CategoriaDAO();
-
-    private CommentoDAO commentoDAO = new CommentoDAO();
-    private LettoreDAO lettoreDAO = new LettoreDAO();
+    private CategoriaDAO categoriaDAO;
+    private LettoreDAO lettoreDAO;
 
     public Discussione doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -30,12 +26,12 @@ public class DiscussioneDAO {
                 Discussione discussione = new Discussione();
                 discussione.setIdDiscussione(rs.getInt(1));
                 discussione.setNumeroCommenti(rs.getInt(2));
-
+                categoriaDAO = new CategoriaDAO();
                 Categoria categoria = categoriaDAO.doRetrieveById(3);
                 discussione.setCategoria(categoria);
 
                 discussione.setTitolo(rs.getString(4));
-
+                lettoreDAO = new LettoreDAO();
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 discussione.setLettore(lettore);
                 return discussione;
@@ -60,11 +56,12 @@ public class DiscussioneDAO {
                 Discussione discussione = new Discussione();
                 discussione.setIdDiscussione(rs.getInt(1));
                 discussione.setNumeroCommenti(rs.getInt(2));
-
+                categoriaDAO = new CategoriaDAO();
                 Categoria categoria = categoriaDAO.doRetrieveById(3);
                 discussione.setCategoria(categoria);
 
                 discussione.setTitolo(rs.getString(4));
+                lettoreDAO = new LettoreDAO();
 
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 discussione.setLettore(lettore);
@@ -94,11 +91,13 @@ public class DiscussioneDAO {
                 Discussione discussione = new Discussione();
                 discussione.setIdDiscussione(rs.getInt(1));
                 discussione.setNumeroCommenti(rs.getInt(2));
+                categoriaDAO = new CategoriaDAO();
 
                 Categoria categoria1  = categoriaDAO.doRetrieveById(3);
                 discussione.setCategoria(categoria1);
 
                 discussione.setTitolo(rs.getString(4));
+                lettoreDAO = new LettoreDAO();
 
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 discussione.setLettore(lettore);
@@ -228,9 +227,11 @@ public class DiscussioneDAO {
                 Discussione discussione = new Discussione();
                 discussione.setIdDiscussione(rs.getInt(1));
                 discussione.setNumeroCommenti(rs.getInt(2));
+                categoriaDAO = new CategoriaDAO();
                 Categoria categoria = categoriaDAO.doRetrieveById(rs.getInt(3));
                 discussione.setCategoria(categoria);
                 discussione.setTitolo(rs.getString(4));
+                lettoreDAO = new LettoreDAO();
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 discussione.setLettore(lettore);
                 lista.add(discussione);

@@ -11,7 +11,7 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
 
-@WebServlet("/categoria")
+@WebServlet("/creaCategoria")
 public class CreazioneCategoriaDisussioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

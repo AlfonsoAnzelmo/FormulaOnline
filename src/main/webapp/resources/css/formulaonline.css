@@ -17,3 +17,10 @@ html, body {
 .btn-primary:hover{
     background-color: rgb(31, 95, 231);
 }
+.commenta{
+    background-color: #ffffff;
+    border-color: lightgrey;
+    border-radius: 0.1rem;
+    border-width: 1px;
+    border-style: solid;
+}

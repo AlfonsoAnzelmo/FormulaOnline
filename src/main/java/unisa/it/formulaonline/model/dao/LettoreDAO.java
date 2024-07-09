@@ -8,8 +8,6 @@ import java.util.List;
 
 public class LettoreDAO {
 
-    private CommentoDAO commentoDAO = new CommentoDAO();
-
     public Lettore doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -19,7 +17,7 @@ public class LettoreDAO {
 
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 rs.getInt(1);
                 Lettore lettore = new Lettore();
                 lettore.setIdLettore(rs.getInt(1));
@@ -44,20 +42,25 @@ public class LettoreDAO {
             PreparedStatement ps =
                     con.prepareStatement("SELECT l.idLettore, l.email,l.pass, l.nickname, l.scuderiaPreferita, l.moderatore, l.dataFineSospensione" +
                             "  FROM formulaonlinedb.lettore l  " +
-                            " WHERE l.email = ? AND l.pass = ?");
+                            " WHERE l.email=? AND l.pass=?");
 
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 rs.getInt(1);
                 Lettore lettore = new Lettore();
                 lettore.setIdLettore(rs.getInt(1));
                 lettore.setEmail(rs.getString(2));
                 lettore.setPassword(rs.getString(3));
                 lettore.setNickname(rs.getString(4));
-                lettore.setModeratore(rs.getBoolean(5));
-                lettore.setDataFineSospensione(new java.util.Date(rs.getDate(6).getTime()));
+                lettore.setScuderiaPref(rs.getString(5));
+                lettore.setModeratore(rs.getBoolean(6));
+                Date dataFine = rs.getDate(7);
+                if(dataFine!=null){
+                    lettore.setDataFineSospensione(new java.util.Date(dataFine.getTime()));
+                }
+
                 return lettore;
             }
             return null;
@@ -176,10 +179,9 @@ public class LettoreDAO {
     public void doDelete(int idLettore) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM formulaonlinedb.lettore WHERE idLettore=?",
-                    Statement.RETURN_GENERATED_KEYS);
+                    "DELETE FROM formulaonlinedb.lettore WHERE idLettore=?");
             ps.setInt(1, idLettore);
-
+            CommentoDAO commentoDAO = new CommentoDAO();
             commentoDAO.doUpdateByAutore(idLettore, 1);
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("DELETE error.");
@@ -193,8 +195,7 @@ public class LettoreDAO {
     public boolean checkExists(String email, String nickname) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM formulaonlinedb.lettore WHERE email=? OR nickname=?",
-                    Statement.RETURN_GENERATED_KEYS);
+                    "SELECT * FROM formulaonlinedb.lettore WHERE email=? OR nickname=?");
             ps.setString(1, email);
             ps.setString(2, nickname);
 

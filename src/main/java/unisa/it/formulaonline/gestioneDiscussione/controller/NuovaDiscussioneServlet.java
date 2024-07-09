@@ -1,5 +1,6 @@
-package unisa.it.formulaonline.gestioneCategoriaDiscussione.controller;
+package unisa.it.formulaonline.gestioneDiscussione.controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,33 +13,27 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
 
-@WebServlet("/eliminaCategoria")
-public class EliminaCategoriaDiscussione extends HttpServlet {
+@WebServlet("/nuovaDiscussione")
+public class NuovaDiscussioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        doPost(req, resp);
     }
-
-    /**
-     * elimina una categoria
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
-     */
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String categoriaStr = req.getParameter("categoria");
-        Lettore lettore = (Lettore) req.getSession().getAttribute("lettore");
-        if(lettore!=null && categoriaStr!=null){
-            int idCategoria = Integer.parseInt(categoriaStr);
-            if(lettore.getModeratore()) {
-                GestioneCategoriaDiscussioneService gs = new GestioneCategoriaDiscussioneImplementazione();
-                gs.eliminaCategoria(idCategoria);
+        String catStr = req.getParameter("categoria");
+        String destinazione = "index.jsp";
+        Lettore l = (Lettore) req.getSession().getAttribute("lettore");
+        if(catStr!=null && l!=null){
+            GestioneCategoriaDiscussioneService cs = new GestioneCategoriaDiscussioneImplementazione();
+            int catId = Integer.parseInt(catStr);
+            Categoria categoria = cs.ottieniCategoriaDaId(catId);
+            if(categoria != null && l.getModeratore()){
+                RequestDispatcher rd = req.getRequestDispatcher(destinazione);
+                rd.forward(req, resp);
             }
-
         }
-
+        resp.sendRedirect(destinazione);
     }
 }

@@ -11,7 +11,7 @@ create table lettore(
     nickname varchar(30) not null unique,
     scuderiaPreferita varchar(30),
     dataFineSospensione date,
-    moderatore tinyint not null
+    moderatore tinyint not null default false
 );
 
 create table categoria (
@@ -47,7 +47,7 @@ create table commento (
     foreign key (discussione) references discussione(idDiscussione)
                       on update cascade
                       on delete cascade,
-    dataCommento date not null,
+    dataCommento datetime DEFAULT CURRENT_TIMESTAMP,
     autore int not null,
     foreign key (autore) references Lettore(idLettore)
 		on update cascade
