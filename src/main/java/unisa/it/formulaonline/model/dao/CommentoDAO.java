@@ -21,7 +21,7 @@ public class CommentoDAO {
                             " WHERE c.idCommento=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 rs.getInt(1);
                 Commento commento = new Commento();
                 commento.setIdCommento(rs.getInt(1));
@@ -113,12 +113,11 @@ public class CommentoDAO {
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
-
-
+            commento.setIdCommento(idCommento);
+            return commento;
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return commento;
     }
 
     public void doUpdateByAutore(int idAutore, int idNewAutore){
@@ -127,11 +126,12 @@ public class CommentoDAO {
                     " UPDATE formulaonlinedb.commento "+
                             " SET autore = ? " +
                             "  WHERE autore = ?");
-            ps.setInt(1, idAutore);
-            ps.setInt(2, idNewAutore);
+            ps.setInt(1, idNewAutore);
+            ps.setInt(2, idAutore);
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
+
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
