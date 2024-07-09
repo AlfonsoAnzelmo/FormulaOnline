@@ -14,13 +14,13 @@ import java.util.List;
 
 public class GestioneDiscussioneImplementazione implements GestioneDiscussioneService {
 
-    private DiscussioneDAO discussioneDAO = new DiscussioneDAO();
-    private CommentoDAO commentoDAO = new CommentoDAO();
-    private CategoriaDAO categoriaDAO = new CategoriaDAO();
-    private LettoreDAO lettoreDAO = new LettoreDAO();
-
     @Override
     public Discussione creaDiscussione(String titolo, int idCategoria, int idAutore, String commento) {
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+        CommentoDAO commentoDAO = new CommentoDAO();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        LettoreDAO lettoreDAO = new LettoreDAO();
+
         Categoria categoria = categoriaDAO.doRetrieveById(idCategoria);
         Lettore lettore = lettoreDAO.doRetrieveById(idAutore) ;
 
@@ -32,6 +32,9 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
 
     @Override
     public Discussione modificaDiscussione(String titolo, int nuovaCategoria, int idDiscussione) {
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+
         Categoria categoria = categoriaDAO.doRetrieveById(nuovaCategoria);
 
         Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
@@ -42,6 +45,7 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
 
     @Override
     public void eliminaDiscussione(int idDiscussione) {
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
         discussioneDAO.doDelete(idDiscussione);
     }
 
@@ -51,17 +55,26 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
      */
     @Override
     public Discussione ottieniDiscussioneDaId(int idDiscussione) {
-        return null;
+
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+        return discussioneDAO.doRetrieveById(idDiscussione) ;
     }
 
     @Override
     public List<Discussione> ottieniDiscussioniDaCategoria(int idCategoria) {
-        Categoria categoria = categoriaDAO.doRetrieveById(idCategoria);
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+
+        Categoria categoria = categoriaDAO.doRetrieveById(idCategoria) ;
         return discussioneDAO.doRetrieveAllByCategoria(categoria);
     }
 
     @Override
     public Commento aggiungiCommento(int idDiscussione, String corpo, int idAutore) {
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+        CommentoDAO commentoDAO = new CommentoDAO();
+        LettoreDAO lettoreDAO = new LettoreDAO();
+
         Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
         Lettore lettore = lettoreDAO.doRetrieveById(idAutore);
         discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);
@@ -71,6 +84,8 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
 
     @Override
     public Commento modificaCommento(String corpo, int idCommento) {
+        CommentoDAO commentoDAO = new CommentoDAO();
+
         Commento commento = commentoDAO.doRetrieveById(idCommento);
         commento.setCorpo(corpo);
         return commentoDAO.doUpdate(commento, idCommento);
@@ -78,13 +93,17 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
 
     @Override
     public void rimuoviCommento(int idCommento, int idDiscussione) {
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+        CommentoDAO commentoDAO = new CommentoDAO();
+
         Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
         commentoDAO.doDelete(idCommento);
         discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);
     }
 
     public Commento ottieniCommentoDaId(int idCommento){
-        Commento commento = new Commento();
+        CommentoDAO commentoDAO = new CommentoDAO();
+        Commento commento = commentoDAO.doRetrieveById(idCommento);
         return commento;
     }
 }

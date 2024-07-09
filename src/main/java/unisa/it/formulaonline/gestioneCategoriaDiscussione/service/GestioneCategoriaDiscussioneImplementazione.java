@@ -7,10 +7,11 @@ import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 public class GestioneCategoriaDiscussioneImplementazione implements GestioneCategoriaDiscussioneService {
-    private CategoriaDAO categoriaDAO = new CategoriaDAO();
-    private LettoreService lettoreService = new LettoreServiceImpl();
     @Override
     public Categoria creaCategoriaDiscussione(String nome, String descrizione, int categoriaPadreId, int autore) {
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        LettoreService lettoreService = new LettoreServiceImpl();
+
         Lettore lettore = lettoreService.ottieniLettoreDaId(autore);
         Categoria categoriaPadre = categoriaDAO.doRetrieveById(categoriaPadreId) ;
         return categoriaDAO.doSave(new Categoria(nome, descrizione, categoriaPadre, lettore));
@@ -18,6 +19,9 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
 
     @Override
     public Categoria modificaCategoriaDiscussione(int idCategoria, String nome, String descrizione, int categoriaPadreId) {
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        LettoreService lettoreService = new LettoreServiceImpl();
+
         Categoria categoria = categoriaDAO.doRetrieveById(idCategoria) ;
         categoria.setNome(nome);
         categoria.setDescrizione(descrizione);
@@ -30,14 +34,19 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
 
     @Override
     public void eliminaCategoria(int idCategoria) {
+
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
         categoriaDAO.doDeleteAlternativo(idCategoria);
     }
 
     @Override
     public Categoria retrieveById(int idCategoria) {
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
         return categoriaDAO.doRetrieveById(idCategoria);
     }
 
     @Override
-    public Categoria ottienieCategoriaDaId(int idCategoria) {return categoriaDAO.doRetrieveById(idCategoria);}
+    public Categoria ottienieCategoriaDaId(int idCategoria) {
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        return categoriaDAO.doRetrieveById(idCategoria);}
 }

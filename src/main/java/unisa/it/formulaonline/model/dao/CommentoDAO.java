@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommentoDAO {
-    private LettoreDAO lettoreDAO = new LettoreDAO();
-    private DiscussioneDAO discussioneDAO = new DiscussioneDAO();
 
     public Commento doRetrieveById(int id) {
+        LettoreDAO lettoreDAO = new LettoreDAO() ;
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
                     con.prepareStatement("SELECT idCommento, corpo, discussione, dataCommento, autore" +
@@ -44,6 +45,9 @@ public class CommentoDAO {
     }
 
     public List<Commento> doRetrieveAll() {
+        LettoreDAO lettoreDAO = new LettoreDAO() ;
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+
         List<Commento> commentoList = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =

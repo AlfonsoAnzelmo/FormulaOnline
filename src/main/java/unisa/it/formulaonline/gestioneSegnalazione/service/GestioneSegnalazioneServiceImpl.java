@@ -15,14 +15,14 @@ import java.util.List;
 
 public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneService{
 
-    private SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
-    LettoreDAO lettoreDAO = new LettoreDAO();
-    GestioneDiscussioneService discussioneService = new GestioneDiscussioneImplementazione();
     /**
      * {@inheritDoc}
      */
     @Override
     public Segnalazione creaSegnalazione(int idCommento, int idAutore, String corpo) {
+        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
+        GestioneDiscussioneService discussioneService = new GestioneDiscussioneImplementazione();
+
         Segnalazione s = segnalazioneDAO.doSave(idCommento, idAutore, corpo);
         Commento c = discussioneService.ottieniCommentoDaId(idCommento);
         s.setCommento(c);
@@ -34,6 +34,10 @@ public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneServ
      */
     @Override
     public void sospendiLettore(int idSegnalazione, Date dataFineSospensione) {
+        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
+        LettoreDAO lettoreDAO = new LettoreDAO();
+        GestioneDiscussioneService discussioneService = new GestioneDiscussioneImplementazione();
+
         Segnalazione segnalazione = segnalazioneDAO.doRetrieveById(idSegnalazione);
 //        lettoreService.ottieniLettoreDaId(segnalazione.getAutore().getIdLettore());
         Lettore lettore = segnalazione.getCommento().getAutore();
@@ -55,6 +59,8 @@ public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneServ
      */
     @Override
     public void eliminaSegnalazione(int idSegnalazione) {
+        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
+
         segnalazioneDAO.doDelete(idSegnalazione);
     }
 
@@ -63,10 +69,14 @@ public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneServ
      */
     @Override
     public List<Segnalazione> ottieniSegnalazioni() {
+        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
+
         return segnalazioneDAO.doRetrieveAll();
     }
 
     public Segnalazione ottieniSegnalazioneDaId(int idSegnalazione){
+        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
+
         return segnalazioneDAO.doRetrieveById(idSegnalazione);
     }
 }

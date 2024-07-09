@@ -9,7 +9,7 @@
     <title>Formula Online</title>
 </head>
 <body>
-<div class="container h-100 pt-4 pb-4 justify-content-center">
+<div class="container pt-4 pb-4 justify-content-center">
     <h3>Area utente</h3>
 </div>
 
