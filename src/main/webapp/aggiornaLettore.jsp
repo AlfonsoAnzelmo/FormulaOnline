@@ -47,6 +47,5 @@
 </div>
 </div>
 
-<script src="resources/js/areaUtente.js"></script>
 </body>
 </html>
