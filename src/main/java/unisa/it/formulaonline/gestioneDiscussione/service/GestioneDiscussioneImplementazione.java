@@ -9,6 +9,7 @@ import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Discussione;
 import unisa.it.formulaonline.model.entity.Lettore;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,14 +72,14 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
 
     @Override
     public Commento aggiungiCommento(int idDiscussione, String corpo, int idAutore) {
-        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
-        CommentoDAO commentoDAO = new CommentoDAO();
-        LettoreDAO lettoreDAO = new LettoreDAO();
+/*        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+*/        CommentoDAO commentoDAO = new CommentoDAO();
+/*        LettoreDAO lettoreDAO = new LettoreDAO();
 
         Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
         Lettore lettore = lettoreDAO.doRetrieveById(idAutore);
-        discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);
-        return commentoDAO.doSave(new Commento(corpo, discussione, new Date(), lettore));
+        discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);*/
+        return commentoDAO.doSave(idDiscussione, idAutore, corpo);
 
     }
 
@@ -105,5 +106,12 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
         CommentoDAO commentoDAO = new CommentoDAO();
         Commento commento = commentoDAO.doRetrieveById(idCommento);
         return commento;
+    }
+
+    public List<Commento> ottieniCommentiDaDiscussione(int idDiscussione){
+        List<Commento> commenti;
+        CommentoDAO commentoDAO = new CommentoDAO();
+        commenti = commentoDAO.doRetrieveByDiscussione(idDiscussione);
+        return commenti;
     }
 }

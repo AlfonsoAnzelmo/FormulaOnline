@@ -4,10 +4,15 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Commento {
+    private int idCommento;
+    private Discussione discussione;
+    private Lettore autore;
+    private Date dataCommento;
+    private String corpo;
 
     public Commento(){
-
     }
+
     public Commento(String corpo, Discussione discussione, Date dataCommento, Lettore autore) {
         this.corpo = corpo;
         this.discussione = discussione;
@@ -15,13 +20,13 @@ public class Commento {
         this.autore = autore;
     }
 
-    private int idCommento;
-    private String corpo;
-
-    private Discussione discussione;
-    private Date dataCommento;
-
-    private Lettore autore;
+    public Commento(int idCommento, String corpo, Discussione discussione, Date dataCommento, Lettore autore) {
+        this.idCommento = idCommento;
+        this.corpo = corpo;
+        this.discussione = discussione;
+        this.dataCommento = dataCommento;
+        this.autore = autore;
+    }
 
     public int getIdCommento() {
         return idCommento;

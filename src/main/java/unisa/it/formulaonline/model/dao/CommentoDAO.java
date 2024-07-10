@@ -17,12 +17,11 @@ public class CommentoDAO {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
                     con.prepareStatement("SELECT idCommento, corpo, discussione, dataCommento, autore" +
-                            "  FROM formulaonlinedb.commento c  " +
-                            " WHERE c.idCommento=?");
+                            "  FROM formulaonlinedb.commento c" +
+                            " WHERE c.idCommento=? ORDER BY dataCommento");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                rs.getInt(1);
                 Commento commento = new Commento();
                 commento.setIdCommento(rs.getInt(1));
                 commento.setCorpo(rs.getString(2));
@@ -30,7 +29,7 @@ public class CommentoDAO {
                 Discussione discussione = discussioneDAO.doRetrieveById(rs.getInt(3));
                 commento.setDiscussione(discussione);
 
-                commento.setDataCommento(rs.getDate(4));
+                commento.setDataCommento(rs.getTimestamp(4));
 
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
                 commento.setAutore(lettore);
@@ -39,6 +38,38 @@ public class CommentoDAO {
             }
             return null;
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Commento> doRetrieveByDiscussione(int idDiscussione) {
+        LettoreDAO lettoreDAO = new LettoreDAO() ;
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT idCommento, corpo, discussione, dataCommento, autore" +
+                            "  FROM formulaonlinedb.commento c  " +
+                            " WHERE c.discussione=?");
+            ps.setInt(1, idDiscussione);
+            ResultSet rs = ps.executeQuery();
+            List<Commento> commenti = new ArrayList<>();
+            while (rs.next()) {
+                Commento commento = new Commento();
+                commento.setIdCommento(rs.getInt(1));
+                commento.setCorpo(rs.getString(2));
+
+                Discussione discussione = discussioneDAO.doRetrieveById(rs.getInt(3));
+                commento.setDiscussione(discussione);
+
+                commento.setDataCommento(rs.getTimestamp(4));
+
+                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
+                commento.setAutore(lettore);
+                commenti.add(commento);
+            }
+            return commenti;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,6 +110,27 @@ public class CommentoDAO {
 
     }
 
+    public Commento doSave(int idDiscussione, int idLettore, String corpo) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO formulaonlinedb.commento (corpo,discussione,autore)" +
+                            "  VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, corpo);
+            ps.setInt(2, idDiscussione);
+            ps.setInt(3, idLettore);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            return doRetrieveById(rs.getInt(1));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public Commento doSave(Commento commento) {
         try (Connection con = ConPool.getConnection()) {
@@ -161,6 +213,7 @@ public class CommentoDAO {
             throw new RuntimeException(e);
         }
     }
+
 
 
 }

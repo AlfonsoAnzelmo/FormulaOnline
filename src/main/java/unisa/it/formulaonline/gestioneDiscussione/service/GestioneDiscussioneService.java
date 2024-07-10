@@ -20,4 +20,6 @@ public interface GestioneDiscussioneService {
     Discussione ottieniDiscussioneDaId(int idDiscussione);
 
     Commento ottieniCommentoDaId(int idCommento);
+
+    List <Commento> ottieniCommentiDaDiscussione(int idDiscussione);
 }

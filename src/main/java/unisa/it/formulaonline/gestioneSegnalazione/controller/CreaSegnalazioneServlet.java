@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * Servlet che si occupa della creazione della funzione
  */
-//@WebServlet("/segnala") //serve?
+@WebServlet("/segnalaCommento") //serve?
 public class CreaSegnalazioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

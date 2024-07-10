@@ -10,7 +10,7 @@
     <title>Errore</title>
     <script>
         function returnHome() {
-            window.location.replace("/");
+            window.location.replace("index.jsp");
         }
     </script>
 </head>
