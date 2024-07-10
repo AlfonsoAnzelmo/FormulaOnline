@@ -1,6 +1,7 @@
 package unisa.it.formulaonline.gestioneSegnalazione.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,10 +13,15 @@ import unisa.it.formulaonline.model.entity.Segnalazione;
 
 import java.io.IOException;
 
+/**
+ * Servlet per eliminare una segnalazione
+ * prende l'idSegnalazione dalla request e controlla che sia stato un moderatore ad effettuare la richiesta
+ */
+@WebServlet("/eliminaSegnalazione")
 public class EliminaSegnalazioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        super.doGet(req, resp);
     }
 
     @Override

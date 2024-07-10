@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="align-self-end">
                                     <form class="col" method="post" action="eliminaSegnalazione">
-                                        <input type="hidden" name="codice" value="${segnalazione.idSegnalazione}">
+                                        <input type="hidden" name="codice" value="${segn.idSegnalazione}">
                                         <button class="btn btn-primary" type="submit">
                                             Elimina
                                         </button>

@@ -36,3 +36,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+src/main/java/unisa/it/formulaonline/model/dao/ConPool.java

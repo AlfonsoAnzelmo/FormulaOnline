@@ -207,6 +207,7 @@ public class DiscussioneDAO {
 
     public List<Discussione> doRetrieveByTitolo(String titolo) {
         try (Connection con = ConPool.getConnection()) {
+            titolo = "%" + titolo +"%";
             PreparedStatement ps =
                     con.prepareStatement("SELECT idDiscussione, numeroCommenti, categoria, titolo, autore" +
                             "  FROM formulaonlinedb.discussione d  " +

@@ -13,7 +13,7 @@
             <div class="collapse navbar-collapse m-auto" id="navbarHeader">
                 <form class="input-group w-auto m-auto" role="search" action="ricerca" method="get">
                     <input class="form-control" type="search" placeholder="Ricerca..." name="q">
-                    <a class="btn btn-outline-secondary" href="ricerca.jsp">Ricerca</a>
+                    <button class="btn btn-outline-secondary" href="ricerca.jsp" type="submit">Ricerca</button>
                 </form>
         <c:choose>
             <c:when test="${lettore!=null && lettore.moderatore}">
@@ -22,9 +22,9 @@
                        data-bs-target="#utenteDd" aria-expanded="false">
                             ${sessionScope.lettore.nickname}
                     </a>
-                    <ul class="dropdown-menu" >
+                    <ul class="dropdown-menu dropdown-menu-end" >
                         <li><a class="dropdown-item" href="listaUtenti">Lista utenti</a></li>
-                        <li><a class="dropdown-item" href="segnalazione">Segnalazioni</a></li>
+                        <li><a class="dropdown-item" href="segnalazioni">Segnalazioni</a></li>
                         <li><a class="dropdown-item" href="aggiornaLettore.jsp">Area Utente</a></li>
                         <li><a class="dropdown-item" href="logout">Logout</a></li>
                     </ul>
@@ -36,7 +36,7 @@
                            data-bs-target="#utenteDd" aria-expanded="false">
                                 ${sessionScope.lettore.nickname}
                     </a>
-                    <ul class="dropdown-menu" id="utenteDd">
+                    <ul class="dropdown-menu dropdown-menu-end" id="utenteDd">
                         <li><a class="dropdown-item" href="aggiornaLettore.jsp">Area Utente</a></li>
                         <li><a class="dropdown-item" href="logout">Logout</a></li>
 

@@ -7,9 +7,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Errore</title>
+    <script>
+        function returnHome() {
+            window.location.replace("/");
+        }
+    </script>
 </head>
 <body>
-
+C'è stato un errore nella richiesta.<br>
+Tra qualche secondo tornerai alla homepage...
+<script>
+    setTimeout(returnHome(), 100);
+</script>
 </body>
 </html>

@@ -21,9 +21,9 @@ import java.util.List;
 public class RicercaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String titolo = req.getParameter("titolo");
+        String query = req.getParameter("q");
         RicercaService rs= new RicercaServiceImpl();
-        List<Discussione> risultati = rs.ricerca(titolo);
+        List<Discussione> risultati = rs.ricerca(query);
         String dest = "ricerca.jsp";
         req.setAttribute("risultati", risultati);
         RequestDispatcher rd = req.getRequestDispatcher(dest);

@@ -8,6 +8,10 @@
         <location>/WEB-INF/errorPage.jsp</location>
     </error-page>
     <error-page>
+        <error-code>405</error-code>
+        <location>/WEB-INF/errorPage.jsp</location>
+    </error-page>
+    <error-page>
         <error-code>500</error-code>
         <location>/WEB-INF/errorPage.jsp</location>
     </error-page>
