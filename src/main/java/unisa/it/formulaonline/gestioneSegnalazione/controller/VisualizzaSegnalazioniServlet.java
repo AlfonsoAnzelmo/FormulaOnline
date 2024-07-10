@@ -35,6 +35,8 @@ public class VisualizzaSegnalazioniServlet extends HttpServlet {
             req.setAttribute("segnalazioni", segnalazioni);
             req.getRequestDispatcher(destinazione).forward(req, resp);
         }
-        resp.sendRedirect(destinazione);
+        else{
+            resp.sendRedirect(destinazione);
+        }
     }
 }

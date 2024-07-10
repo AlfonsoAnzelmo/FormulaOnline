@@ -43,7 +43,7 @@
                         </form>
                     </c:when>
                 </c:choose>
-                <form method="post" action="nuovaDiscussione">
+                <form method="post" action="creaDiscussione">
                     <input type="hidden" name="idCategoria" value="${requestScope.categoria.idCategoria}">
                     <button class="btn btn-outline-secondary float-end">
                         + Nuova Discussione

@@ -21,7 +21,7 @@
         <div class="col-11">
             <div class="d-flex justify-content-between mb-4">
                 <p class="h1">${requestScope.discussione.titolo}</p>
-                <c:if test="${lettore.moderatore}">
+                <c:if test="${sessionScope.lettore.moderatore}">
                     <form method="post" action="modificaDiscussione">
                         <input type="hidden" name="idDiscussione" value="${requestScope.discussione.idDiscussione}">
                         <button class="btn btn-secondary" type="submit">
@@ -75,9 +75,9 @@
                                                 <form action="segnalaCommento" method="post">
                                                     <div class="modal-body">
                                                         <textarea aria-label="Motivazione" class="form-control"
-                                                                  id="motivazione"
-                                                                  name="motivazione" required></textarea>
-                                                        <input type="hidden" name="codice" value="${comm.idCommento}">
+                                                                  id="motivazione" name="motivazione" required></textarea>
+                                                        <input type="hidden" name="idCommento" value="${comm.idCommento}">
+                                                        <input type="hidden" name="idDiscussione" value="${requestScope.discussione.idDiscussione}">
                                                     </div>
 
                                                     <div class="modal-footer">

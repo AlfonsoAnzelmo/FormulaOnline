@@ -34,5 +34,7 @@ public class SospendiLettoreServlet extends HttpServlet {
                 gs.sospendiLettore(idSegn, data);
             }
         }
+        String destinazione = "/segnalazioni";
+        resp.sendRedirect(destinazione);
     }
 }

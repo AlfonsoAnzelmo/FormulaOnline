@@ -27,12 +27,15 @@ public class AggiornaDiscussioneServlet extends HttpServlet {
         String categoriaStr = req.getParameter("categoria");
         String numComStr = req.getParameter("numCommenti");
         String autoreStr = req.getParameter("autore");
+        String destinazione = "index.jsp";
         /* controlla che i parametri esistano nella richiesta */
         if(idStr!=null && titolo!=null && categoriaStr!=null && numComStr!= null && autoreStr!=null){
             GestioneDiscussioneService ds = new GestioneDiscussioneImplementazione();
             int idDiscussione = Integer.parseInt(idStr);
             int idCat = Integer.parseInt(categoriaStr);
             ds.modificaDiscussione(titolo, idCat, idDiscussione);
+            destinazione = getServletContext().getContextPath()+"/discussione?idDiscussione=" +idDiscussione;
         }
+        resp.sendRedirect(destinazione);
     }
 }
