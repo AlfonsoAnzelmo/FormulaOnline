@@ -24,24 +24,24 @@ public class AggiornaLettoreServlet extends HttpServlet {
         LettoreService lettoreService = new LettoreServiceImpl();
         Lettore lettore = (Lettore)req.getSession().getAttribute("lettore") ;
         String email = req.getParameter("email");
-        String passowrd = req.getParameter("password");
+        String password = req.getParameter("password");
         String nickname = req.getParameter("nickname");
         String scuderiaPreferita = req.getParameter("scuderiaPreferita");
 
-        if(email == null)
+
+        if(email.length()<=5 || email.length() >= 50)
             email = lettore.getEmail() ;
 
-        if(passowrd == null)
-            passowrd = lettore.getPassword() ;
+        if(password.length() <= 8 || password.length() >= 32)
+            password = lettore.getPassword() ;
 
-        if(nickname == null)
+        if(nickname.length() <= 5 || nickname.length() >= 30)
             nickname = lettore.getNickname() ;
 
         if(scuderiaPreferita == null)
             scuderiaPreferita = lettore.getScuderiaPref() ;
 
-        Lettore lettore1 = lettoreService.aggiornaLettore(lettore.getIdLettore(), email, passowrd, nickname, scuderiaPreferita) ;
-
+        Lettore lettore1 = lettoreService.aggiornaLettore(lettore.getIdLettore(), email, password, nickname, scuderiaPreferita) ;
 
         req.getSession().setAttribute("lettore",lettore1);
 

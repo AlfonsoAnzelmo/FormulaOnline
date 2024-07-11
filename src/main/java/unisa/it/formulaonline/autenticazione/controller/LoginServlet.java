@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
         if (l != null) {
             HttpSession session = req.getSession();
             session.setAttribute("lettore", l);
-            dest = "index.jsp";
+            dest = "home";
             resp.sendRedirect(dest);
         } else {
 //        se le credenziali non sono valide, ritorna alla pagina di login
