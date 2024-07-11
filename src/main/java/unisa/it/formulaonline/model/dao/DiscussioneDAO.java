@@ -77,24 +77,25 @@ public class DiscussioneDAO {
 
     }
 
-    public List<Discussione> doRetrieveAllByCategoria(Categoria categoria) {
-        List<Discussione> discussioneList = new ArrayList<>();
+    public List<Discussione> doRetrieveByCategoria(int idCategoria) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
                     con.prepareStatement("SELECT idDiscussione, numeroCommenti, categoria, titolo, autore" +
                             "  FROM formulaonlinedb.discussione d" +
                             " WHERE d.categoria = ?");
 
+            ps.setInt(1,idCategoria);
             ResultSet rs = ps.executeQuery();
-            ps.setInt(1,categoria.getIdCategoria());
+
+            List<Discussione> discussioneList = new ArrayList<>();
             while (rs.next()) {
                 Discussione discussione = new Discussione();
                 discussione.setIdDiscussione(rs.getInt(1));
                 discussione.setNumeroCommenti(rs.getInt(2));
                 categoriaDAO = new CategoriaDAO();
 
-                Categoria categoria1  = categoriaDAO.doRetrieveById(3);
-                discussione.setCategoria(categoria1);
+                Categoria categoria  = categoriaDAO.doRetrieveById(rs.getInt(3));
+                discussione.setCategoria(categoria);
 
                 discussione.setTitolo(rs.getString(4));
                 lettoreDAO = new LettoreDAO();
@@ -213,6 +214,35 @@ public class DiscussioneDAO {
                             "  FROM formulaonlinedb.discussione d  " +
                             " WHERE d.titolo LIKE ?");
             ps.setString(1, titolo);
+            ResultSet rs = ps.executeQuery();
+            List<Discussione> lista = new ArrayList<>();
+            while (rs.next()) {
+                rs.getInt(1);
+                Discussione discussione = new Discussione();
+                discussione.setIdDiscussione(rs.getInt(1));
+                discussione.setNumeroCommenti(rs.getInt(2));
+                categoriaDAO = new CategoriaDAO();
+                Categoria categoria = categoriaDAO.doRetrieveById(rs.getInt(3));
+                discussione.setCategoria(categoria);
+                discussione.setTitolo(rs.getString(4));
+                lettoreDAO = new LettoreDAO();
+                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
+                discussione.setLettore(lettore);
+                lista.add(discussione);
+            }
+            return lista;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Discussione> doRetrieveRecenti() {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT distinct d.idDiscussione, d.numeroCommenti, d.categoria, d.titolo, d.autore " +
+                            "FROM formulaonlinedb.discussione d, formulaonlinedb.commento c " +
+                            "WHERE c.discussione = d.idDiscussione ORDER BY c.dataCommento LIMIT 5;");
             ResultSet rs = ps.executeQuery();
             List<Discussione> lista = new ArrayList<>();
             while (rs.next()) {

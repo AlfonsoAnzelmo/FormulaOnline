@@ -35,16 +35,19 @@ public interface GestioneCategoriaDiscussioneService {
     void eliminaCategoria(int idCategoria);
 
     /**
-     * ottiene una nuova categoria
-     * @param idCategoria
-     * @return
-     */
-    Categoria retrieveById(int idCategoria);
-
-    /**
      * ottiene una categoria dall'id
      * @param idCategoria
      * @return la categoria cercata
      */
     Categoria ottieniCategoriaDaId(int idCategoria);
+
+    /**
+     * Restituisce la lista delle categorie che non sono sottocategorie
+     */
+    List<Categoria> ottieniCategoriePrincipali();
+
+    /**
+     * Restituisce le sottocategorie di una categoria
+     */
+    List<Categoria> ottieniSottocategorie(int idCategoria);
 }

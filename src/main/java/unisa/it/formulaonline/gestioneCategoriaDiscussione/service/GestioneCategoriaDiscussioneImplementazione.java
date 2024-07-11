@@ -6,7 +6,12 @@ import unisa.it.formulaonline.model.dao.CategoriaDAO;
 import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Lettore;
 
+import java.util.List;
+
 public class GestioneCategoriaDiscussioneImplementazione implements GestioneCategoriaDiscussioneService {
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Categoria creaCategoriaDiscussione(String nome, String descrizione, int categoriaPadreId, int autore) {
         CategoriaDAO categoriaDAO = new CategoriaDAO();
@@ -17,6 +22,9 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
         return categoriaDAO.doSave(new Categoria(nome, descrizione, categoriaPadre, lettore));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Categoria modificaCategoriaDiscussione(int idCategoria, String nome, String descrizione, int categoriaPadreId) {
         CategoriaDAO categoriaDAO = new CategoriaDAO();
@@ -32,6 +40,9 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void eliminaCategoria(int idCategoria) {
 
@@ -39,14 +50,29 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
         categoriaDAO.doDeleteAlternativo(idCategoria);
     }
 
-    @Override
-    public Categoria retrieveById(int idCategoria) {
-        CategoriaDAO categoriaDAO = new CategoriaDAO();
-        return categoriaDAO.doRetrieveById(idCategoria);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Categoria ottieniCategoriaDaId(int idCategoria) {
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         return categoriaDAO.doRetrieveById(idCategoria);}
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Categoria> ottieniCategoriePrincipali() {
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        return categoriaDAO.doRetrievePrincipali();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Categoria> ottieniSottocategorie(int idCategoria) {
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        return categoriaDAO.doRetrieveByPadre(idCategoria);
+    }
 }

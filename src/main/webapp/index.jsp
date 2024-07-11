@@ -24,13 +24,41 @@
     <div class="row d-flex justify-content-center h-100">
         <div class="col-10">
             <div class="d-flex justify-content-between mb-4">
+                <h3 class="text-black">Discussioni principali</h3>
+            </div>
+            <ol class="list-group">
+                <c:forEach items="${requestScope.discussioniPrincipali}" var="dis">
+                    <li class="list-group-item">
+                        <div class="row row-cols-sm-2 row-cols-1 flex-wrap" id="${dis.idDiscussione}">
+                                <div class="col col-md-8">
+                                    <a class="stretched-link text-decoration-none"
+                                        href="discussione?idDiscussione=${dis.idDiscussione}">
+                                        ${dis.titolo}</a>
+                                    <p class="small">
+                                        in ${dis.categoria.nome}
+                                    </p>
+                                    </div>
+                                <div class="col col-md-4">
+                                    <small>creato da:</small>
+                                        ${dis.lettore.nickname}
+                                    <p class="small">
+                                        # commenti: ${dis.numeroCommenti}
+                                    </p>
+                                </div>
+                        </div>
+                    </li>
+                </c:forEach>
+            </ol>
+        </div>
+        <div class="col-10">
+            <div class="d-flex justify-content-between mb-4">
                 <h3 class="text-black">Categorie principali</h3>
             </div>
             <ol class="list-group">
                 <c:forEach items="${requestScope.categorie}" var="cat">
                     <li class="list-group-item">
                         <div class="" id="${cat.idCategoria}">
-                            <a class="stretched-link"
+                            <a class="stretched-link text-decoration-none"
                                 href="categoria?idCategoria=${cat.idCategoria}">
                                 ${cat.nome}</a>
                             <div class>

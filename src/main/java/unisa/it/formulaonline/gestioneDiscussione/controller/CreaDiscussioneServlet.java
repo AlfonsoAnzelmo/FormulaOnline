@@ -22,8 +22,8 @@ public class CreaDiscussioneServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String catStr = req.getParameter("categoria");
-        String destinazione = "index.jsp";
+        String catStr = req.getParameter("idCategoria");
+        String destinazione = "login.jsp";
         Lettore l = (Lettore) req.getSession().getAttribute("lettore");
         if(catStr!=null && l!=null){
             GestioneCategoriaDiscussioneService cs = new GestioneCategoriaDiscussioneImplementazione();
@@ -35,6 +35,8 @@ public class CreaDiscussioneServlet extends HttpServlet {
                 rd.forward(req, resp);
             }
         }
-        resp.sendRedirect(destinazione);
+        else {
+            resp.sendRedirect(destinazione);
+        }
     }
 }

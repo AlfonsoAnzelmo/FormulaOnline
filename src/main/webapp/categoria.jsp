@@ -22,7 +22,7 @@
             <div class="d-flex justify-content-between mb-4">
                 <h3 class="text-black">${requestScope.categoria.nome}</h3>
                 <c:choose>
-                    <c:when test="${sessionScope.lettore.getModeratore()}">
+                    <c:when test="${sessionScope.lettore.moderatore}">
                         <form method="post" action="modificaCategoria">
                             <input type="hidden" name="idCategoria" value="${requestScope.categoria.idCategoria}">
                             <button class="btn btn-secondary" type="submit">
@@ -34,7 +34,7 @@
             </div>
             <div class=" mb-2">
                 <c:choose>
-                    <c:when test="${sessionScope.lettore.getModeratore()}">
+                    <c:when test="${sessionScope.lettore.moderatore}">
                         <form method="post" action="nuovaCategoria">
                             <input type="hidden" name="idCategoria" value="${requestScope.categoria.idCategoria}">
                             <button class="btn btn-outline-secondary" type="submit">
@@ -66,12 +66,22 @@
             <hr>
             <ol class="list-group">
                 <c:forEach items="${requestScope.discussioni}" var="dis">
-                    <li class="list-group-item p-3">
-                        <div class="" id="${dis.idDiscussione}">
-                            <a class="stretched-link" href="discussione?idDiscussione=${dis.idDiscussione}">
-                                    ${dis.titolo}</a>
-                            <div class="">
-                                    ${dis.autore}
+                    <li class="list-group-item">
+                        <div class="row row-cols-sm-2 row-cols-1 flex-wrap" id="${dis.idDiscussione}">
+                            <div class="col col-md-8">
+                                <a class="stretched-link text-decoration-none"
+                                   href="discussione?idDiscussione=${dis.idDiscussione}">
+                                        ${dis.titolo}</a>
+                                <p class="small">
+                                    in ${dis.categoria.nome}
+                                </p>
+                            </div>
+                            <div class="col col-md-4">
+                                <small>creato da:</small>
+                                    ${dis.lettore.nickname}
+                                <p class="small">
+                                    # commenti: ${dis.numeroCommenti}
+                                </p>
                             </div>
                         </div>
                     </li>

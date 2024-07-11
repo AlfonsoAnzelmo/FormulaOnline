@@ -48,13 +48,13 @@ public class CategoriaDAO {
     }
 
     public List<Categoria> doRetrieveAll() {
-        List<Categoria> categoriaList = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
                     con.prepareStatement("SELECT c.idCategoria, c.nome,c.descrizione, c.categoriaPadre, c.creatore" +
                             "  FROM  formulaonlinedb.categoria c");
 
             ResultSet rs = ps.executeQuery();
+            List<Categoria> categoriaList = new ArrayList<>();
             while (rs.next()) {
                 Categoria categoria = new Categoria();
                 categoria.setIdCategoria(rs.getInt(1));
@@ -76,6 +76,69 @@ public class CategoriaDAO {
 
     }
 
+    /**
+     * Resitituisce tutte le sottocategorie relative alla categoria padre
+     * @param idCategoria se 0 considera viene considerato null
+     * @return la lista delle sottocategorie
+     */
+    public List<Categoria> doRetrieveByPadre(int idCategoria) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT c.idCategoria, c.nome, c.descrizione, c.categoriaPadre, c.creatore" +
+                            "  FROM  formulaonlinedb.categoria c WHERE categoriaPadre=?");
+            ps.setInt(1, idCategoria);
+            ResultSet rs = ps.executeQuery();
+            List<Categoria> categoriaList = new ArrayList<>();
+            while (rs.next()) {
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt(1));
+                categoria.setNome(rs.getString(2));
+                categoria.setDescrizione(rs.getString(3));
+
+                Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
+                categoria.setCategoriaPadre(categoriaPadre);
+
+                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));
+                categoria.setCreatore(lettore);
+                categoriaList.add(categoria);
+            }
+            return categoriaList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Resitituisce tutte le categorie principali
+     * @return la lista delle categorie senza una categoria padre
+     */
+    public List<Categoria> doRetrievePrincipali() {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT c.idCategoria, c.nome, c.descrizione, c.categoriaPadre, c.creatore" +
+                            "  FROM  formulaonlinedb.categoria c WHERE categoriaPadre is null");
+            ResultSet rs = ps.executeQuery();
+            List<Categoria> categoriaList = new ArrayList<>();
+            while (rs.next()) {
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt(1));
+                categoria.setNome(rs.getString(2));
+                categoria.setDescrizione(rs.getString(3));
+
+                Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
+                categoria.setCategoriaPadre(categoriaPadre);
+
+                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));
+                categoria.setCreatore(lettore);
+                categoriaList.add(categoria);
+            }
+            return categoriaList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public Categoria doSave(Categoria categoria) {
         try (Connection con = ConPool.getConnection()) {
@@ -161,7 +224,7 @@ public class CategoriaDAO {
     }
 
     /**
-     *  elimina la categoira selezionata e assegna alle sottocategorie "senza categoria padre"
+     * elimina la categoira selezionata e assegna alle sottocategorie "senza categoria padre"
      * @param idCategoria
      */
     public void doDeleteAlternativo(int idCategoria){
@@ -177,5 +240,6 @@ public class CategoriaDAO {
         }
 
     }
+
 
 }

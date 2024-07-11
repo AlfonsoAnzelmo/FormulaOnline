@@ -64,10 +64,13 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
     @Override
     public List<Discussione> ottieniDiscussioniDaCategoria(int idCategoria) {
         DiscussioneDAO discussioneDAO = new DiscussioneDAO();
-        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        return discussioneDAO.doRetrieveByCategoria(idCategoria);
+    }
 
-        Categoria categoria = categoriaDAO.doRetrieveById(idCategoria) ;
-        return discussioneDAO.doRetrieveAllByCategoria(categoria);
+    @Override
+    public List<Discussione> ottieniDiscussioniPrincipali(){
+        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
+        return discussioneDAO.doRetrieveRecenti();
     }
 
     @Override

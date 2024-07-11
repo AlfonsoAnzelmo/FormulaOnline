@@ -8,20 +8,20 @@
 <html>
 
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.css">
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="resources/css/formulaonline.css">
-<title>Formula Online</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.css">
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="resources/css/formulaonline.css">
+    <title>Formula Online</title>
 </head>
 
 <body>
 <%@include file="/WEB-INF/header.jsp" %>
 <%
     Lettore l = (Lettore) session.getAttribute("utente");
-    if(l==null){
+    if (l == null) {
         String redirectURL = "login.jsp";
         response.sendRedirect(redirectURL);
     }
@@ -32,24 +32,24 @@
             <p class="h3 text-center">
                 Crea discussione
             </p>
-            <form action="creadiscussione" method="post" class="container w-100 m-2">
+            <form action="salvaDiscussione" method="post" class="container w-100 m-2">
+                <input type="hidden" id="idCategoria" name="idCategoria"
+                       value="${requestScope.idCategoria}">
                 <input class="form-control w-50 my-3" maxlength="50"
-                    placeholder="Titolo discussione" id="titolo" name="titolo" required>
+                       placeholder="Titolo discussione" id="titolo" name="titolo" required>
                 <p class="h6 p-1">Commenta:</p>
-                <form action="commenta" method="post">
-                    <input type="hidden" id="idDiscussione" name="idDiscussione"
-                        value="${discussione.idDiscussione}">
-                    <textarea class="form-control p-2 mb-3" maxlength="500"
-                        placeholder="Scrivi il tuo commento..." required></textarea>
-                    <label class="ms-3">Categoria</label>
-                    <select class="form-select mb-3" id="categoriaInput" name="categoria" required>
-                        <c:forEach items="${categorie}" var="categoria">
-                            <option value="${categoria.idCategoria}">${categoria.nome}
-                            </option>
-                        </c:forEach>
-                    </select>
-                    <button type="submit" class="btn btn-primary float-end mx-4">Crea</button>
-                </form>
+                <textarea class="form-control p-2 mb-3" maxlength="500"
+                          placeholder="Scrivi il tuo commento..." required></textarea>
+<%--
+                <label class="ms-3">Categoria</label>
+                <select class="form-select mb-3" id="categoriaInput" name="categoria" required>
+                    <c:forEach items="${categorie}" var="categoria">
+                        <option value="${categoria.idCategoria}">${categoria.nome}
+                        </option>
+                    </c:forEach>
+                </select>
+--%>
+                <button type="submit" class="btn btn-primary float-end mx-4">Crea</button>
         </div>
     </div>
 </div>
