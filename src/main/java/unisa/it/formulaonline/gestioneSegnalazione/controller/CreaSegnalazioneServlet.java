@@ -44,7 +44,7 @@ public class CreaSegnalazioneServlet extends HttpServlet {
             GestioneSegnalazioneService gs = new GestioneSegnalazioneServiceImpl();
             Segnalazione s = gs.creaSegnalazione(idCommento, l.getIdLettore(), corpo);
             if(s!=null){
-                indirizzo = "discussione?idDiscussione="+idDiscussione;
+                indirizzo = getServletContext().getContextPath()+"/discussione?idDiscussione="+idDiscussione;
             }
         }
         resp.sendRedirect(indirizzo);

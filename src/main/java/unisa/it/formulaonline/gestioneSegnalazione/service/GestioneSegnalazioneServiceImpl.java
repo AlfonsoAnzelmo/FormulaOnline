@@ -23,7 +23,7 @@ public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneServ
         SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
         GestioneDiscussioneService discussioneService = new GestioneDiscussioneImplementazione();
 
-        Segnalazione s = segnalazioneDAO.doSave(idCommento, idAutore, corpo);
+        Segnalazione s = segnalazioneDAO.doSave(idAutore, idCommento, corpo);
         Commento c = discussioneService.ottieniCommentoDaId(idCommento);
         s.setCommento(c);
         return s;

@@ -103,17 +103,19 @@ public class SegnalazioneDAO {
             PreparedStatement ps =
                     con.prepareStatement("INSERT INTO formulaonlinedb.segnalazione " +
                             "(lettore, commento, corpo) values (?,?,?)",Statement.RETURN_GENERATED_KEYS);
-            if (ps.executeUpdate()!=1) {
-                throw new RuntimeException("INSERT error.");
-            }
 
             ps.setInt(1, idLettore);
             ps.setInt(2, idCommento);
             ps.setString(  3, corpo);
 
+            if (ps.executeUpdate()!=1) {
+                throw new RuntimeException("INSERT error.");
+            }
+
             ResultSet rs = ps.getGeneratedKeys();
             Segnalazione s = new Segnalazione();
-            s.setIdSegnalazione(rs.getInt("idSegnalazione"));
+            rs.next();
+            s.setIdSegnalazione(rs.getInt(1));
 
             return s;
         } catch (SQLException e) {
