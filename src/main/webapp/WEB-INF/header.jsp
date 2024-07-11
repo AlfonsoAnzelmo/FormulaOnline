@@ -4,7 +4,7 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.jsp">FormulaOnline</a>
+            <a class="navbar-brand" href="home">FormulaOnline</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarHeader">
@@ -13,7 +13,7 @@
             <div class="collapse navbar-collapse m-auto" id="navbarHeader">
                 <form class="input-group w-auto m-auto" role="search" action="ricerca" method="get">
                     <input class="form-control" type="search" placeholder="Ricerca..." name="q">
-                    <button class="btn btn-outline-secondary" href="ricerca.jsp" type="submit">Ricerca</button>
+                    <button class="btn btn-outline-secondary" type="submit">Ricerca</button>
                 </form>
         <c:choose>
             <c:when test="${lettore!=null && lettore.moderatore}">

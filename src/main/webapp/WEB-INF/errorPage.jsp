@@ -8,19 +8,12 @@
 <html>
 <head>
     <title>Errore</title>
-    <script>
-        function returnHome() {
-            // window.location.replace("/home");
-            document.getElementById("backHome").click();
-        }
-    </script>
 </head>
 <body>
 C'è stato un errore nella richiesta.<br>
 Tra qualche secondo tornerai alla homepage...
-<a href="home" id="backHome">Clicca quì per tornare alla home</a>
-<script>
-    setTimeout(returnHome(), 100);
-</script>
+<%
+    response.sendRedirect("home");
+%>
 </body>
 </html>

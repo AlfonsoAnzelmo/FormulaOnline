@@ -20,7 +20,7 @@
 <body>
 <%@include file="/WEB-INF/header.jsp" %>
 <%
-    Lettore l = (Lettore) session.getAttribute("utente");
+    Lettore l = (Lettore) session.getAttribute("lettore");
     if (l == null) {
         String redirectURL = "login.jsp";
         response.sendRedirect(redirectURL);
@@ -38,7 +38,7 @@
                 <input class="form-control w-50 my-3" maxlength="50"
                        placeholder="Titolo discussione" id="titolo" name="titolo" required>
                 <p class="h6 p-1">Commenta:</p>
-                <textarea class="form-control p-2 mb-3" maxlength="500"
+                <textarea class="form-control p-2 mb-3" maxlength="500" name="corpo"
                           placeholder="Scrivi il tuo commento..." required></textarea>
 <%--
                 <label class="ms-3">Categoria</label>

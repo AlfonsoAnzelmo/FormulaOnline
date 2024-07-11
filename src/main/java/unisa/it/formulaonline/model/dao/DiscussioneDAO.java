@@ -176,6 +176,31 @@ public class DiscussioneDAO {
         }
     }
 
+    public Discussione doSave(String titolo, int idLettore, int idCategoria){
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO formulaonlinedb.discussione (categoria, titolo, autore)" +
+                            "  VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+
+            ps.setInt(1, idCategoria);
+            ps.setString(2, titolo);
+            ps.setInt(3, idLettore);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            CategoriaDAO cd = new CategoriaDAO();
+            LettoreDAO ld = new LettoreDAO();
+            Discussione discussione= new Discussione(rs.getInt(1), 0,
+                    cd.doRetrieveById(idCategoria),  titolo, ld.doRetrieveById(idLettore));
+            return discussione;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Discussione doUpdate(Discussione discussione, int idDiscussione) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -265,4 +290,31 @@ public class DiscussioneDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void doAggiungiNComm(int idDiscussione) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    " UPDATE formulaonlinedb.discussione "+
+                            " SET numeroCommenti = numeroCommenti + 1" +
+                            "  WHERE idDiscussione=?");
+            ps.setInt(1, idDiscussione);
+            ps.executeUpdate();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doRimuoviNComm(int idDiscussione) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    " UPDATE formulaonlinedb.discussione "+
+                            " SET numeroCommenti = numeroCommenti - 1" +
+                            "  WHERE idDiscussione=?");
+            ps.setInt(1, idDiscussione);
+            ps.executeUpdate();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

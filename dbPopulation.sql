@@ -1,9 +1,9 @@
 use formulaonlinedb;
 INSERT INTO lettore values
-(null, 'admin@email.com', 'password', 'admin', 'Ferrari', null, true),
-(null, 'moderatore@email.com', 'password', 'mod', 'Mercedes', null, true),
-(null, 'user@gmail.com', 'user1234', 'utente1', null, null, false),
-(null, 'utente2@koala.org', 'koalalove', 'koala', null, date('2024-07-07'), false);
+(null, 'admin@email.com', sha1('password'), 'admin', 'Ferrari', null, true),
+(null, 'moderatore@email.com', sha1('password'), 'mod', 'Mercedes', null, true),
+(null, 'user@gmail.com', sha1('user1234'), 'utente1', null, null, false),
+(null, 'utente2@koala.org', sha1('koalalove'), 'koala', null, date('2024-07-07'), false);
 select * from lettore;
 
 INSERT INTO categoria values
@@ -37,3 +37,9 @@ insert into commento values
 (null, 'in reprehenderit in voluptate', 1, '2024-07-09 14:31:36', 4),
 (null, 'velit esse cillum', 4, '2024-07-09 19:48:04', 2);
 select * from commento;
+
+insert into segnalazione values
+(null, 1, 1, "ciao"),
+(null, 1, 3, "sonoforte")
+;
+select * from segnalazione;

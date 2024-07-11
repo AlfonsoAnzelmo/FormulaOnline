@@ -45,7 +45,7 @@ public class LettoreDAO {
             PreparedStatement ps =
                     con.prepareStatement("SELECT l.idLettore, l.email,l.pass, l.nickname, l.scuderiaPreferita, l.moderatore, l.dataFineSospensione" +
                             "  FROM formulaonlinedb.lettore l  " +
-                            " WHERE l.email=? AND l.pass=?");
+                            " WHERE l.email=? AND BINARY l.pass=?");
 
             ps.setString(1, email);
             ps.setString(2, password);

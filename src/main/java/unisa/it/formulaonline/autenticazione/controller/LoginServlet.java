@@ -12,6 +12,8 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
 
+import static unisa.it.formulaonline.utility.PassHash.PasswordHasher;
+
 /**
  * servlet per effettuare l'accesso da parte di lettori e moderatori
  */
@@ -21,13 +23,13 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String email = req.getParameter("email");
-//        String hash=PasswordHasher(req.getParameter("password")); //se utilizziamo gli hash
+//        String hash = PasswordHasher(req.getParameter("password")); //se utilizziamo gli hash
         String password = req.getParameter("password");
         AutenticazioneService as = new AutenticazioneServiceImpl();
         Lettore l;
 //        l=ld.doRetrieveByEmailPassword(email, hash);
         l = as.login(email, password);
-        String dest = "index.jsp";
+        String dest;
 
         //se l'utente esiste ed è valido
         if (l != null) {

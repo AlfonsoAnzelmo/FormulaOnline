@@ -18,7 +18,7 @@
 <body>
 <%@include file="/WEB-INF/header.jsp" %>
 <%
-    Lettore l = (Lettore) session.getAttribute("utente");
+    Lettore l = (Lettore) session.getAttribute("lettore");
     if(l==null || !l.getModeratore()){
         String redirectURL = ".";
         response.sendRedirect(redirectURL);
@@ -30,17 +30,17 @@
             <p class="h3 text-center">
                 Modifica Categoria
             </p>
-            <form action="creacategoria" method="post" class="container w-100 m-2">
+            <form action="aggiornaCategoria" method="post" class="container w-100 m-2">
                 <input class="form-control w-50 mb-3" maxlength="50"
-                    placeholder="${categoria.nome}" id="nomecategoria" name="nomecategoria"
+                    placeholder="${requestScope.categoria.nome}" id="nomecategoria" name="nomecategoria"
                     required>
                 <textarea class="form-control mb-3" placeholder="descrizione"
-                    maxlength="300">${categoria.descrizione}</textarea>
+                    maxlength="300">${requestScope.categoria.descrizione}</textarea>
                     <label class="ms-3">Categoria</label>
                 <select class="form-select mb-3" id="categoriaInput" name="nuovaCategoria">
                     <option selected>Nessuna</option>
-                    <c:forEach items="${categorie}" var="cat">
-                        <option name="${cat.idCategoria}">${cat.nome}</option>
+                    <c:forEach items="${requestScope.categorie}" var="cat">
+                        <option value="${cat.idCategoria}">${cat.nome}</option>
                     </c:forEach>
                 </select>
                 <button type="submit" class="btn btn-primary">Crea</button>

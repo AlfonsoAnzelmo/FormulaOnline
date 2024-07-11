@@ -8,7 +8,7 @@ import java.util.List;
 public interface LettoreService {
     /**
      * Preso un lettore già esistente lo elegge a moderatore
-     * @param eletto
+     * @param idLettore
      * @return il lettore eletto, il relativo parametro "moderatore" sarà vero se è l'elezione è avvenuta con successo
      * falso altrimenti
      */
@@ -17,7 +17,6 @@ public interface LettoreService {
     /**
      * Modifica ed aggiorna i dati di un lettore già esistente
      * @param idLettore relativo al lettore da modificare
-     * @param lettore
      * @return il lettore aggiornato oppure null se la modifica non è andata a buon fine
      */
     public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,
@@ -37,5 +36,10 @@ public interface LettoreService {
      * @param idLettore
      */
     public Lettore ottieniLettoreDaId(int idLettore);
+
+    /**
+     * restituisce una lista dei lettori non moderatori
+     * @return
+     */
     public List<Lettore> ottieniLettoriNonModeratori();
 }

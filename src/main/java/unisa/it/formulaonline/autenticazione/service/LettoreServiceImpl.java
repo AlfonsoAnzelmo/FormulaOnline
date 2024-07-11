@@ -6,6 +6,8 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.util.Date;
 import java.util.List;
 
+import static unisa.it.formulaonline.utility.PassHash.PasswordHasher;
+
 public class LettoreServiceImpl implements LettoreService {
 
 
@@ -31,7 +33,7 @@ public class LettoreServiceImpl implements LettoreService {
                                    String scuderiaPreferita, Boolean moderatore, Date dataFineSospensione) {
 
         LettoreDAO lettoreDAO = new LettoreDAO();
-
+        password = PasswordHasher(password);
         lettoreDAO.doUpdate(idLettore, email, password, nickname, scuderiaPreferita, moderatore, dataFineSospensione);
         Lettore lettore = new Lettore(idLettore, email, password, nickname, scuderiaPreferita, moderatore, dataFineSospensione);
         return lettore;
@@ -44,7 +46,7 @@ public class LettoreServiceImpl implements LettoreService {
     public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname, String scuderiaPreferita) {
 
         LettoreDAO lettoreDAO = new LettoreDAO();
-
+        password = PasswordHasher(password);
         lettoreDAO.doUpdate(idLettore, email, password, nickname, scuderiaPreferita);
         Lettore lettore = new Lettore(idLettore, email, password, nickname, scuderiaPreferita);
         return lettore;

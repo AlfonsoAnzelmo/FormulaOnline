@@ -50,4 +50,10 @@ public interface GestioneCategoriaDiscussioneService {
      * Restituisce le sottocategorie di una categoria
      */
     List<Categoria> ottieniSottocategorie(int idCategoria);
+
+    /**
+     * Restituisce una lista di tutte le categorie
+     * @return
+     */
+    List<Categoria> ottieniTutteCategorie();
 }

@@ -5,6 +5,8 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.util.Date;
 
+import static unisa.it.formulaonline.utility.PassHash.PasswordHasher;
+
 public class AutenticazioneServiceImpl implements AutenticazioneService{
 
     /**
@@ -13,7 +15,7 @@ public class AutenticazioneServiceImpl implements AutenticazioneService{
     @Override
     public Lettore login(String email, String password) {
         LettoreDAO lettoreDAO = new LettoreDAO();
-
+        password = PasswordHasher(password);
         Lettore l = lettoreDAO.doRetrieveByEmailPassword(email, password);
         /*Controlla se esiste*/
         if (l!=null){

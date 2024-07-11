@@ -6,7 +6,7 @@ use formulaOnlineDB;
 create table lettore(
 	idLettore int auto_increment primary key not null ,
     email varchar(50) not null unique,
-    pass varchar(50) not null,
+    pass varchar(40) not null,
     nickname varchar(30) not null unique,
     scuderiaPreferita varchar(30),
     dataFineSospensione date,
@@ -55,7 +55,7 @@ create table commento (
 
 
 create table segnalazione(
-    idSegnalazione int primary key,
+    idSegnalazione int primary key auto_increment,
 	lettore int not null,
     commento int not null,
     corpo varchar(250) not null,
@@ -66,3 +66,16 @@ create table segnalazione(
 		on update cascade
 		on delete cascade
 );
+
+CREATE TRIGGER aggiungi_commento
+	AFTER insert ON commento
+	FOR EACH ROW
+    update discussione d
+    set d.numeroCommenti = d.numeroCommenti + 1
+    where new.discussione = idDiscussione;
+CREATE TRIGGER rimuovi_commento
+	AFTER delete ON commento
+	FOR EACH ROW
+    update discussione d
+    set d.numeroCommenti = d.numeroCommenti - 1
+    where old.discussione = idDiscussione;

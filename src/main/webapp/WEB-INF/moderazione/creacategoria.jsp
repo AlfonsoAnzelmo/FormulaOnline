@@ -20,7 +20,7 @@
 <body>
 <%@include file="/WEB-INF/header.jsp" %>
 <%
-    Lettore l = (Lettore) session.getAttribute("utente");
+    Lettore l = (Lettore) session.getAttribute("lettore");
     if(l==null || !l.getModeratore()){
         String redirectURL = ".";
         response.sendRedirect(redirectURL);
@@ -32,7 +32,7 @@
             <p class="h3 text-center">
                 Crea Categoria
             </p>
-            <form action="creacategoria" method="post" class="container w-100 m-2">
+            <form action="salvaCategoria" method="post" class="container w-100 m-2">
                 <input class="form-control w-50 mb-3" maxlength="50"
                     placeholder="Nome categoria" id="nomecategoria" name="nomecategoria"
                     required>
@@ -41,7 +41,7 @@
                     <label class="ms-3">Categoria</label>
                 <select class="form-select mb-3" id="categoriaInput" name="categoria">
                     <option selected>Nessuna</option>
-                    <c:forEach items="${categorie}" var="categoria">
+                    <c:forEach items="${requestScope.categorie}" var="categoria">
                         <option value="${categoria.idCategoria}">${categoria.nome}</option>
                     </c:forEach>
                 </select>

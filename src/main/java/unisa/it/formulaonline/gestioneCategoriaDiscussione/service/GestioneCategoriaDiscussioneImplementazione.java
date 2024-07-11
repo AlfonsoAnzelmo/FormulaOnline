@@ -75,4 +75,10 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         return categoriaDAO.doRetrieveByPadre(idCategoria);
     }
+
+    @Override
+    public List<Categoria> ottieniTutteCategorie() {
+        CategoriaDAO cd = new CategoriaDAO();
+        return cd.doRetrieveAll();
+    }
 }

@@ -20,6 +20,14 @@ public class Discussione {
         this.lettore = lettore;
     }
 
+    public Discussione(int idDiscussione, int numeroCommenti, Categoria categoria, String titolo, Lettore lettore) {
+        this.idDiscussione = idDiscussione;
+        this.numeroCommenti = numeroCommenti;
+        this.categoria = categoria;
+        this.titolo = titolo;
+        this.lettore = lettore;
+    }
+
     public int getIdDiscussione() {
         return idDiscussione;
     }

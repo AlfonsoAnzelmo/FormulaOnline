@@ -3,6 +3,8 @@ package unisa.it.formulaonline.registrazione.service;
 import unisa.it.formulaonline.model.dao.LettoreDAO;
 import unisa.it.formulaonline.model.entity.Lettore;
 
+import static unisa.it.formulaonline.utility.PassHash.PasswordHasher;
+
 public class RegistrazioneServiceImpl implements RegistrazioneService{
 
     /**
@@ -18,7 +20,8 @@ public class RegistrazioneServiceImpl implements RegistrazioneService{
                     (5<=email.length() && (email.length()) <= 50)
                     && ((8 <= password.length())) && (password.length() <= 32)
                     && (5 <= nickname.length() && nickname.length() <= 30)){
-            lettore = ld.doSave(email, password, nickname, scuderiaPreferita);
+                password = PasswordHasher(password);
+                lettore = ld.doSave(email, password, nickname, scuderiaPreferita);
             }
         }
         return lettore;

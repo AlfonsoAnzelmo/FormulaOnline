@@ -23,10 +23,9 @@ public class SalvaDiscussioneServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String titolo = req.getParameter("titolo");
-        String categoria = req.getParameter("categoria");
+        String categoria = req.getParameter("idCategoria");
         String corpo = req.getParameter("corpo");
         String destinazione = "login.jsp";
-
         Lettore l = (Lettore) req.getSession().getAttribute("lettore");
         /*Controlla se tutti i parametri necessari siano stati passati*/
         if(titolo!=null && categoria !=null && corpo!=null && l!=null){
@@ -37,7 +36,7 @@ public class SalvaDiscussioneServlet extends HttpServlet {
                 destinazione = getServletContext().getContextPath()+"/discussione?idDiscussione=" +discussione.getIdDiscussione();
             }
         }
-        /*la pagina di login oppure la pagine di creazione discussione se l'utente è loggato*/
+        /*redirect alla pagina di login oppure la pagine della discussione appena creata*/
         resp.sendRedirect(destinazione);
     }
 }

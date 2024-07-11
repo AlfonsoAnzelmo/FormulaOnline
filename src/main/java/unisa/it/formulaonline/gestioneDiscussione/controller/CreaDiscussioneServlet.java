@@ -11,6 +11,7 @@ import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCateg
 import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Lettore;
 
+import javax.swing.plaf.metal.OceanTheme;
 import java.io.IOException;
 
 @WebServlet("/creaDiscussione")
@@ -29,10 +30,14 @@ public class CreaDiscussioneServlet extends HttpServlet {
             GestioneCategoriaDiscussioneService cs = new GestioneCategoriaDiscussioneImplementazione();
             int catId = Integer.parseInt(catStr);
             Categoria categoria = cs.ottieniCategoriaDaId(catId);
-            if(categoria != null && l.getModeratore()){
+            if(categoria != null){
                 destinazione = "creadiscussione.jsp";
+                req.setAttribute("idCategoria", categoria.getIdCategoria());
                 RequestDispatcher rd = req.getRequestDispatcher(destinazione);
                 rd.forward(req, resp);
+            }
+            else{
+                resp.sendRedirect("home");
             }
         }
         else {

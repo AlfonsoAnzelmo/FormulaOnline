@@ -1,6 +1,5 @@
 package unisa.it.formulaonline.gestioneCategoriaDiscussione.controller;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,19 +11,24 @@ import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
+import java.util.List;
 
-@WebServlet("/nuovaCategoria")
-public class NuovaCategoriaServlet extends HttpServlet {
+@WebServlet("/creaCategoria")
+public class CreaCategoriaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String destinazione = "index.jsp";
         Lettore l = (Lettore) req.getSession().getAttribute("lettore");
+        String dest = "home";
         if(l!=null && l.getModeratore()){
-            destinazione ="WEB-INF/moderazione/creacategoria.jsp";
-            RequestDispatcher rd = req.getRequestDispatcher(destinazione);
-            rd.forward(req, resp);
+            GestioneCategoriaDiscussioneService cs = new GestioneCategoriaDiscussioneImplementazione();
+            List<Categoria> categorie = cs.ottieniTutteCategorie();
+            req.setAttribute("categorie", categorie);
+            dest= "WEB-INF/moderazione/creacategoria.jsp";
+            req.getRequestDispatcher(dest).forward(req, resp);
         }
-        resp.sendRedirect(destinazione);
+        else{
+            resp.sendRedirect(dest);
+        }
     }
 
     @Override

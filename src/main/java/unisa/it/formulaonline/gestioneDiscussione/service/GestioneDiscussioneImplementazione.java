@@ -3,31 +3,19 @@ package unisa.it.formulaonline.gestioneDiscussione.service;
 import unisa.it.formulaonline.model.dao.CategoriaDAO;
 import unisa.it.formulaonline.model.dao.CommentoDAO;
 import unisa.it.formulaonline.model.dao.DiscussioneDAO;
-import unisa.it.formulaonline.model.dao.LettoreDAO;
 import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Discussione;
-import unisa.it.formulaonline.model.entity.Lettore;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class GestioneDiscussioneImplementazione implements GestioneDiscussioneService {
 
     @Override
-    public Discussione creaDiscussione(String titolo, int idCategoria, int idAutore, String commento) {
+    public Discussione creaDiscussione(String titolo, int idCategoria, int idLettore, String commento) {
         DiscussioneDAO discussioneDAO = new DiscussioneDAO();
-        CommentoDAO commentoDAO = new CommentoDAO();
-        CategoriaDAO categoriaDAO = new CategoriaDAO();
-        LettoreDAO lettoreDAO = new LettoreDAO();
-
-        Categoria categoria = categoriaDAO.doRetrieveById(idCategoria);
-        Lettore lettore = lettoreDAO.doRetrieveById(idAutore) ;
-
-        Discussione discussione = discussioneDAO.doSave(new Discussione(1, categoria, titolo, lettore));
-        commentoDAO.doSave(new Commento(commento, discussione, new Date(), lettore));
-
+        Discussione discussione = discussioneDAO.doSave(titolo, idLettore, idCategoria);
+        aggiungiCommento(discussione.getIdDiscussione(), commento, idLettore);
         return discussione;
     }
 
@@ -75,15 +63,9 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
 
     @Override
     public Commento aggiungiCommento(int idDiscussione, String corpo, int idAutore) {
-/*        DiscussioneDAO discussioneDAO = new DiscussioneDAO();
-*/        CommentoDAO commentoDAO = new CommentoDAO();
-/*        LettoreDAO lettoreDAO = new LettoreDAO();
-
-        Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
-        Lettore lettore = lettoreDAO.doRetrieveById(idAutore);
-        discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);*/
-        return commentoDAO.doSave(idDiscussione, idAutore, corpo);
-
+        CommentoDAO commentoDAO = new CommentoDAO();
+        Commento commento = commentoDAO.doSave(idDiscussione, idAutore, corpo);
+        return commento;
     }
 
     @Override
@@ -102,7 +84,10 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
 
         Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
         commentoDAO.doDelete(idCommento);
-        discussione.setNumeroCommenti(discussione.getNumeroCommenti() + 1);
+        discussione.setNumeroCommenti(discussione.getNumeroCommenti() - 1);
+        if (discussione.getNumeroCommenti()<=0){
+            eliminaDiscussione(discussione.getIdDiscussione());
+        }
     }
 
     public Commento ottieniCommentoDaId(int idCommento){

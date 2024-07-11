@@ -35,8 +35,8 @@
             <div class=" mb-2">
                 <c:choose>
                     <c:when test="${sessionScope.lettore.moderatore}">
-                        <form method="post" action="nuovaCategoria">
-                            <input type="hidden" name="idCategoria" value="${requestScope.categoria.idCategoria}">
+                        <form method="post" action="creaCategoria">
+<%--                            <input type="hidden" name="idCategoria" value="${requestScope.categoria.idCategoria}">--%>
                             <button class="btn btn-outline-secondary" type="submit">
                                 + Nuova Categoria
                             </button>
