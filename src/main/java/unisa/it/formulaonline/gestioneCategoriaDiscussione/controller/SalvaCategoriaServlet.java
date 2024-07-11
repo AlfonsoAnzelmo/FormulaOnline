@@ -27,20 +27,19 @@ public class SalvaCategoriaServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String lettore = req.getParameter("lettore");
+        Lettore lettore = (Lettore) req.getSession().getAttribute("lettore");
         String nome = req.getParameter("nome");
         String descrizione = req.getParameter("descrizione");
-        String idPadreStr = req.getParameter("idPadre");
+        String idPadreStr = req.getParameter("categoria");
         String destinazione = "home";
         if (lettore != null && nome != null && descrizione != null
                 && idPadreStr != null) {
             if (nome.length() >= 5 && nome.length() <= 50 && descrizione.length() <= 300) {
-                Lettore l = (Lettore) req.getSession().getAttribute("lettore");
-                if (l.getModeratore()) {
+                if (lettore.getModeratore()) {
                     int categoriaPadreID = Integer.parseInt(idPadreStr);
                     GestioneCategoriaDiscussioneService gs = new GestioneCategoriaDiscussioneImplementazione();
                     Categoria categoria =
-                            gs.creaCategoriaDiscussione(nome, descrizione, categoriaPadreID, l.getIdLettore());
+                            gs.creaCategoriaDiscussione(nome, descrizione, categoriaPadreID, lettore.getIdLettore());
                     destinazione =  getServletContext().getContextPath() + "/categoria?idCategoria=" +
                             categoria.getIdCategoria();
                 }

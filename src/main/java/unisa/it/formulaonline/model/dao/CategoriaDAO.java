@@ -148,13 +148,52 @@ public class CategoriaDAO {
 
             ps.setString(1, categoria.getNome());
             ps.setString(2, categoria.getDescrizione());
-            ps.setInt(3, categoria.getCategoriaPadre().getIdCategoria());
+            if(categoria.getCategoriaPadre()!=null) {
+                ps.setInt(3, categoria.getCategoriaPadre().getIdCategoria());
+            }
+            else{
+                ps.setNull(3, Types.INTEGER);
+            }
             ps.setInt(4, categoria.getCreatore().getIdLettore());
 
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
-        return categoria;
+            ResultSet rs = ps.getGeneratedKeys();
+            categoria.setIdCategoria(rs.getInt(1));
+            return categoria;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Categoria doSave(String nome, String descrizione, int categoriaPadre, int creatore) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO formulaonlinedb.categoria (nome,descrizione,categoriaPadre,creatore)" +
+                            "  VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, nome);
+            ps.setString(2, descrizione);
+            if(categoriaPadre!=0) {
+                ps.setInt(3, categoriaPadre);
+            }
+            else{
+                ps.setNull(3, Types.INTEGER);
+            }
+            ps.setInt(4, creatore);
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            LettoreDAO ld = new LettoreDAO();
+            ResultSet rs = ps.getGeneratedKeys();
+            Categoria categoria = new Categoria();
+            categoria.setIdCategoria(rs.getInt(1));
+            categoria.setDescrizione(descrizione);
+            categoria.setCreatore(ld.doRetrieveById(creatore));
+            categoria.setCategoriaPadre(doRetrieveById(categoriaPadre));
+            return categoria;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

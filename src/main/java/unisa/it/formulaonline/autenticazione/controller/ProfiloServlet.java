@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import unisa.it.formulaonline.autenticazione.service.LettoreService;
+import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
 import unisa.it.formulaonline.model.dao.LettoreDAO;
 import unisa.it.formulaonline.model.entity.Lettore;
 
@@ -19,13 +21,13 @@ public class ProfiloServlet extends HttpServlet {
         doGet(req, resp);
     }
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        //TODO aggiungere servizio al posto del DAO?
-        LettoreDAO ld = new LettoreDAO();
+        String idStr = req.getParameter("idLettore");
+        LettoreService ls = new LettoreServiceImpl();
         Lettore l = null;
         String address="/WEB-INF/errorPage.jsp";
-        if(id != null) {
-            l = ld.doRetrieveById(Integer.parseInt(id));
+        if(idStr != null) {
+            int id = Integer.parseInt(idStr);
+            l = ls.ottieniLettoreDaId(id);
         }
         if (l != null) {
             address = "lettore.jsp";

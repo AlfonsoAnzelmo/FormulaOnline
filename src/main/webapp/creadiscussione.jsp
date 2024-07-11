@@ -15,17 +15,17 @@
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="resources/css/formulaonline.css">
     <title>Formula Online</title>
+    <%@include file="/WEB-INF/header.jsp" %>
+    <%
+        Lettore l = (Lettore) session.getAttribute("lettore");
+        if (l == null) {
+            String redirectURL = "login.jsp";
+            response.sendRedirect(redirectURL);
+        }
+    %>
 </head>
 
 <body>
-<%@include file="/WEB-INF/header.jsp" %>
-<%
-    Lettore l = (Lettore) session.getAttribute("lettore");
-    if (l == null) {
-        String redirectURL = "login.jsp";
-        response.sendRedirect(redirectURL);
-    }
-%>
 <div class="container main h-100 pt-4 pb-4">
     <div class="row d-flex justify-content-center h-100 px-5">
         <div class="container bg-white py-4">

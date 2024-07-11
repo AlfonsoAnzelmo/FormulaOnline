@@ -34,13 +34,13 @@
             </p>
             <form action="salvaCategoria" method="post" class="container w-100 m-2">
                 <input class="form-control w-50 mb-3" maxlength="50"
-                    placeholder="Nome categoria" id="nomecategoria" name="nomecategoria"
+                    placeholder="Nome categoria" id="nome" name="nome"
                     required>
                 <textarea class="form-control mb-3" placeholder="descrizione"
-                    maxlength="300"></textarea>
+                    maxlength="300" name="descrizione"></textarea>
                     <label class="ms-3">Categoria</label>
                 <select class="form-select mb-3" id="categoriaInput" name="categoria">
-                    <option selected>Nessuna</option>
+                    <option value="0" selected>Nessuna categoria</option>
                     <c:forEach items="${requestScope.categorie}" var="categoria">
                         <option value="${categoria.idCategoria}">${categoria.nome}</option>
                     </c:forEach>

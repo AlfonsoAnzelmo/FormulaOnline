@@ -13,13 +13,9 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
      * {@inheritDoc}
      */
     @Override
-    public Categoria creaCategoriaDiscussione(String nome, String descrizione, int categoriaPadreId, int autore) {
+    public Categoria creaCategoriaDiscussione(String nome, String descrizione, int categoriaPadreId, int creatore) {
         CategoriaDAO categoriaDAO = new CategoriaDAO();
-        LettoreService lettoreService = new LettoreServiceImpl();
-
-        Lettore lettore = lettoreService.ottieniLettoreDaId(autore);
-        Categoria categoriaPadre = categoriaDAO.doRetrieveById(categoriaPadreId) ;
-        return categoriaDAO.doSave(new Categoria(nome, descrizione, categoriaPadre, lettore));
+        return categoriaDAO.doSave(nome, descrizione, categoriaPadreId, creatore);
     }
 
     /**

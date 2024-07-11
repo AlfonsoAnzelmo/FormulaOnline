@@ -1,3 +1,4 @@
+<%@ page import="unisa.it.formulaonline.model.entity.Lettore" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,13 @@
     <link rel="stylesheet" href="resources/css/formulaonline.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Formula Online</title>
+    <%
+        Lettore l = (Lettore) session.getAttribute("lettore");
+        if(l==null){
+            String redirectURL = ".";
+            response.sendRedirect(redirectURL);
+        }
+    %>
 </head>
 <body>
 <%@include file="/WEB-INF/header.jsp"%>

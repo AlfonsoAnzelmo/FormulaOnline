@@ -1,7 +1,14 @@
+<%@ page import="unisa.it.formulaonline.model.entity.Lettore" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-
+<%
+    Lettore l = (Lettore) session.getAttribute("lettore");
+    if(l==null || !l.getModeratore()){
+        String redirectURL = ".";
+        response.sendRedirect(redirectURL);
+    }
+%>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.css">
