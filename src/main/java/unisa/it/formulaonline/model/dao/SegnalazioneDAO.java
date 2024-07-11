@@ -1,5 +1,6 @@
 package unisa.it.formulaonline.model.dao;
 
+import unisa.it.formulaonline.model.entity.Lettore;
 import unisa.it.formulaonline.model.entity.Segnalazione;
 
 import java.sql.*;
@@ -101,13 +102,19 @@ public class SegnalazioneDAO {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
                     con.prepareStatement("INSERT INTO formulaonlinedb.segnalazione " +
-                            "(lettore, commento, corpo) value(?,?,?)");
+                            "(lettore, commento, corpo) values (?,?,?)",Statement.RETURN_GENERATED_KEYS);
             if (ps.executeUpdate()!=1) {
                 throw new RuntimeException("INSERT error.");
             }
-            ResultSet rs = ps.getResultSet();
+
+            ps.setInt(1, idLettore);
+            ps.setInt(2, idCommento);
+            ps.setString(  3, corpo);
+
+            ResultSet rs = ps.getGeneratedKeys();
             Segnalazione s = new Segnalazione();
             s.setIdSegnalazione(rs.getInt("idSegnalazione"));
+
             return s;
         } catch (SQLException e) {
             throw new RuntimeException(e);

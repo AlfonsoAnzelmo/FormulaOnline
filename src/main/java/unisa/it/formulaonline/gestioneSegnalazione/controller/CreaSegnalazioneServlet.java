@@ -34,15 +34,17 @@ public class CreaSegnalazioneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Lettore l = (Lettore) req.getSession().getAttribute("lettore");
         String idCommentoStr = req.getParameter("idCommento");
+        int idDiscussione = Integer.parseInt(req.getParameter("idDiscussione"));
         String corpo = req.getParameter("motivazione");
         String indirizzo = "WEB-INF/error_page.jsp";
+
+
         if(corpo.length()>5 && corpo.length()<=250 && idCommentoStr!=null && l!=null){
             int idCommento = Integer.parseInt(idCommentoStr);
             GestioneSegnalazioneService gs = new GestioneSegnalazioneServiceImpl();
             Segnalazione s = gs.creaSegnalazione(idCommento, l.getIdLettore(), corpo);
             if(s!=null){
-                indirizzo = getServletContext().getContextPath()+"/discussione?idDiscussione=" +
-                        req.getParameter("idDiscussione");
+                indirizzo = "discussione?idDiscussione="+idDiscussione;
             }
         }
         resp.sendRedirect(indirizzo);
