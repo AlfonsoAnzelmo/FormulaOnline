@@ -1,3 +1,4 @@
+<%@ page import="unisa.it.formulaonline.model.entity.Lettore" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -7,6 +8,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="resources/css/formulaonline.css">
     <title>Formula Online</title>
+    <%
+        Lettore l = (Lettore) session.getAttribute("lettore");
+        if(l!=null){
+            String redirectURL = "home";
+            response.sendRedirect(redirectURL);
+        }
+    %>
 </head>
 <body>
 <%@ include file="/WEB-INF/header.jsp"%>

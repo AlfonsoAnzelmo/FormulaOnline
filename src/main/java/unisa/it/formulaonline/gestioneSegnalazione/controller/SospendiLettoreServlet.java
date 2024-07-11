@@ -1,6 +1,7 @@
 package unisa.it.formulaonline.gestioneSegnalazione.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import unisa.it.formulaonline.model.entity.Segnalazione;
 import java.io.IOException;
 import java.sql.Date;
 
+@WebServlet("/sospendi")
 public class SospendiLettoreServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,12 +23,11 @@ public class SospendiLettoreServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String segnPar = req.getParameter("segnalazione");
-        String dataPar = req.getParameter("data");
+        String segnPar = req.getParameter("codice");
+        String dataPar = req.getParameter("dataFineSospensione");
 
         if(segnPar!=null && dataPar!=null){
             Lettore mod = (Lettore) req.getSession().getAttribute("lettore");
-
             if (mod!=null && mod.getModeratore()){
                 int idSegn = Integer.parseInt(segnPar);
                 Date data = Date.valueOf(dataPar);
@@ -34,7 +35,7 @@ public class SospendiLettoreServlet extends HttpServlet {
                 gs.sospendiLettore(idSegn, data);
             }
         }
-        String destinazione = "/segnalazioni";
+        String destinazione = "segnalazioni";
         resp.sendRedirect(destinazione);
     }
 }
