@@ -22,14 +22,15 @@
             <div class="d-flex justify-content-between mb-4">
                 <p class="h1">${requestScope.discussione.titolo}</p>
                 <c:if test="${sessionScope.lettore.moderatore}">
-                    <form method="post" action="modificaDiscussione">
-                        <input type="hidden" name="idDiscussione" value="${requestScope.discussione.idDiscussione}">
-                        <button class="btn btn-secondary" type="submit">
-                            Modifica discussione
-                        </button>
-                    </form>
+
+                    <a href="modificaDiscussione?idDiscussione=${requestScope.discussione.idDiscussione}" class="btn btn-secondary"> Modifica discussione</a>
+
                 </c:if>
             </div>
+
+
+
+
             <ol class="list-group">
                 <c:forEach items="${requestScope.commenti}" var="comm">
                     <li class="list-group-item">

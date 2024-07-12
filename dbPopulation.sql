@@ -3,7 +3,7 @@ INSERT INTO lettore values
 (null, 'admin@email.com', sha1('password'), 'admin', 'Ferrari', null, true),
 (null, 'moderatore@email.com', sha1('password'), 'mod', 'Mercedes', null, true),
 (null, 'user@gmail.com', sha1('user1234'), 'utente1', null, null, false),
-(null, 'utente2@koala.org', sha1('koalalove'), 'koala', null, date('2024-07-07'), false);
+    (null, 'utente2@koala.org', sha1('koalalove'), 'koala', null, date('2024-07-07'), false);
 select * from lettore;
 
 INSERT INTO categoria values

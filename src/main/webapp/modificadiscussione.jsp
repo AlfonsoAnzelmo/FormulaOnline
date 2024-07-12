@@ -20,7 +20,7 @@
 <body>
 <%@include file="/WEB-INF/header.jsp" %>
 <%
-    Lettore l = (Lettore) session.getAttribute("utente");
+    Lettore l = (Lettore) session.getAttribute("lettore");
     if(l==null || !l.getModeratore()){
         String redirectURL = "login.jsp";
         response.sendRedirect(redirectURL);
@@ -32,14 +32,15 @@
             <p class="h3 text-center">
                 Modifica discussione
             </p>
-            <form action="modificadiscussione" method="post" class="container w-100 m-2">
+            <form action="modificaDiscussione" method="post" class="container w-100 m-2">
+                <label class="ms-3">Titolo</label>
                 <input class="form-control w-50 my-3" maxlength="50" value="${discussione.titolo}"
                     placeholder="Titolo discussione" id="titolo" name="titolo" required>
                 <input type="hidden" id="idDiscussione" name="idDiscussione"
                     value="${discussione.idDiscussione}">
                 <label class="ms-3">Categoria</label>
                 <select class="form-select mb-3" id="categoriaInput" name="categoria" required>
-                    <option selected value="${discussione.categoria.idCategoria}"> 
+                    <option selected value="${discussione.categoria.idCategoria}">
                         ${discussione.categoria.nome}
                     </option>
                     <c:forEach items="${categorie}" var="cat">

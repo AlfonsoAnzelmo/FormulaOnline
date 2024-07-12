@@ -22,12 +22,11 @@ public class DiscussioneDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                rs.getInt(1);
                 Discussione discussione = new Discussione();
                 discussione.setIdDiscussione(rs.getInt(1));
                 discussione.setNumeroCommenti(rs.getInt(2));
                 categoriaDAO = new CategoriaDAO();
-                Categoria categoria = categoriaDAO.doRetrieveById(3);
+                Categoria categoria = categoriaDAO.doRetrieveById(rs.getInt(3));
                 discussione.setCategoria(categoria);
 
                 discussione.setTitolo(rs.getString(4));
@@ -57,7 +56,7 @@ public class DiscussioneDAO {
                 discussione.setIdDiscussione(rs.getInt(1));
                 discussione.setNumeroCommenti(rs.getInt(2));
                 categoriaDAO = new CategoriaDAO();
-                Categoria categoria = categoriaDAO.doRetrieveById(3);
+                Categoria categoria = categoriaDAO.doRetrieveById(rs.getInt(3));
                 discussione.setCategoria(categoria);
 
                 discussione.setTitolo(rs.getString(4));
