@@ -31,14 +31,17 @@
                 Modifica Categoria
             </p>
             <form action="aggiornaCategoria" method="post" class="container w-100 m-2">
+                <input type="hidden" name="categoria" value="${requestScope.categoria.idCategoria}"/>
                 <input class="form-control w-50 mb-3" maxlength="50"
-                    placeholder="${requestScope.categoria.nome}" id="nomecategoria" name="nomecategoria"
+                    value="${requestScope.categoria.nome}" id="nomecategoria" name="nome"
                     required>
-                <textarea class="form-control mb-3" placeholder="descrizione"
+                <textarea class="form-control mb-3" placeholder="descrizione" name="descrizione"
                     maxlength="300">${requestScope.categoria.descrizione}</textarea>
                     <label class="ms-3">Categoria</label>
-                <select class="form-select mb-3" id="categoriaInput" name="nuovaCategoria">
-                    <option selected>Nessuna</option>
+                <select class="form-select mb-3" id="categoriaInput" name="categoriaPadre">
+                    <option value="${requestScope.categoria.categoriaPadre.idCategoria}" selected>
+                        ${requestScope.categoria.categoriaPadre.nome}</option>
+                    <option value="0">-Nessuna categoria-</option>
                     <c:forEach items="${requestScope.categorie}" var="cat">
                         <option value="${cat.idCategoria}">${cat.nome}</option>
                     </c:forEach>

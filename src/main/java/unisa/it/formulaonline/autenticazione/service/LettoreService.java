@@ -34,6 +34,7 @@ public interface LettoreService {
     /**
      * ottiene un lettore partendo dall'id
      * @param idLettore
+     * @return il lettore richesto, null se non esiste
      */
     public Lettore ottieniLettoreDaId(int idLettore);
 

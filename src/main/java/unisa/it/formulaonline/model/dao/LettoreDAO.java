@@ -230,9 +230,8 @@ public class LettoreDAO {
             ps.setInt(5, idLettore);
 
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("INSERT error.");
+                throw new RuntimeException("UPDATE error.");
             }
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
