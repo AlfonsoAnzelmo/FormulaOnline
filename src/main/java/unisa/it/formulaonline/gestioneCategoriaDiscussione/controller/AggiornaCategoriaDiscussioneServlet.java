@@ -27,26 +27,26 @@ public class AggiornaCategoriaDiscussioneServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String lettore = req.getParameter("lettore");
-        String categoriaNome = req.getParameter("categoriaNome");
-        String categoriaDescrizione = req.getParameter("categoriaDescrizione");
+        Lettore lettore = (Lettore) req.getSession().getAttribute("lettore");
+        String nome = req.getParameter("nome");
+        String descrizione = req.getParameter("descrizione");
         String categoriaPadre = req.getParameter("categoriaPadre");
         String categoria = req.getParameter("categoria");
-
-        if (lettore != null && categoriaNome.length() > 0 && categoriaDescrizione.length() > 0
-                && categoriaPadre.length() > 0 && categoria.length() > 0) {
-            Lettore l = (Lettore) req.getSession().getAttribute("lettore");
-
-            int idCategoriaPadre = Integer.parseInt(categoriaPadre);
+        String destinazione = "home";
+        if (lettore != null && nome.length() >= 5 && nome.length() <= 50 &&
+                descrizione.length()<=300 && !categoria.isEmpty()) {
+            int idCategoriaPadre = 0;
+            if(!categoriaPadre.isEmpty()) {
+                idCategoriaPadre = Integer.parseInt(categoriaPadre);
+            }
             int idCategoria = Integer.parseInt(categoria);
 
-
-            if (l.getModeratore()) {
+            if (lettore.getModeratore()) {
                 GestioneCategoriaDiscussioneService gs = new GestioneCategoriaDiscussioneImplementazione();
-                gs.modificaCategoriaDiscussione(idCategoria, categoriaNome, categoriaDescrizione, idCategoriaPadre);
+                gs.modificaCategoriaDiscussione(idCategoria, nome, descrizione, idCategoriaPadre);
+                destinazione=getServletContext().getContextPath()+"/categoria?idCategoria="+idCategoria;
             }
-
         }
-
+        resp.sendRedirect(destinazione);
     }
 }

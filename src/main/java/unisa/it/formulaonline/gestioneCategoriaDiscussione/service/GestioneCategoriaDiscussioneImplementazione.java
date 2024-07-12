@@ -29,8 +29,14 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
         Categoria categoria = categoriaDAO.doRetrieveById(idCategoria) ;
         categoria.setNome(nome);
         categoria.setDescrizione(descrizione);
-        Categoria categoriaPadre = categoriaDAO.doRetrieveById(categoriaPadreId) ;
-        categoria.setCategoriaPadre(categoriaPadre);
+        /*Se è maggiore di 0 allora è relativa ad una categoria esistente*/
+        if(categoriaPadreId>0){
+            Categoria categoriaPadre = categoriaDAO.doRetrieveById(categoriaPadreId) ;
+            categoria.setCategoriaPadre(categoriaPadre);
+        }
+        else {
+            categoria.setCategoriaPadre(null);
+        }
 
         return categoriaDAO.doUpdate(categoria, idCategoria);
 

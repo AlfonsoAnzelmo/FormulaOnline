@@ -61,6 +61,9 @@ public class LettoreServiceImpl implements LettoreService {
         lettoreDAO.doDelete(idLettore);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Lettore ottieniLettoreDaId(int idLettore) {
 

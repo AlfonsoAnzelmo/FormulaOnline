@@ -207,7 +207,12 @@ public class CategoriaDAO {
                             "  WHERE idCategoria=? ");
 
             ps.setInt(1, categoria.getCreatore().getIdLettore());
-            ps.setInt(2, categoria.getCategoriaPadre().getIdCategoria());
+            if(categoria.getCategoriaPadre()!=null) {
+                ps.setInt(2, categoria.getCategoriaPadre().getIdCategoria());
+            }
+            else{
+                ps.setNull(2, Types.INTEGER);
+            }
             ps.setString(3, categoria.getNome());
             ps.setString(4, categoria.getDescrizione());
             ps.setInt(5, idCategoria);
