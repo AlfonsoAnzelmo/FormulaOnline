@@ -36,18 +36,16 @@ public class RegistrazioneTest {
         l = rs.registraLettore(email, password, nickname, scuderiaPreferita);
         assertNotNull(l);
     }
-/*
+
     @ParameterizedTest
     @CsvSource({
-            "lettore@email.com, 123pass, Fan, Ferrari",
             "mail, 123pass123, FerrariFan, Ferrari",
             "Loremipsumdolorsitametconsecteturadipiscingelitsed@email.com, 123pass123, FerrariFan, Ferrari",
             "lettore@email.com, 123pass, FerrariFan, Ferrari",
             "lettore@email.com, Loremipsumdolorsitametconsecteturadipiscingelitsed, FerrariFan, Ferrari",
             "lettore@email.com, 123pass123, nick, Ferrari",
             "lettore@email.com, 123pass123, Loremipsumdolorsitametconsecteturadipiscingelitsed, Ferrari",
-            "lettore'@'email.com, 123pass123, FerrariFan, Ferrari",
-            "lettore@email.com, 123%pass123, FerrariFan, Ferrari",
+            "lettore@email.com, 123pass123, FerrariFan, Loremipsumdolorsitametconsecteturadipiscingelitsed",
             "lettore@email.com, 123pass123, Ferrar, "
     })
     public void registraLettoreFailTest(String email, String password, String nickname, String scuderiaPreferita){
@@ -62,5 +60,4 @@ public class RegistrazioneTest {
         l = rs.registraLettore(email, password, nickname, scuderiaPreferita);
         assertNull(l);
     }
-*/
 }

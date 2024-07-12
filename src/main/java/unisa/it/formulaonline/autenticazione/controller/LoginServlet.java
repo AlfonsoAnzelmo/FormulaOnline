@@ -12,8 +12,6 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
 
-import static unisa.it.formulaonline.utility.PassHash.PasswordHasher;
-
 /**
  * servlet per effettuare l'accesso da parte di lettori e moderatori
  */

@@ -22,14 +22,7 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
     @Override
     public Discussione modificaDiscussione(String titolo, int nuovaCategoria, int idDiscussione) {
         DiscussioneDAO discussioneDAO = new DiscussioneDAO();
-        CategoriaDAO categoriaDAO = new CategoriaDAO();
-
-        Categoria categoria = categoriaDAO.doRetrieveById(nuovaCategoria);
-
-        Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);
-        discussione.setTitolo(titolo);
-        discussione.setCategoria(categoria);
-        return discussioneDAO.doUpdate(discussione, idDiscussione);
+        return discussioneDAO.doUpdate(idDiscussione, titolo, nuovaCategoria);
     }
 
     @Override

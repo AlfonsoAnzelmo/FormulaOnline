@@ -24,7 +24,6 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
     @Override
     public Categoria modificaCategoriaDiscussione(int idCategoria, String nome, String descrizione, int categoriaPadreId) {
         CategoriaDAO categoriaDAO = new CategoriaDAO();
-        LettoreService lettoreService = new LettoreServiceImpl();
 
         Categoria categoria = categoriaDAO.doRetrieveById(idCategoria) ;
         categoria.setNome(nome);
