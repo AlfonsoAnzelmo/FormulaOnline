@@ -15,14 +15,8 @@ import java.io.IOException;
 public class EliminaDiscussioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idDiscussioneStr = req.getParameter("idDiscussione");
         Lettore lettore = (Lettore) req.getSession().getAttribute("lettore");
-        String indirizzo = "/index.jsp";
         if(idDiscussioneStr != null && lettore != null){   //controlla che i parametri siano validi
             if(lettore.getModeratore()){
                 GestioneDiscussioneService ds = new GestioneDiscussioneImplementazione();
@@ -30,6 +24,7 @@ public class EliminaDiscussioneServlet extends HttpServlet {
                 ds.eliminaDiscussione(idDiscussione);
             }
         }
-        resp.sendRedirect(indirizzo);
+        resp.sendRedirect("home");
     }
+
 }

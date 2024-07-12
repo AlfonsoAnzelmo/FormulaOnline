@@ -26,7 +26,12 @@
                     <a href="modificaDiscussione?idDiscussione=${requestScope.discussione.idDiscussione}" class="btn btn-secondary"> Modifica discussione</a>
 
                 </c:if>
+                <c:if test="${sessionScope.lettore.moderatore}">
+                    <a href="eliminaDiscussione?idDiscussione=${requestScope.discussione.idDiscussione}" class="btn btn-secondary"> Elimina discussione</a>
+
+                </c:if>
             </div>
+
 
 
 
