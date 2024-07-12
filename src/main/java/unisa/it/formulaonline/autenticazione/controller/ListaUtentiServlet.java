@@ -19,6 +19,6 @@ public class ListaUtentiServlet extends HttpServlet {
         LettoreService lettoreService = new LettoreServiceImpl();
         List<Lettore> lettoreListNonModeratori = lettoreService.ottieniLettoriNonModeratori() ;
         req.setAttribute("lettoriNonModeratori", lettoreListNonModeratori);
-        req.getRequestDispatcher("listaLettori.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/moderazione/listaLettori.jsp").forward(req, resp);
     }
 }

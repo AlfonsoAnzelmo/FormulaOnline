@@ -37,9 +37,6 @@ public class AggiornaLettoreServlet extends HttpServlet {
         if(password.length() <= 8 || password.length() >= 32){
             password = lettore.getPassword() ;
         }
-        else{
-            password = PasswordHasher(password);
-        }
 
         if(nickname.length() <= 5 || nickname.length() >= 30)
             nickname = lettore.getNickname() ;

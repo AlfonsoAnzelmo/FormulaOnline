@@ -29,13 +29,13 @@
     </tr>
     </thead>
     <tbody>
-        <c:forEach items="${lettoriNonModeratori}" var="lettore" varStatus="loop">
+        <c:forEach items="${lettoriNonModeratori}" var="lett" varStatus="loop">
         <tr>
             <th scope="row">${loop.index}</th>
-            <td>${lettore.nickname}</td>
-            <td>${lettore.email}</td>
-            <td>${lettore.moderatore}</td>
-            <td> <a href="nominaModeratore?idLettore=${lettore.idLettore}">rendi moderatore</a> </td>
+            <td>${lett.nickname}</td>
+            <td>${lett.email}</td>
+            <td>${lett.moderatore}</td>
+            <td> <a href="nominaModeratore?idLettore=${lett.idLettore}">rendi moderatore</a> </td>
         </tr>
         </c:forEach>
     </tbody>
