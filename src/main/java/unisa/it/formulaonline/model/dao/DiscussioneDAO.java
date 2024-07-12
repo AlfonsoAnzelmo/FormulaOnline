@@ -200,19 +200,18 @@ public class DiscussioneDAO {
         }
     }
 
-    public Discussione doUpdate(Discussione discussione, int idDiscussione) {
+    public Discussione doUpdate(int idDiscussione, String titolo, int nuovaCategoria) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     " UPDATE formulaonlinedb.discussione "+
                             " SET categoria = ?, titolo = ?" +
                             "  WHERE idDiscussione=? ");
 
-            ps.setInt(1, discussione.getCategoria().getIdCategoria());
-            ps.setString(2, discussione.getTitolo());
+            ps.setInt(1, nuovaCategoria);
+            ps.setString(2, titolo);
             ps.setInt(3, idDiscussione);
             ps.executeUpdate();
-
-            return discussione;
+            return doRetrieveById(idDiscussione);
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
