@@ -10,6 +10,9 @@ import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
 
 import java.io.IOException;
 
+/**
+ * Servlet per la nomina di un moderatore tra i lettori
+ */
 @WebServlet("/nominaModeratore")
 public class NominaModeratore extends HttpServlet {
     @Override

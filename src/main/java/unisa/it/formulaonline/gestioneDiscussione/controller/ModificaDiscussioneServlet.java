@@ -17,6 +17,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet per la modifica di una discussione ed il salvataggio di tali modifiche
+ */
 @WebServlet("/modificaDiscussione")
 public class ModificaDiscussioneServlet extends HttpServlet {
     @Override

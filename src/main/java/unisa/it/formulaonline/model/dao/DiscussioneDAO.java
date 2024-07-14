@@ -9,10 +9,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe per la gestione delle discussioni nel database.
+ */
 public class DiscussioneDAO {
     private CategoriaDAO categoriaDAO;
     private LettoreDAO lettoreDAO;
 
+    /**
+     * Metodo per ottenere una discussione partendo dal suo identificativo
+     * @param id della discussione
+     * @return la discussione relativa all'id se esiste, altrimenti null
+     */
     public Discussione doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -42,7 +50,10 @@ public class DiscussioneDAO {
         }
     }
 
-
+    /**
+     * Restituisce tutte le discussioni
+     * @return una list delle discussioni, la lista sarà vuota se non esistono
+     */
     public List<Discussione> doRetrieveAll() {
         List<Discussione> discussioneList = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
@@ -76,6 +87,11 @@ public class DiscussioneDAO {
 
     }
 
+    /**
+     * Metodo per recuperare tutte le discussioni contenute in una categoria
+     * @param idCategoria identificativo della categoria
+     * @return la lista delle discussioni, la lista sarà vuota se non esistono discussioni
+     */
     public List<Discussione> doRetrieveByCategoria(int idCategoria) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -112,6 +128,11 @@ public class DiscussioneDAO {
         }
     }
 
+    /**
+     * Salva una nuova discussione
+     * @param discussione
+     * @return
+     */
     public Discussione doSave(Discussione discussione) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -137,6 +158,12 @@ public class DiscussioneDAO {
         }
     }
 
+    /**
+     * Salva una nuova discussione ed il suo primo commento
+     * @param discussione
+     * @param commento
+     * @return
+     */
     public Discussione doSave(Discussione discussione, Commento commento) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -175,6 +202,13 @@ public class DiscussioneDAO {
         }
     }
 
+    /**
+     * Salva una nuova discussione
+     * @param titolo titolo della nuova discussione
+     * @param idLettore id del lettore che l'ha creata
+     * @param idCategoria id della categoria in cui deve essere inserita
+     * @return l'oggetto discussione relativa se l'aggiunta è andata a buon fine, null altrimenti
+     */
     public Discussione doSave(String titolo, int idLettore, int idCategoria){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -200,6 +234,13 @@ public class DiscussioneDAO {
         }
     }
 
+    /**
+     * Metodo per modificare le informazioni di una discussione
+     * @param idDiscussione id della discussione da modificare
+     * @param titolo nuovo titolo della discussione
+     * @param nuovaCategoria la categoria in cui spostarla
+     * @return la discussione con i campi aggiornati
+     */
     public Discussione doUpdate(int idDiscussione, String titolo, int nuovaCategoria) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -217,6 +258,10 @@ public class DiscussioneDAO {
         }
     }
 
+    /**
+     * Metodo per eliminare una discussione
+     * @param idDiscussione id della discussione da eliminare
+     */
     public void doDelete(int idDiscussione) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -228,7 +273,11 @@ public class DiscussioneDAO {
         }
     }
 
-
+    /**
+     * Metodo che resituisce una lista di discussioni con titolo simile alla stringa inviata
+     * @param titolo titolo della discussione da ricercare
+     * @return la lista delle discussioni, la lista sarà vuota se non esistono discussioni con titoli simili
+     */
     public List<Discussione> doRetrieveByTitolo(String titolo) {
         try (Connection con = ConPool.getConnection()) {
             titolo = "%" + titolo +"%";
@@ -260,6 +309,10 @@ public class DiscussioneDAO {
         }
     }
 
+    /**
+     * Restitutisce la lista delle ultime 5 discussioni che hanno ricevuto di commenti di recente
+     * @return la lista delle ultime 5 discussioni, dalla risposta più recente
+     */
     public List<Discussione> doRetrieveRecenti() {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -285,32 +338,6 @@ public class DiscussioneDAO {
             return lista;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void doAggiungiNComm(int idDiscussione) {
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    " UPDATE formulaonlinedb.discussione "+
-                            " SET numeroCommenti = numeroCommenti + 1" +
-                            "  WHERE idDiscussione=?");
-            ps.setInt(1, idDiscussione);
-            ps.executeUpdate();
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void doRimuoviNComm(int idDiscussione) {
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    " UPDATE formulaonlinedb.discussione "+
-                            " SET numeroCommenti = numeroCommenti - 1" +
-                            "  WHERE idDiscussione=?");
-            ps.setInt(1, idDiscussione);
-            ps.executeUpdate();
-        }catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

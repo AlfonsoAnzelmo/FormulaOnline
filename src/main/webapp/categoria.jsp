@@ -29,6 +29,12 @@
                                 Modifica categoria
                             </button>
                         </form>
+                        <form method="post" action="eliminaCategoria">
+                            <input type="hidden" name="idCategoria" value="${requestScope.categoria.idCategoria}">
+                            <button class="btn btn-danger" type="submit">
+                                Elimina categoria
+                            </button>
+                        </form>
                     </c:when>
                 </c:choose>
             </div>

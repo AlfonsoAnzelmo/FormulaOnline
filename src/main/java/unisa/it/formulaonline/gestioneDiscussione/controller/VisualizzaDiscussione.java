@@ -14,6 +14,9 @@ import unisa.it.formulaonline.model.entity.Discussione;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet per la visualizzazione di una discussioe e dei commenti
+ */
 @WebServlet("/discussione")
 public class VisualizzaDiscussione extends HttpServlet {
     @Override

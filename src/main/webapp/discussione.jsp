@@ -79,7 +79,7 @@
                                             </div>
                                             <c:if test="${sessionScope.lettore!=null}">
                                                 <form action="segnalaCommento" method="post">
-                                                    <input type="hidden" value="${idDiscussione}">
+                                                    <input type="hidden" value="${requestScope.Discussione.idDiscussione}">
                                                     <div class="modal-body">
                                                         <textarea aria-label="Motivazione" class="form-control"
                                                                   id="motivazione" name="motivazione" required></textarea>

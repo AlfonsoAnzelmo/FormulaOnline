@@ -2,7 +2,16 @@ package unisa.it.formulaonline.model.entity;
 
 import java.util.Objects;
 
+/**
+ * Questa classe rappresenta una categoria di discussione. Contiene l'identificativo, un nome, una descrizone,
+ * la categoria padre nel caso sia una sottocategoria, ed lettore che l'ha creata
+ */
+
 public class Categoria {
+    private int idCategoria;
+    private String nome, descrizione;
+    private Categoria categoriaPadre;
+    private Lettore creatore;
 
     public Categoria(){
 
@@ -14,11 +23,6 @@ public class Categoria {
         this.categoriaPadre =  padre;
         this.creatore = creatore;
     }
-
-    private int idCategoria;
-    private String nome, descrizione;
-    private Categoria categoriaPadre;
-    private Lettore creatore;
 
     public int getIdCategoria() {
         return idCategoria;

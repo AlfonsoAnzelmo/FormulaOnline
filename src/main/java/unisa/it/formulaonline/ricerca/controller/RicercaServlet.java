@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Permette di effettuare le ricerche delle discussioni
+ * Servlet che permette di effettuare la ricerca delle discussioni all'url "ricerca"
+ * utilizzando un parametro "q" e la pagina ricerca.jsp
  */
-
 @WebServlet("/ricerca")
 public class RicercaServlet extends HttpServlet {
     @Override

@@ -2,6 +2,10 @@ package unisa.it.formulaonline.model.entity;
 
 import java.util.Objects;
 
+/**
+ * Questa classe rappresenta una categoria di discussione. Contiene l'identificativo, un titolo,
+ * il numero di commenti che ha ricevuto, il lettore che l'ha creata e la categoria a cui appartiene
+ */
 public class Discussione {
     private int idDiscussione, numeroCommenti;
 

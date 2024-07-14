@@ -7,7 +7,7 @@ INSERT INTO lettore values
 select * from lettore;
 
 INSERT INTO categoria values
-(null, 'Nessuna', 'Off topics', null, 1),
+(1, 'Nessuna', 'Discussioni senza una categoria', null, 1),
 (null, 'gp 2024', 'tutte le discussioni riguardo il gran premio 2024', null, 1),
 (null, 'gp 2023', 'tutte le discussioni riguardo il gran premio 2023', null, 2),
 (null, 'Ferrari', 'tutte le discussioni riguardo la ferrari nel gran premio 2024', 2, 1),
@@ -39,7 +39,8 @@ insert into commento values
 select * from commento;
 
 insert into segnalazione values
-(null, 1, 1, "ciao"),
-(null, 1, 3, "sonoforte")
-;
+(null, 1, 1, 'Non mi piace il tono'),
+(null, 1, 3, 'È un messaggio d\'odio'),
+(null, 3, 7, 'Linguaggio denigratorio'),
+(null, 4, 5, 'Sessismo');
 select * from segnalazione;

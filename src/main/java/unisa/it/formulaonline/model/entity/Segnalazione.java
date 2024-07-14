@@ -1,5 +1,9 @@
 package unisa.it.formulaonline.model.entity;
 
+/**
+ * Questa classe rappresenta una segnalazione. Contiene un'identificativo, il commento a cui si riferisce,
+ * l'autore che l'ha complilata e la motivazione
+ */
 public class Segnalazione {
     private int idSegnalazione;
     private Commento commento;

@@ -13,6 +13,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet che riporta alla pagina di creazione di una nuova categoria per i moderatori
+ */
 @WebServlet("/creaCategoria")
 public class CreaCategoriaServlet extends HttpServlet {
     @Override

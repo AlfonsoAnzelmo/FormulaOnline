@@ -12,6 +12,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet per viusualizzare la lista dei lettori non moderatori registrati
+ */
 @WebServlet("/listaUtenti")
 public class ListaUtentiServlet extends HttpServlet {
     @Override

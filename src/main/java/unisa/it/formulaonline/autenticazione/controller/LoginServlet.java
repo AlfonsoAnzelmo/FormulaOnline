@@ -13,7 +13,7 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.io.IOException;
 
 /**
- * servlet per effettuare l'accesso da parte di lettori e moderatori
+ * Servlet per effettuare l'accesso da parte di lettori e moderatori
  */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {

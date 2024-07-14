@@ -11,6 +11,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
 
+/**
+ * Servlet per eliminare una discussione
+ */
 @WebServlet("/eliminaDiscussione")
 public class EliminaDiscussioneServlet extends HttpServlet {
     @Override

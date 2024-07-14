@@ -11,6 +11,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
 
+/**
+ * Servlet per la creazione di un nuovo commento in una discussione
+ */
 @WebServlet("/commenta")
 public class CreaCommentoServlet extends HttpServlet {
     @Override

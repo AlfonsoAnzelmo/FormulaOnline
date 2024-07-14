@@ -3,6 +3,11 @@ package unisa.it.formulaonline.model.entity;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Classe che rappresenta un lettore, l'utente di base del sistema. Contiene un identificativo,
+ * l'email, la password per accedere, un nickname unico, la scuderia preferita, se è un moderatore
+ * e la data di fine sospensione, nel caso ne abbia ricevuta una
+ */
 public class Lettore {
     private Integer idLettore;
     private String email;
@@ -39,6 +44,7 @@ public class Lettore {
         this.scuderiaPref = scuderiaPref;
         this.moderatore = moderatore;
     }
+
     public Lettore(String email, String password, String nickname, String scuderiaPref) {
         this.idLettore = idLettore;
         this.email = email;
@@ -47,17 +53,9 @@ public class Lettore {
         this.scuderiaPref = scuderiaPref;
         this.moderatore = moderatore;
     }
+
     public Lettore() {
     }
-
-    public Date getDataFineSospensione() {
-        return dataFineSospensione;
-    }
-
-    public void setDataFineSospensione(Date dataFineSospensione) {
-        this.dataFineSospensione = dataFineSospensione;
-    }
-
 
     public Integer getIdLettore() {
         return idLettore;
@@ -105,6 +103,14 @@ public class Lettore {
 
     public void setModeratore(Boolean moderatore) {
         this.moderatore = moderatore;
+    }
+
+    public Date getDataFineSospensione() {
+        return dataFineSospensione;
+    }
+
+    public void setDataFineSospensione(Date dataFineSospensione) {
+        this.dataFineSospensione = dataFineSospensione;
     }
 
     @Override

@@ -13,6 +13,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Servlet per l'eliminazione di un commento da una discussione
+ */
 @WebServlet("/eliminaCommento")
 public class EliminaCommentoServlet extends HttpServlet {
     @Override

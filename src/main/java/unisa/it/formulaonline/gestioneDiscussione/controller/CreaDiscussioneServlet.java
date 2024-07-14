@@ -14,6 +14,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import javax.swing.plaf.metal.OceanTheme;
 import java.io.IOException;
 
+/**
+ * Servlet che riporta alla pagina di creazione discussione
+ */
 @WebServlet("/creaDiscussione")
 public class CreaDiscussioneServlet extends HttpServlet {
     @Override

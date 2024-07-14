@@ -13,6 +13,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
 
+/**
+ * Servlet per aggiornare le informazioni di una discussione
+ */
 @WebServlet("/aggiornaDiscussione")
 public class AggiornaDiscussioneServlet extends HttpServlet {
     @Override

@@ -11,7 +11,7 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.io.IOException;
 
 /**
- * Servlet per visualizzare la propria area utente
+ * Servlet per visualizzare la propria area utente e poter modificare i propri dati
  */
 @WebServlet("/areaUtente")
 public class AreaUtenteServlet extends HttpServlet {

@@ -8,8 +8,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe per la gestione dei commenti nel database.
+ */
 public class CommentoDAO {
 
+    /**
+     * Metodo per recuperare un commento partendo dal suo identificativo
+     * @param id identificativo del commento
+     * @return il commento relativo all'id, null se il commento non esiste
+     */
     public Commento doRetrieveById(int id) {
         LettoreDAO lettoreDAO = new LettoreDAO() ;
         DiscussioneDAO discussioneDAO = new DiscussioneDAO();
@@ -43,6 +51,11 @@ public class CommentoDAO {
         }
     }
 
+    /**
+     * Metodo che recupera la lista dei commenti in ordine cronologico
+     * @param idDiscussione id della discussione di cui si vogliono ottenere i commenti
+     * @return la lista dei commenti
+     */
     public List<Commento> doRetrieveByDiscussione(int idDiscussione) {
         LettoreDAO lettoreDAO = new LettoreDAO() ;
         DiscussioneDAO discussioneDAO = new DiscussioneDAO();
@@ -51,7 +64,7 @@ public class CommentoDAO {
             PreparedStatement ps =
                     con.prepareStatement("SELECT idCommento, corpo, discussione, dataCommento, autore" +
                             "  FROM formulaonlinedb.commento c  " +
-                            " WHERE c.discussione=?");
+                            " WHERE c.discussione=? ORDER BY dataCommento");
             ps.setInt(1, idDiscussione);
             ResultSet rs = ps.executeQuery();
             List<Commento> commenti = new ArrayList<>();
@@ -78,7 +91,6 @@ public class CommentoDAO {
     public List<Commento> doRetrieveAll() {
         LettoreDAO lettoreDAO = new LettoreDAO() ;
         DiscussioneDAO discussioneDAO = new DiscussioneDAO();
-
         List<Commento> commentoList = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -93,7 +105,6 @@ public class CommentoDAO {
 
                 Discussione discussione = discussioneDAO.doRetrieveById(rs.getInt(3));
                 commento.setDiscussione(discussione);
-
                 commento.setDataCommento(rs.getDate(4));
 
                 Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));
@@ -110,6 +121,13 @@ public class CommentoDAO {
 
     }
 
+    /**
+     * Metodo per salvare un nuovo commento in una discusssione
+     * @param idDiscussione id della discussione a cui aggiungere il commento
+     * @param idLettore id del lettore che ha scritto il commento
+     * @param corpo contentuto del commento
+     * @return il commento creato
+     */
     public Commento doSave(int idDiscussione, int idLettore, String corpo) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -186,8 +204,11 @@ public class CommentoDAO {
         }
     }
 
+    /**
+     * Metodo per eliminare un commento
+     * @param idCommento id del commento da eliminare
+     */
     public void doDelete(int idCommento) {
-
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "DELETE FROM formulaonlinedb.commento WHERE idCommento=?",
@@ -202,6 +223,10 @@ public class CommentoDAO {
         }
     }
 
+    /**
+     * Metodo per eliminare tutti i commenti fatti da un utente
+     * @param idAutore id dell'autore di cui devono essere eliminati i commenti
+     */
     public void doDeleteByAutore(int idAutore){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(

@@ -13,6 +13,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * Metodo per salvare una nuova discussione
+ */
 @WebServlet("/salvaDiscussione")
 public class SalvaDiscussioneServlet extends HttpServlet {
     @Override

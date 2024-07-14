@@ -11,11 +11,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che rappresenta una categoria a cui appartengono le discussioni
+ */
 public class CategoriaDAO {
 
-    private GestioneCategoriaDiscussioneService gestioneCategoriaDiscussioneService = new GestioneCategoriaDiscussioneImplementazione();
-    private LettoreService lettoreService = new LettoreServiceImpl();
+    private LettoreDAO ld;
 
+    /**
+     * Metodo per ottenere una categoria dato il suo identificativo
+     * @param id identificativo della categoria
+     * @return la categoria se è stata trovata, null altrimenti
+     */
     public Categoria doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -35,7 +42,8 @@ public class CategoriaDAO {
                 Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
                 categoria.setCategoriaPadre(categoriaPadre);
 
-                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));
+                ld= new LettoreDAO();
+                Lettore lettore = ld.doRetrieveById(rs.getInt(5));
                 categoria.setCreatore(lettore);
 
                 return categoria;
@@ -47,6 +55,10 @@ public class CategoriaDAO {
         }
     }
 
+    /**
+     * Metodo per recuperare tutte le categorie
+     * @return una lista con tutte le categoria
+     */
     public List<Categoria> doRetrieveAll() {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -55,6 +67,7 @@ public class CategoriaDAO {
 
             ResultSet rs = ps.executeQuery();
             List<Categoria> categoriaList = new ArrayList<>();
+            ld= new LettoreDAO();
             while (rs.next()) {
                 Categoria categoria = new Categoria();
                 categoria.setIdCategoria(rs.getInt(1));
@@ -64,7 +77,7 @@ public class CategoriaDAO {
                 Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
                 categoria.setCategoriaPadre(categoriaPadre);
 
-                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));
+                Lettore lettore = ld.doRetrieveById(rs.getInt(5));
                 categoria.setCreatore(lettore);
                 categoriaList.add(categoria);
             }
@@ -89,6 +102,7 @@ public class CategoriaDAO {
             ps.setInt(1, idCategoria);
             ResultSet rs = ps.executeQuery();
             List<Categoria> categoriaList = new ArrayList<>();
+            ld= new LettoreDAO();
             while (rs.next()) {
                 Categoria categoria = new Categoria();
                 categoria.setIdCategoria(rs.getInt(1));
@@ -98,7 +112,7 @@ public class CategoriaDAO {
                 Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
                 categoria.setCategoriaPadre(categoriaPadre);
 
-                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));
+                Lettore lettore = ld.doRetrieveById(rs.getInt(5));
                 categoria.setCreatore(lettore);
                 categoriaList.add(categoria);
             }
@@ -120,6 +134,7 @@ public class CategoriaDAO {
                             "  FROM  formulaonlinedb.categoria c WHERE categoriaPadre is null");
             ResultSet rs = ps.executeQuery();
             List<Categoria> categoriaList = new ArrayList<>();
+            ld= new LettoreDAO();
             while (rs.next()) {
                 Categoria categoria = new Categoria();
                 categoria.setIdCategoria(rs.getInt(1));
@@ -129,7 +144,8 @@ public class CategoriaDAO {
                 Categoria categoriaPadre = doRetrieveById(rs.getInt(4));
                 categoria.setCategoriaPadre(categoriaPadre);
 
-                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));
+                ld= new LettoreDAO();
+                Lettore lettore = ld.doRetrieveById(rs.getInt(5));
                 categoria.setCreatore(lettore);
                 categoriaList.add(categoria);
             }
@@ -140,6 +156,12 @@ public class CategoriaDAO {
         }
     }
 
+    /**
+     * Metodo per salvare una nuova categoria nel database
+     * NON UTILIZZATA
+     * @param categoria
+     * @return
+     */
     public Categoria doSave(Categoria categoria) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -167,6 +189,14 @@ public class CategoriaDAO {
         }
     }
 
+    /**
+     * Metodo per salvare una nuova categoria nel database
+     * @param nome della nuova categoria
+     * @param descrizione della categoria
+     * @param categoriaPadre id della categoria a cui dovrà appartenere, 0 se non appartiene a nessuna
+     * @param creatore id del lettore che l'ha creata
+     * @return la categoria appena creata
+     */
     public Categoria doSave(String nome, String descrizione, int categoriaPadre, int creatore) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -228,20 +258,18 @@ public class CategoriaDAO {
     }
 
     /**
-     * assegna alle categorie individuate da categoria padre la categoria "senza categoria"
-     * @param idCategoriaPadre
+     * Metodo che sposta le sottocategorie di una categoria in "senza categoria"
+     * @param idCategoriaPadre id della categoria da cui spostare le sottocategorie
      */
     public void doSetDefaultCategoriaPadre(int idCategoriaPadre) {
 
-        Categoria no_categoria = doRetrieveById(1) ;
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     " UPDATE formulaonlinedb.categoria "+
-                            " SET categoriaPadre = ? " +
+                            " SET categoriaPadre = 1 " +
                             "  WHERE categoriaPadre=? ");
 
-            ps.setInt(1, no_categoria.getIdCategoria());
-            ps.setInt(2, idCategoriaPadre);
+            ps.setInt(1, idCategoriaPadre);
             ps.executeUpdate();
 
         }catch (SQLException e) {
@@ -250,8 +278,8 @@ public class CategoriaDAO {
     }
 
     /**
-     *  elimina la categoira selezionata e le sottocategorie
-     * @param idCategoria
+     *  elimina la categoria selezionata e le sottocategorie
+     * @param idCategoria id della ca
      */
     public void doDelete(int idCategoria){
 
@@ -268,19 +296,23 @@ public class CategoriaDAO {
     }
 
     /**
-     * elimina la categoira selezionata e assegna alle sottocategorie "senza categoria padre"
-     * @param idCategoria
+     * elimina la categoria selezionata e assegna alle sottocategorie "senza categoria" come categoria padre
+     * @param idCategoria id della categoria da eliminare, l'id non può essere relativo alla categoria
+     *                    "senza categoria"
      */
     public void doDeleteAlternativo(int idCategoria){
 
-        doSetDefaultCategoriaPadre(idCategoria);
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM formulaonlinedb.categoria WHERE idCategoria=?");
-            ps.setInt(1, idCategoria);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if(idCategoria!=1){
+            doSetDefaultCategoriaPadre(idCategoria);
+            try (Connection con = ConPool.getConnection()) {
+                /*elimina la categoria scelta*/
+                PreparedStatement ps = con.prepareStatement(
+                        "DELETE FROM formulaonlinedb.categoria WHERE idCategoria=?");
+                ps.setInt(1, idCategoria);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }

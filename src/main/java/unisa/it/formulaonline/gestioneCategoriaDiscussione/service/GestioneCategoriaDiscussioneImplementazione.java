@@ -46,7 +46,6 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
      */
     @Override
     public void eliminaCategoria(int idCategoria) {
-
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         categoriaDAO.doDeleteAlternativo(idCategoria);
     }
@@ -77,6 +76,9 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
         return categoriaDAO.doRetrieveByPadre(idCategoria);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Categoria> ottieniTutteCategorie() {
         CategoriaDAO cd = new CategoriaDAO();

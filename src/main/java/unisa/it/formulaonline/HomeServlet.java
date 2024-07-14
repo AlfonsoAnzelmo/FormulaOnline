@@ -15,6 +15,10 @@ import unisa.it.formulaonline.model.entity.Discussione;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet per reindirizzare e per mostrare correttamente la pagina index.jsp, con categorie e
+ * discussioni principali
+ */
 @WebServlet(urlPatterns = {"", "/home"})
 public class HomeServlet extends HttpServlet {
     @Override

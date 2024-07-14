@@ -14,6 +14,7 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.io.IOException;
 /**
  * Servlet per visualizzare il profilo di un utente
+ * NON IMPLEMENTATO
  */
 @WebServlet("/lettore")
 public class ProfiloServlet extends HttpServlet {

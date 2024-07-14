@@ -14,6 +14,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet che riporta alla pagina di modifica di una categoria
+ */
 @WebServlet("/modificaCategoria")
 public class ModificaCategoriaPageServlet extends HttpServlet {
     @Override

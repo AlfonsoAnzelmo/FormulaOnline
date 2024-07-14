@@ -8,6 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+/**
+ * Servlet per effettuare il logout dal sistema per i lettori
+ */
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
     @Override

@@ -13,6 +13,9 @@ import java.io.IOException;
 
 import static unisa.it.formulaonline.utility.PassHash.PasswordHasher;
 
+/**
+ * Servlet per il salvataggio delle modifiche ad un lettore
+ */
 @WebServlet("/aggiornaLettore")
 public class AggiornaLettoreServlet extends HttpServlet {
 

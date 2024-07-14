@@ -21,14 +21,11 @@ public class RegistrazioneServlet extends HttpServlet {
 
         String dest;
         String email=req.getParameter("email");
-//        String hash=PasswordHasher(req.getParameter("password")); //se utilizziamo gli hash
         String password =  req.getParameter("password");
         String nickname =  req.getParameter("nickname");
+        String scuderia = req.getParameter("scuderia");
         //controllo sulle precondizioni delle credenziali
-        if ((5<=email.length() && (email.length()) <= 50)
-                && ((8 <= password.length())) && (password.length() <= 32)
-                && (5 <= nickname.length() && nickname.length() <= 30)){
-            String scuderia = req.getParameter("scuderia");
+        if (email!=null && password!=null && nickname!=null && scuderia!=null){
             RegistrazioneService rs = new RegistrazioneServiceImpl();
             Lettore l = rs.registraLettore(email, password, nickname, scuderia);
             //se l'utente è stato registrato con successo
@@ -39,9 +36,10 @@ public class RegistrazioneServlet extends HttpServlet {
                 resp.sendRedirect(dest);
             }
         }
-        //se le credenziali non sono valide, ritorna alla pagina di registrazione
+        /*  se le credenziali non sono valide o la registrazione non è andata a buon fine
+            ritorna alla pagina di registrazione*/
         dest = "registrazione.jsp";
-        req.setAttribute("regErr", "Credenziali non valide");//metti caso
+        req.setAttribute("regErr", "Credenziali non valide");
         req.getRequestDispatcher(dest).forward(req, resp);
 
     }

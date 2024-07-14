@@ -10,6 +10,10 @@ import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneSer
 
 import java.io.IOException;
 
+/**
+ * Servlet per salvare le modifiche su un commento
+ * Non implementata
+ */
 @WebServlet("/aggiornaCommento")
 public class AggiornaCommentoServlet extends HttpServlet {
     @Override
@@ -27,7 +31,7 @@ public class AggiornaCommentoServlet extends HttpServlet {
             GestioneDiscussioneService ds = new GestioneDiscussioneImplementazione();
             int idCommento = Integer.parseInt(idStr);
             ds.modificaCommento(corpo, idCommento);
-            destinazione = getServletContext().getContextPath()+"/discussione?idDiscussione=" +idDisStr;
+            destinazione = getServletContext().getContextPath()+"/discussione?idDiscussione=" + idDisStr;
         }
         resp.sendRedirect(destinazione);
     }

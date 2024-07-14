@@ -73,6 +73,7 @@ CREATE TRIGGER aggiungi_commento
     update discussione d
     set d.numeroCommenti = d.numeroCommenti + 1
     where new.discussione = idDiscussione;
+
 CREATE TRIGGER rimuovi_commento
 	AFTER delete ON commento
 	FOR EACH ROW

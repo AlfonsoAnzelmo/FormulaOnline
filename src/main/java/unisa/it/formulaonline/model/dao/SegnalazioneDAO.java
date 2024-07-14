@@ -7,6 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe per la gestione delle segnalazioni nel database.
+ */
 public class SegnalazioneDAO {
     private LettoreDAO ld;
     private CommentoDAO cd;
@@ -36,6 +39,11 @@ public class SegnalazioneDAO {
         }
     }
 
+    /**
+     * Metodo per recuperare una segnalazione partendo da suo identificativo
+     * @param id della segnalazione
+     * @return la segnalazione completa se è stata trovata, null altrimenti
+     */
     public Segnalazione doRetrieveById(int id){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -60,6 +68,10 @@ public class SegnalazioneDAO {
         }
     }
 
+    /**
+     * Metodo per recuperare tutte le segnalazioni presenti nel database
+     * @return la lista di tutte le segnalazioni, la lista sarà vuota se non ne esistono
+     */
     public ArrayList<Segnalazione> doRetrieveAll(){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -98,6 +110,13 @@ public class SegnalazioneDAO {
         return s;
     }
 
+    /**
+     * Metodo per salvare una nuova segnalazione nel database
+     * @param idLettore che ha inviato la segnalazione
+     * @param idCommento del commento segnalato
+     * @param corpo della segnalazione
+     * @return la segnalazione se la creazione è andata a buon fine
+     */
     public Segnalazione doSave(int idLettore, int idCommento, String corpo){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -123,6 +142,10 @@ public class SegnalazioneDAO {
         }
     }
 
+    /**
+     * Metodo per eliminare una segnalazione
+     * @param idSegnalazione della segnalazione da eliminare
+     */
     public void doDelete(int idSegnalazione){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(

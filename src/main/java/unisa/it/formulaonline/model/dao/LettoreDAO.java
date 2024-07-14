@@ -6,8 +6,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe per la gestione dei lettori nel database.
+ */
 public class LettoreDAO {
-
+    /**
+     * Metodo che restituisce un lettore partendo dal suo identificativo
+     * @param id relativo al lettore da recuperare
+     * @return il lettore se esiste, null altrimenti
+     */
     public Lettore doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -40,6 +47,12 @@ public class LettoreDAO {
         }
     }
 
+    /**
+     * Metodo per recuperare un lettore partendo da email e password, usato per il login
+     * @param email relativo al lettore
+     * @param password dell'account
+     * @return il lettore se le credenziali sono corrette, null altrimenti
+     */
     public Lettore doRetrieveByEmailPassword(String email, String password) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -73,14 +86,18 @@ public class LettoreDAO {
         }
     }
 
+    /**
+     * Resituisce tutti i lettori
+     * @return la lista di tutti i lettori, la lista sarà vuota se non esistono lettori
+     */
     public List<Lettore> doRetrieveAll() {
-        List<Lettore> lettoreList = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
                     con.prepareStatement("SELECT l.idLettore, l.email,l.pass, l.nickname, l.scuderiaPreferita, l.moderatore, l.dataFineSospensione" +
                             "  FROM formulaonlinedb.lettore l");
 
             ResultSet rs = ps.executeQuery();
+            List<Lettore> lettoreList = new ArrayList<>();
             while (rs.next()){
                 Lettore lettore = new Lettore();
                 lettore.setIdLettore(rs.getInt(1));
@@ -102,11 +119,17 @@ public class LettoreDAO {
         }
 
     }
+
+    /**
+     * Resituisce tutti i lettori che non sono moderatori
+     * @return la lista di tutti i lettori che non sono moderatori, la lista sarà vuota se non esistono lettori
+     */
     public List<Lettore> doRetrieveAllNonModeratore() {
         List<Lettore> lettoreList = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
-                    con.prepareStatement("SELECT l.idLettore, l.email,l.pass, l.nickname, l.scuderiaPreferita, l.moderatore, l.dataFineSospensione" +
+                    con.prepareStatement("SELECT l.idLettore, l.email,l.pass, l.nickname, " +
+                            "l.scuderiaPreferita, l.moderatore, l.dataFineSospensione" +
                             "  FROM formulaonlinedb.lettore l" +
                             " WHERE l.moderatore = 0");
 
@@ -161,6 +184,14 @@ public class LettoreDAO {
         }
     }
 
+    /**
+     * Salva un nuovo lettore nel database
+     * @param email del nuovo lettore
+     * @param password
+     * @param nickname
+     * @param scuderiaPreferita
+     * @return il lettore se l'inserimento è andato a buon fine
+     */
     public Lettore doSave(String email, String password, String nickname, String scuderiaPreferita) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -186,7 +217,16 @@ public class LettoreDAO {
         }
     }
 
-
+    /**
+     * Metodo per poter aggiornare tutti i parametri di un lettore
+     * @param idLettore
+     * @param email
+     * @param password
+     * @param nickname
+     * @param scuderiaPreferita
+     * @param moderatore
+     * @param dataFineSospensione
+     */
     public void doUpdate(int idLettore, String email, String password, String nickname, String scuderiaPreferita,
                          Boolean moderatore, java.util.Date dataFineSospensione) {
         try (Connection con = ConPool.getConnection()) {
@@ -216,6 +256,15 @@ public class LettoreDAO {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * metodo per aggiornare un lettore, limitato ai parametri che il lettore può modificare in autonomia
+     * @param idLettore
+     * @param email
+     * @param password
+     * @param nickname
+     * @param scuderiaPreferita
+     */
     public void doUpdate(int idLettore, String email, String password, String nickname, String scuderiaPreferita) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -238,6 +287,10 @@ public class LettoreDAO {
         }
     }
 
+    /**
+     * Metodo per eliminare un lettore partendo dal suo id
+     * @param idLettore da eliminare
+     */
     public void doDelete(int idLettore) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -253,7 +306,12 @@ public class LettoreDAO {
         }
     }
 
-    //per controllare che l'utente esista
+    /**
+     * Controlla che l'email ed il nickname non siano già utilizzati
+     * @param email
+     * @param nickname
+     * @return true se almeno uno dei due parametri è già in uso da un lettore, false altrimenti
+     */
     public boolean checkExists(String email, String nickname) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(

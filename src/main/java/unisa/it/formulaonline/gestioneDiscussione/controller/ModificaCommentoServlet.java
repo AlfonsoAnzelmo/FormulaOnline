@@ -13,6 +13,10 @@ import unisa.it.formulaonline.model.entity.Lettore;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Servlet che riporta alla pagina di modifica di un commento
+ * Non implementata
+ */
 @WebServlet("/modificaCommento")
 public class ModificaCommentoServlet extends HttpServlet {
     @Override

@@ -19,17 +19,9 @@ public class EliminaCategoriaDiscussione extends HttpServlet {
         super.doGet(req, resp);
     }
 
-    /**
-     * elimina una categoria
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
-     */
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String categoriaStr = req.getParameter("categoria");
+        String categoriaStr = req.getParameter("idCategoria");
         Lettore lettore = (Lettore) req.getSession().getAttribute("lettore");
         if(lettore!=null && categoriaStr!=null){
             int idCategoria = Integer.parseInt(categoriaStr);
@@ -37,8 +29,8 @@ public class EliminaCategoriaDiscussione extends HttpServlet {
                 GestioneCategoriaDiscussioneService gs = new GestioneCategoriaDiscussioneImplementazione();
                 gs.eliminaCategoria(idCategoria);
             }
-
         }
+        resp.sendRedirect("home");
 
     }
 }

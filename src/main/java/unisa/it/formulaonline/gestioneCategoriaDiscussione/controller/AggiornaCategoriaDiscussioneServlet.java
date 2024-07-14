@@ -11,6 +11,9 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
 
+/**
+ * Servlet per salvare le modifiche ad una categoria
+ */
 @WebServlet("/aggiornaCategoria")
 public class AggiornaCategoriaDiscussioneServlet extends HttpServlet {
     @Override
@@ -18,13 +21,6 @@ public class AggiornaCategoriaDiscussioneServlet extends HttpServlet {
         super.doGet(req, resp);
     }
 
-    /**
-     * modifica una categoria
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
-     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Lettore lettore = (Lettore) req.getSession().getAttribute("lettore");

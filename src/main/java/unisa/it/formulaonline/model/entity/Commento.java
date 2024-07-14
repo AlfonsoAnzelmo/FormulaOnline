@@ -3,6 +3,10 @@ package unisa.it.formulaonline.model.entity;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Questa classe rappresenta un commento, contiene un identificativo, il corpo, la data in cui è stato inviato,
+ * la discussione a cui appartiene ed il lettore che l'ha scritto
+ */
 public class Commento {
     private int idCommento;
     private Discussione discussione;

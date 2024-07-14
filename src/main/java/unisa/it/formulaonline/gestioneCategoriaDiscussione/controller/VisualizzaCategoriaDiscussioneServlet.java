@@ -16,6 +16,9 @@ import unisa.it.formulaonline.model.entity.Discussione;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet per visualizzare una categoria con le sottocategorie e le discussioni che contiene, dato il suo id
+ */
 @WebServlet("/categoria")
 public class VisualizzaCategoriaDiscussioneServlet extends HttpServlet {
     @Override

@@ -5,6 +5,8 @@ import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static unisa.it.formulaonline.utility.PassHash.PasswordHasher;
 
@@ -32,10 +34,21 @@ public class LettoreServiceImpl implements LettoreService {
     public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,
                                    String scuderiaPreferita, Boolean moderatore, Date dataFineSospensione) {
 
-        LettoreDAO lettoreDAO = new LettoreDAO();
+        LettoreDAO ld = new LettoreDAO();
+        Lettore lettore = null;
         password = PasswordHasher(password);
-        lettoreDAO.doUpdate(idLettore, email, password, nickname, scuderiaPreferita, moderatore, dataFineSospensione);
-        Lettore lettore = new Lettore(idLettore, email, password, nickname, scuderiaPreferita, moderatore, dataFineSospensione);
+        Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = emailPattern.matcher(email);
+        boolean emailValida = matcher.matches();
+        if (!ld.checkExists(email, nickname) && emailValida &&
+                (5 <= email.length() && (email.length()) <= 50)
+                && ((8 <= password.length())) && (password.length() <= 32)
+                && (5 <= nickname.length() && nickname.length() <= 30)
+                && scuderiaPreferita.length() <= 30) {
+            password = PasswordHasher(password);
+            ld.doUpdate(idLettore, email, password, nickname, scuderiaPreferita, moderatore, dataFineSospensione);
+            lettore = new Lettore(idLettore, email, password, nickname, scuderiaPreferita, moderatore, dataFineSospensione);
+        }
         return lettore;
     }
 
@@ -43,7 +56,8 @@ public class LettoreServiceImpl implements LettoreService {
      * {@inheritDoc}
      */
     @Override
-    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname, String scuderiaPreferita) {
+    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname, String
+            scuderiaPreferita) {
 
         LettoreDAO lettoreDAO = new LettoreDAO();
         password = PasswordHasher(password);
@@ -51,6 +65,7 @@ public class LettoreServiceImpl implements LettoreService {
         Lettore lettore = new Lettore(idLettore, email, password, nickname, scuderiaPreferita);
         return lettore;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -71,6 +86,9 @@ public class LettoreServiceImpl implements LettoreService {
         return lettoreDAO.doRetrieveById(idLettore);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Lettore> ottieniLettoriNonModeratori() {
         LettoreDAO lettoreDAO = new LettoreDAO();
