@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * Servlet per permettere la visualizzazione delle segnalazioni per i moderatori
  */
-//TODO link
 @WebServlet("/segnalazioni")
 public class VisualizzaSegnalazioniServlet extends HttpServlet {
     @Override

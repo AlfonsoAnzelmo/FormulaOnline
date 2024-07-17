@@ -39,19 +39,13 @@ public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneServ
         GestioneDiscussioneService discussioneService = new GestioneDiscussioneImplementazione();
 
         Segnalazione segnalazione = segnalazioneDAO.doRetrieveById(idSegnalazione);
-//        lettoreService.ottieniLettoreDaId(segnalazione.getAutore().getIdLettore());
         Lettore lettore = segnalazione.getCommento().getAutore();
         lettore.setDataFineSospensione(dataFineSospensione);
-//        lettoreService.aggiornaLettore(lettore.getIdLettore(), );
         lettoreDAO.doUpdate(lettore.getIdLettore(), lettore.getEmail(), lettore.getPassword(),
                 lettore.getNickname(), lettore.getScuderiaPref(), lettore.getModeratore(), dataFineSospensione);
         segnalazioneDAO.doDelete(segnalazione.getIdSegnalazione());
         discussioneService.rimuoviCommento(segnalazione.getCommento().getIdCommento(), segnalazione.getCommento().
                 getDiscussione().getIdDiscussione());
-        /*dovrebbe anche cancellare il commento mo che ci penso ed a cascata tutte le segnalazioni collegate
-        CommentoDAO cd = new CommentoDAO();
-        cd.doDelete(segnalazione.getCommento().getIdCommento());
-        */
     }
 
     /**

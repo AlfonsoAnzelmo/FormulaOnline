@@ -33,7 +33,8 @@ public interface LettoreService {
                                    String scuderiaPreferita, Boolean moderatore, Date dataFineSospensione);
 
     /**
-     * Modifica ed aggiorna i dati di un lettore già esistente
+     * Modifica ed aggiorna i dati di un lettore già esistente, con solo i campi che un lettore può modificare
+     * in autonomia
      * @param idLettore id del lettore da modificare
      * @param email il nuovo indirizzo email
      * @param password la nuova password
