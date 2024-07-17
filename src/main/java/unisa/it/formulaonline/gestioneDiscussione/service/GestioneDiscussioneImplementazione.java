@@ -17,9 +17,18 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
     @Override
     public Discussione creaDiscussione(String titolo, int idCategoria, int idLettore, String commento) {
         DiscussioneDAO discussioneDAO = new DiscussioneDAO();
-        Discussione discussione = discussioneDAO.doSave(titolo, idLettore, idCategoria);
-        aggiungiCommento(discussione.getIdDiscussione(), commento, idLettore);
+        Discussione discussione = null ;
+
+        if(commento != null && titolo != null && !commento.isEmpty() && commento.length() <= 500 &&
+                !titolo.isEmpty() && titolo.length() <= 50 && idCategoria != 0 ) {
+            discussione = discussioneDAO.doSave(titolo, idLettore, idCategoria);
+            aggiungiCommento(discussione.getIdDiscussione(), commento, idLettore);
+
+        }
+
         return discussione;
+
+
     }
 
     /**

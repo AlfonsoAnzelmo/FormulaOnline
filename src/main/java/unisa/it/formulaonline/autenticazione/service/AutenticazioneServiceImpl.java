@@ -17,6 +17,7 @@ public class AutenticazioneServiceImpl implements AutenticazioneService{
         LettoreDAO lettoreDAO = new LettoreDAO();
         password = PasswordHasher(password);
         Lettore l = lettoreDAO.doRetrieveByEmailPassword(email, password);
+
         /*Controlla se esiste*/
         if (l!=null){
             /*Se esiste controlla che non abbia mai ricevuto sospensioni*/
