@@ -11,7 +11,6 @@ import unisa.it.formulaonline.model.entity.Discussione;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * Metodo per salvare una nuova discussione

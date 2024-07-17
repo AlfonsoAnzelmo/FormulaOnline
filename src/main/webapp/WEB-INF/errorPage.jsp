@@ -4,7 +4,7 @@
   Date: 05/07/2024
   Time: 22:18
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Errore</title>

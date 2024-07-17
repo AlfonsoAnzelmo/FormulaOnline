@@ -1,7 +1,5 @@
 package unisa.it.formulaonline.gestioneSegnalazione.service;
 
-import unisa.it.formulaonline.autenticazione.service.LettoreService;
-import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
 import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneImplementazione;
 import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneService;
 import unisa.it.formulaonline.model.dao.LettoreDAO;

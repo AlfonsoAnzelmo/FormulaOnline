@@ -15,7 +15,7 @@ public interface LettoreService {
      * @return il lettore eletto, il relativo parametro "moderatore" sarà vero se è l'elezione è avvenuta con successo
      * falso altrimenti
      */
-    public Lettore nominaModeratore(int idLettore);
+    Lettore nominaModeratore(int idLettore);
 
     /**
      * Modifica ed aggiorna i dati di un lettore già esistente
@@ -29,7 +29,7 @@ public interface LettoreService {
      *                            se non ha mai ricevuto una sospensione
      * @return il lettore aggiornato oppure null se la modifica non è andata a buon fine
      */
-    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,
+    Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,
                                    String scuderiaPreferita, Boolean moderatore, Date dataFineSospensione);
 
     /**
@@ -42,14 +42,14 @@ public interface LettoreService {
      * @param scuderiaPreferita la nuova scuderia preferita
      * @return il lettore con i campi aggiornati
      */
-    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,String scuderiaPreferita);
+    Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,String scuderiaPreferita);
 
     /**
      * Elimina un lettore partendo dal suo codice
      * NON IMPLEMENTATO
       * @param idLettore id del lettore da eliminare
      */
-    public void eliminaLettore(int idLettore);
+    void eliminaLettore(int idLettore);
 
 
     /**
@@ -57,11 +57,11 @@ public interface LettoreService {
      * @param idLettore id del lettore da recuperare
      * @return il lettore richesto, null se non esiste
      */
-    public Lettore ottieniLettoreDaId(int idLettore);
+    Lettore ottieniLettoreDaId(int idLettore);
 
     /**
      * restituisce una lista dei lettori non moderatori
      * @return la lista di lettori che non sono moderatori
      */
-    public List<Lettore> ottieniLettoriNonModeratori();
+    List<Lettore> ottieniLettoriNonModeratori();
 }

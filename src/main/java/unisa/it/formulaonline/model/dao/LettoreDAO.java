@@ -320,10 +320,7 @@ public class LettoreDAO {
             ps.setString(2, nickname);
 
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return true;
-            }
-            return false;
+            return rs.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -1,9 +1,7 @@
 package unisa.it.formulaonline.gestioneDiscussione.service;
 
-import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Discussione;
-import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.util.List;
 

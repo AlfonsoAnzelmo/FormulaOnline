@@ -12,5 +12,5 @@ public interface AutenticazioneService {
     * @param password
     * @return Lettore se le condizioni precendenti sono state rispettate, {@code null} altrimenti
     */
-    public Lettore login(String email, String password);
+   Lettore login(String email, String password);
 }

@@ -1,9 +1,5 @@
 package unisa.it.formulaonline.model.dao;
 
-import unisa.it.formulaonline.autenticazione.service.LettoreService;
-import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
-import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneImplementazione;
-import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneService;
 import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Lettore;
 
@@ -14,7 +10,8 @@ import java.util.List;
 /**
  * Classe che rappresenta una categoria a cui appartengono le discussioni
  */
-public class CategoriaDAO {
+public class
+CategoriaDAO {
 
     private LettoreDAO ld;
 

@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import unisa.it.formulaonline.gestioneSegnalazione.service.GestioneSegnalazioneService;
 import unisa.it.formulaonline.gestioneSegnalazione.service.GestioneSegnalazioneServiceImpl;
-import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Lettore;
 import unisa.it.formulaonline.model.entity.Segnalazione;
 

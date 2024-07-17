@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import unisa.it.formulaonline.autenticazione.service.LettoreService;
 import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
-import unisa.it.formulaonline.model.dao.LettoreDAO;
 import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;

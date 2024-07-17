@@ -11,7 +11,6 @@ import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCateg
 import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Lettore;
 
-import javax.swing.plaf.metal.OceanTheme;
 import java.io.IOException;
 
 /**

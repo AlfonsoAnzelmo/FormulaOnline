@@ -1,6 +1,5 @@
 package unisa.it.formulaonline.model.dao;
 
-import unisa.it.formulaonline.model.entity.Lettore;
 import unisa.it.formulaonline.model.entity.Segnalazione;
 
 import java.sql.*;
@@ -172,21 +171,4 @@ public class SegnalazioneDAO {
             throw new RuntimeException(e);
         }
     }
-/*
-    public Boolean doExists(int lettore, int commento){
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT lettore, commento FROM formulaonlinedb.segnalazione " +
-                            "WHERE lettore=? AND commento=?");
-            ps.setInt(1, lettore);
-            ps.setInt(2, commento);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next())
-                return true;
-            return false;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-*/
 }

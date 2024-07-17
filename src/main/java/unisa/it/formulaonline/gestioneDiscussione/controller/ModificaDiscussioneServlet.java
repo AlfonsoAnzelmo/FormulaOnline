@@ -1,6 +1,5 @@
 package unisa.it.formulaonline.gestioneDiscussione.controller;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -44,15 +43,18 @@ public class ModificaDiscussioneServlet extends HttpServlet {
         String categoria = req.getParameter("categoria");
         String titolo = req.getParameter("titolo");
 
-        int idDiscussione = Integer.parseInt(discussione);
-        int idCategoria = Integer.parseInt(categoria);
+        if(discussione != null && categoria != null) {
+            int idDiscussione = Integer.parseInt(discussione);
+            int idCategoria = Integer.parseInt(categoria);
 
-        GestioneDiscussioneService gestioneDiscussioneService = new GestioneDiscussioneImplementazione();
-        gestioneDiscussioneService.modificaDiscussione(titolo, idCategoria, idDiscussione);
 
-        if(l!=null && l.getModeratore() && discussione!=null){
-            resp.sendRedirect("home");
+            if (l != null && l.getModeratore()) {
+                GestioneDiscussioneService gestioneDiscussioneService = new GestioneDiscussioneImplementazione();
+                gestioneDiscussioneService.modificaDiscussione(titolo, idCategoria, idDiscussione);
+
+            }
         }
+
         resp.sendRedirect("home");
     }
 }

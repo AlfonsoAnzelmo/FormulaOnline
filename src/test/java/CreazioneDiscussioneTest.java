@@ -1,4 +1,3 @@
-import com.oracle.wls.shaded.org.apache.xml.utils.res.XResources_cy;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +21,6 @@ public class CreazioneDiscussioneTest {
 
     @BeforeAll
     public static void init(){
-
         //un lettore che ha effettuato il login
         lettoreDAO = new LettoreDAO();
         Lettore lettore = lettoreDAO.doRetrieveById(1);

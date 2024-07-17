@@ -7,9 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneImplementazione;
 import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneService;
-import unisa.it.formulaonline.model.entity.Categoria;
-import unisa.it.formulaonline.model.entity.Discussione;
-import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.io.IOException;
 

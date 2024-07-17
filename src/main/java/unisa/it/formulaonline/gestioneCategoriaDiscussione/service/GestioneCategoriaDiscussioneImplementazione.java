@@ -1,10 +1,7 @@
 package unisa.it.formulaonline.gestioneCategoriaDiscussione.service;
 
-import unisa.it.formulaonline.autenticazione.service.LettoreService;
-import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
 import unisa.it.formulaonline.model.dao.CategoriaDAO;
 import unisa.it.formulaonline.model.entity.Categoria;
-import unisa.it.formulaonline.model.entity.Lettore;
 
 import java.util.List;
 

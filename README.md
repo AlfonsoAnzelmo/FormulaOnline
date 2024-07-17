@@ -1,4 +1,4 @@
-Progetto per l'esame di Ingegneria del Software
+Progetto per l'esame di ingegneria del Software
 
 Studenti:
 Anzelmo Alfonso

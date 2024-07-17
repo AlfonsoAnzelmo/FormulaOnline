@@ -1,9 +1,7 @@
 package unisa.it.formulaonline.gestioneDiscussione.service;
 
-import unisa.it.formulaonline.model.dao.CategoriaDAO;
 import unisa.it.formulaonline.model.dao.CommentoDAO;
 import unisa.it.formulaonline.model.dao.DiscussioneDAO;
-import unisa.it.formulaonline.model.entity.Categoria;
 import unisa.it.formulaonline.model.entity.Commento;
 import unisa.it.formulaonline.model.entity.Discussione;
 
