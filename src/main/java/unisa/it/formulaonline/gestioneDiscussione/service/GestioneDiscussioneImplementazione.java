@@ -35,7 +35,11 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
     @Override
     public Discussione modificaDiscussione(String titolo, int nuovaCategoria, int idDiscussione) {
         DiscussioneDAO discussioneDAO = new DiscussioneDAO();
-        return discussioneDAO.doUpdate(idDiscussione, titolo, nuovaCategoria);
+        if(titolo != null && !titolo.isEmpty() && titolo.length() <= 50 && nuovaCategoria != 0 ) {
+            return discussioneDAO.doUpdate(idDiscussione, titolo, nuovaCategoria);
+
+        }
+        return null;
     }
 
     /**
@@ -81,8 +85,9 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
     @Override
     public Commento aggiungiCommento(int idDiscussione, String corpo, int idAutore) {
         CommentoDAO commentoDAO = new CommentoDAO();
-        Commento commento = commentoDAO.doSave(idDiscussione, idAutore, corpo);
-        return commento;
+        if(corpo != null && corpo.length() > 0 && corpo.length() <= 500)
+            return commentoDAO.doSave(idDiscussione, idAutore, corpo);
+        return null;
     }
 
     /**
@@ -92,9 +97,13 @@ public class GestioneDiscussioneImplementazione implements GestioneDiscussioneSe
     public Commento modificaCommento(String corpo, int idCommento) {
         CommentoDAO commentoDAO = new CommentoDAO();
 
-        Commento commento = commentoDAO.doRetrieveById(idCommento);
-        commento.setCorpo(corpo);
-        return commentoDAO.doUpdate(commento, idCommento);
+        if(corpo != null && corpo.length() > 0 && corpo.length() <= 500) {
+            Commento commento = commentoDAO.doRetrieveById(idCommento);
+            commento.setCorpo(corpo);
+            return commentoDAO.doUpdate(commento, idCommento);
+        }
+        return null;
+
     }
 
     /**

@@ -21,9 +21,12 @@ public class LettoreServiceImpl implements LettoreService {
         LettoreDAO lettoreDAO = new LettoreDAO();
 
         Lettore lettore = lettoreDAO.doRetrieveById(idLettore);
-        lettoreDAO.doUpdate(lettore.getIdLettore(), lettore.getEmail(), lettore.getPassword(),
-                lettore.getNickname(), lettore.getScuderiaPref(), Boolean.TRUE, lettore.getDataFineSospensione());
-        lettore.setModeratore(Boolean.TRUE);
+
+        if(lettore!=null) {
+            lettoreDAO.doUpdate(lettore.getIdLettore(), lettore.getEmail(), lettore.getPassword(),
+                    lettore.getNickname(), lettore.getScuderiaPref(), Boolean.TRUE, lettore.getDataFineSospensione());
+            lettore.setModeratore(Boolean.TRUE);
+        }
         return lettore;
     }
 

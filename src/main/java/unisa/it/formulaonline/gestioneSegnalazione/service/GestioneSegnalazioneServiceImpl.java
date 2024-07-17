@@ -11,7 +11,7 @@ import unisa.it.formulaonline.model.entity.Segnalazione;
 import java.sql.Date;
 import java.util.List;
 
-public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneService{
+public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneService {
 
     /**
      * {@inheritDoc}
@@ -19,12 +19,15 @@ public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneServ
     @Override
     public Segnalazione creaSegnalazione(int idCommento, int idAutore, String corpo) {
         SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
-        GestioneDiscussioneService discussioneService = new GestioneDiscussioneImplementazione();
+        if (corpo.length() > 5 && corpo.length() <= 250 && idCommento != 0) {
+            GestioneDiscussioneService discussioneService = new GestioneDiscussioneImplementazione();
 
-        Segnalazione s = segnalazioneDAO.doSave(idAutore, idCommento, corpo);
-        Commento c = discussioneService.ottieniCommentoDaId(idCommento);
-        s.setCommento(c);
-        return s;
+            Segnalazione s = segnalazioneDAO.doSave(idAutore, idCommento, corpo);
+            Commento c = discussioneService.ottieniCommentoDaId(idCommento);
+            s.setCommento(c);
+            return s;
+        }
+        return null;
     }
 
     /**
@@ -66,7 +69,7 @@ public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneServ
         return segnalazioneDAO.doRetrieveAll();
     }
 
-    public Segnalazione ottieniSegnalazioneDaId(int idSegnalazione){
+    public Segnalazione ottieniSegnalazioneDaId(int idSegnalazione) {
         SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
 
         return segnalazioneDAO.doRetrieveById(idSegnalazione);

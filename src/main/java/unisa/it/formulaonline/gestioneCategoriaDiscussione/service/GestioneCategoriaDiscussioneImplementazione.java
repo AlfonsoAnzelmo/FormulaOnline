@@ -12,7 +12,12 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
     @Override
     public Categoria creaCategoriaDiscussione(String nome, String descrizione, int categoriaPadreId, int creatore) {
         CategoriaDAO categoriaDAO = new CategoriaDAO();
-        return categoriaDAO.doSave(nome, descrizione, categoriaPadreId, creatore);
+
+        if (creatore != 0 && nome != null && descrizione != null && categoriaPadreId != 0 &&
+                nome.length() >= 5 && nome.length() <= 50 && descrizione.length() <= 300)
+            return categoriaDAO.doSave(nome, descrizione, categoriaPadreId, creatore);
+
+        return null;
     }
 
     /**
@@ -23,18 +28,18 @@ public class GestioneCategoriaDiscussioneImplementazione implements GestioneCate
         CategoriaDAO categoriaDAO = new CategoriaDAO();
 
         Categoria categoria = categoriaDAO.doRetrieveById(idCategoria) ;
-        categoria.setNome(nome);
-        categoria.setDescrizione(descrizione);
-        /*Se è maggiore di 0 allora è relativa ad una categoria esistente*/
-        if(categoriaPadreId>0){
-            Categoria categoriaPadre = categoriaDAO.doRetrieveById(categoriaPadreId) ;
-            categoria.setCategoriaPadre(categoriaPadre);
-        }
-        else {
-            categoria.setCategoriaPadre(null);
-        }
 
-        return categoriaDAO.doUpdate(categoria, idCategoria);
+        if ( nome != null && descrizione != null && categoriaPadreId != 0 &&
+                nome.length() >= 5 && nome.length() <= 50 && descrizione.length() <= 300) {
+            categoria.setNome(nome);
+            categoria.setDescrizione(descrizione);
+
+            Categoria categoriaPadre = categoriaDAO.doRetrieveById(categoriaPadreId);
+            categoria.setCategoriaPadre(categoriaPadre);
+
+            return categoriaDAO.doUpdate(categoria, idCategoria);
+        }
+        return null;
 
     }
 
