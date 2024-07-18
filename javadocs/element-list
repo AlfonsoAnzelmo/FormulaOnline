@@ -1,0 +1,17 @@
+unnamed package
+unisa.it.formulaonline
+unisa.it.formulaonline.autenticazione.controller
+unisa.it.formulaonline.autenticazione.service
+unisa.it.formulaonline.gestioneCategoriaDiscussione.controller
+unisa.it.formulaonline.gestioneCategoriaDiscussione.service
+unisa.it.formulaonline.gestioneDiscussione.controller
+unisa.it.formulaonline.gestioneDiscussione.service
+unisa.it.formulaonline.gestioneSegnalazione.controller
+unisa.it.formulaonline.gestioneSegnalazione.service
+unisa.it.formulaonline.model.dao
+unisa.it.formulaonline.model.entity
+unisa.it.formulaonline.registrazione.controller
+unisa.it.formulaonline.registrazione.service
+unisa.it.formulaonline.ricerca.controller
+unisa.it.formulaonline.ricerca.service
+unisa.it.formulaonline.utility
