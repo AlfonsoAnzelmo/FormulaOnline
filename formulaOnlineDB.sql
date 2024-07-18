@@ -12,6 +12,8 @@ create table lettore(
     dataFineSospensione date,
     moderatore tinyint not null default false
 );
+INSERT INTO lettore values
+(1, 'admin@email.com', sha1('password'), 'admin', 'Nessuna', null, true);
 
 create table categoria (
     idCategoria int auto_increment primary key,
@@ -24,6 +26,8 @@ create table categoria (
 		-- on delete set default
 		on update cascade
 );
+INSERT INTO categoria values
+(1, 'Nessuna', 'Discussioni senza una categoria', null, 1);
 
 create table discussione(
 	idDiscussione int auto_increment primary key,
