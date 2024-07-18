@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegistrazioneServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.registrazione.service</a> &gt; <span class="el_source">RegistrazioneServiceImpl.java</span></div><h1>RegistrazioneServiceImpl.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.registrazione.service;
+
+import unisa.it.formulaonline.model.dao.LettoreDAO;
+import unisa.it.formulaonline.model.entity.Lettore;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static unisa.it.formulaonline.utility.PassHash.PasswordHasher;
+
+<span class="fc" id="L10">public class RegistrazioneServiceImpl implements RegistrazioneService{</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Lettore registraLettore(String email, String password, String nickname, String scuderiaPreferita) {
+<span class="fc" id="L17">        LettoreDAO ld = new LettoreDAO();</span>
+<span class="fc" id="L18">        Lettore lettore = null;</span>
+<span class="fc" id="L19">        Pattern emailPattern = Pattern.compile(&quot;^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$&quot;, Pattern.CASE_INSENSITIVE);</span>
+<span class="pc bpc" id="L20" title="3 of 8 branches missed.">        if(email!=null &amp;&amp; password!=null &amp;&amp; nickname!=null &amp;&amp; scuderiaPreferita!=null){</span>
+<span class="fc" id="L21">            Matcher matcher = emailPattern.matcher(email);</span>
+<span class="fc" id="L22">            boolean emailValida = matcher.matches();</span>
+<span class="pc bpc" id="L23" title="1 of 4 branches missed.">            if (!ld.checkExists(email, nickname) &amp;&amp; emailValida &amp;&amp;</span>
+<span class="pc bpc" id="L24" title="1 of 4 branches missed.">                    (5&lt;=email.length() &amp;&amp; (email.length()) &lt;= 50)</span>
+<span class="fc bfc" id="L25" title="All 4 branches covered.">                    &amp;&amp; ((8 &lt;= password.length())) &amp;&amp; (password.length() &lt;= 32)</span>
+<span class="fc bfc" id="L26" title="All 4 branches covered.">                    &amp;&amp; (5 &lt;= nickname.length() &amp;&amp; nickname.length() &lt;= 30)</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">                    &amp;&amp; scuderiaPreferita.length()&lt;=30){</span>
+<span class="fc" id="L28">                password = PasswordHasher(password);</span>
+<span class="fc" id="L29">                lettore = ld.doSave(email, password, nickname, scuderiaPreferita);</span>
+            }
+        }
+<span class="fc" id="L32">        return lettore;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

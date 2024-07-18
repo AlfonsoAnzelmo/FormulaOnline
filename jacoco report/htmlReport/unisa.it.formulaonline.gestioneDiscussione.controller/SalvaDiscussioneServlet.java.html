@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SalvaDiscussioneServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.gestioneDiscussione.controller</a> &gt; <span class="el_source">SalvaDiscussioneServlet.java</span></div><h1>SalvaDiscussioneServlet.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.gestioneDiscussione.controller;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneImplementazione;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneService;
+import unisa.it.formulaonline.model.entity.Discussione;
+import unisa.it.formulaonline.model.entity.Lettore;
+
+import java.io.IOException;
+import java.util.Date;
+
+/**
+ * Metodo per salvare una nuova discussione
+ */
+@WebServlet(&quot;/salvaDiscussione&quot;)
+<span class="nc" id="L20">public class SalvaDiscussioneServlet extends HttpServlet {</span>
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L23">        super.doGet(req, resp);</span>
+<span class="nc" id="L24">    }</span>
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L28">        String titolo = req.getParameter(&quot;titolo&quot;);</span>
+<span class="nc" id="L29">        String categoria = req.getParameter(&quot;idCategoria&quot;);</span>
+<span class="nc" id="L30">        String corpo = req.getParameter(&quot;corpo&quot;);</span>
+<span class="nc" id="L31">        String destinazione = &quot;login.jsp&quot;;</span>
+<span class="nc" id="L32">        Lettore l = (Lettore) req.getSession().getAttribute(&quot;lettore&quot;);</span>
+        /*Controlla se tutti i parametri necessari siano stati passati*/
+<span class="nc bnc" id="L34" title="All 8 branches missed.">        if(titolo!=null &amp;&amp; categoria !=null &amp;&amp; corpo!=null &amp;&amp; l!=null){</span>
+<span class="nc bnc" id="L35" title="All 4 branches missed.">            if(!titolo.isEmpty() &amp;&amp; !corpo.isEmpty()){</span>
+<span class="nc" id="L36">                int idCategoria = Integer.parseInt(categoria);</span>
+<span class="nc" id="L37">                GestioneDiscussioneService ds = new GestioneDiscussioneImplementazione();</span>
+<span class="nc" id="L38">                Discussione discussione = ds.creaDiscussione(titolo, idCategoria, l.getIdLettore(), corpo);</span>
+<span class="nc" id="L39">                destinazione = getServletContext().getContextPath()+&quot;/discussione?idDiscussione=&quot; +discussione.getIdDiscussione();</span>
+            }
+        }
+        /*redirect alla pagina di login oppure la pagine della discussione appena creata*/
+<span class="nc" id="L43">        resp.sendRedirect(destinazione);</span>
+<span class="nc" id="L44">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

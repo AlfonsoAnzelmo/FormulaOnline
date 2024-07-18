@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Segnalazione.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.model.entity</a> &gt; <span class="el_source">Segnalazione.java</span></div><h1>Segnalazione.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.model.entity;
+
+/**
+ * Questa classe rappresenta una segnalazione. Contiene un'identificativo, il commento a cui si riferisce,
+ * l'autore che l'ha complilata e la motivazione
+ */
+public class Segnalazione {
+    private int idSegnalazione;
+    private Commento commento;
+    private Lettore autore;
+    private String corpo;
+
+<span class="nc" id="L13">    public Segnalazione() {</span>
+<span class="nc" id="L14">    }</span>
+
+<span class="nc" id="L16">    public Segnalazione(int idSegnalazione) {</span>
+<span class="nc" id="L17">        this.idSegnalazione = idSegnalazione;</span>
+<span class="nc" id="L18">    }</span>
+
+<span class="nc" id="L20">    public Segnalazione(Commento commento, Lettore autore, String corpo) {</span>
+<span class="nc" id="L21">        this.commento = commento;</span>
+<span class="nc" id="L22">        this.autore = autore;</span>
+<span class="nc" id="L23">        this.corpo = corpo;</span>
+<span class="nc" id="L24">    }</span>
+
+<span class="nc" id="L26">    public Segnalazione(int idSegnalazione, Commento commento, Lettore autore, String corpo) {</span>
+<span class="nc" id="L27">        this.idSegnalazione = idSegnalazione;</span>
+<span class="nc" id="L28">        this.commento = commento;</span>
+<span class="nc" id="L29">        this.autore = autore;</span>
+<span class="nc" id="L30">        this.corpo = corpo;</span>
+<span class="nc" id="L31">    }</span>
+
+    public Commento getCommento() {
+<span class="nc" id="L34">        return commento;</span>
+    }
+
+    public void setCommento(Commento commento) {
+<span class="nc" id="L38">        this.commento = commento;</span>
+<span class="nc" id="L39">    }</span>
+
+    public Lettore getAutore() {
+<span class="nc" id="L42">        return autore;</span>
+    }
+
+    public void setAutore(Lettore autore) {
+<span class="nc" id="L46">        this.autore = autore;</span>
+<span class="nc" id="L47">    }</span>
+
+    public String getCorpo() {
+<span class="nc" id="L50">        return corpo;</span>
+    }
+
+    public void setCorpo(String corpo) {
+<span class="nc" id="L54">        this.corpo = corpo;</span>
+<span class="nc" id="L55">    }</span>
+
+    public int getIdSegnalazione() {
+<span class="nc" id="L58">        return idSegnalazione;</span>
+    }
+
+    public void setIdSegnalazione(int idSegnalazione) {
+<span class="nc" id="L62">        this.idSegnalazione = idSegnalazione;</span>
+<span class="nc" id="L63">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PassHash.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.utility</a> &gt; <span class="el_source">PassHash.java</span></div><h1>PassHash.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.utility;
+
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+/**
+ * Classe di supporto per la funzione hash utilizzata per la password
+ */
+<span class="nc" id="L11">public final class PassHash {</span>
+    /**
+     * Funzione per effettuare l'hash della password con l'algoritmo sha-1
+     * @param pass la password da criptare
+     * @return la password criptata
+     */
+    public static String PasswordHasher(String pass) {
+        try {
+<span class="fc" id="L19">            MessageDigest digest =</span>
+<span class="fc" id="L20">                    MessageDigest.getInstance(&quot;SHA-1&quot;);</span>
+<span class="fc" id="L21">            digest.reset();</span>
+<span class="fc" id="L22">            digest.update(pass.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L23">            return String.format(&quot;%040x&quot;, new</span>
+<span class="fc" id="L24">                    BigInteger(1, digest.digest()));</span>
+<span class="nc" id="L25">        } catch (</span>
+                NoSuchAlgorithmException e) {
+<span class="nc" id="L27">            throw new RuntimeException(e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

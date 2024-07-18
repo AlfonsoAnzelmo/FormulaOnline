@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiscussioneDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.model.dao</a> &gt; <span class="el_source">DiscussioneDAO.java</span></div><h1>DiscussioneDAO.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.model.dao;
+
+import unisa.it.formulaonline.model.entity.Categoria;
+import unisa.it.formulaonline.model.entity.Commento;
+import unisa.it.formulaonline.model.entity.Discussione;
+import unisa.it.formulaonline.model.entity.Lettore;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Classe per la gestione delle discussioni nel database.
+ */
+<span class="fc" id="L15">public class DiscussioneDAO {</span>
+    private CategoriaDAO categoriaDAO;
+    private LettoreDAO lettoreDAO;
+
+    /**
+     * Metodo per ottenere una discussione partendo dal suo identificativo
+     * @param id della discussione
+     * @return la discussione relativa all'id se esiste, altrimenti null
+     */
+    public Discussione doRetrieveById(int id) {
+<span class="fc" id="L25">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="fc" id="L26">            PreparedStatement ps =</span>
+<span class="fc" id="L27">                    con.prepareStatement(&quot;SELECT idDiscussione, numeroCommenti, categoria, titolo, autore&quot; +</span>
+                            &quot;  FROM formulaonlinedb.discussione c  &quot; +
+                            &quot; WHERE c.idDiscussione=?&quot;);
+<span class="fc" id="L30">            ps.setInt(1, id);</span>
+<span class="fc" id="L31">            ResultSet rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">            if (rs.next()) {</span>
+<span class="fc" id="L33">                Discussione discussione = new Discussione();</span>
+<span class="fc" id="L34">                discussione.setIdDiscussione(rs.getInt(1));</span>
+<span class="fc" id="L35">                discussione.setNumeroCommenti(rs.getInt(2));</span>
+<span class="fc" id="L36">                categoriaDAO = new CategoriaDAO();</span>
+<span class="fc" id="L37">                Categoria categoria = categoriaDAO.doRetrieveById(rs.getInt(3));</span>
+<span class="fc" id="L38">                discussione.setCategoria(categoria);</span>
+
+<span class="fc" id="L40">                discussione.setTitolo(rs.getString(4));</span>
+<span class="fc" id="L41">                lettoreDAO = new LettoreDAO();</span>
+<span class="fc" id="L42">                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));</span>
+<span class="fc" id="L43">                discussione.setLettore(lettore);</span>
+<span class="fc" id="L44">                return discussione;</span>
+            }
+<span class="nc" id="L46">            return null;</span>
+
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L49">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Restituisce tutte le discussioni
+     * @return una list delle discussioni, la lista sarà vuota se non esistono
+     */
+    public List&lt;Discussione&gt; doRetrieveAll() {
+<span class="nc" id="L58">        List&lt;Discussione&gt; discussioneList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L59">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L60">            PreparedStatement ps =</span>
+<span class="nc" id="L61">                    con.prepareStatement(&quot;SELECT idDiscussione, numeroCommenti, categoria, titolo, autore&quot; +</span>
+                            &quot;  FROM formulaonlinedb.discussione d&quot;);
+
+<span class="nc" id="L64">            ResultSet rs = ps.executeQuery();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L66">                Discussione discussione = new Discussione();</span>
+<span class="nc" id="L67">                discussione.setIdDiscussione(rs.getInt(1));</span>
+<span class="nc" id="L68">                discussione.setNumeroCommenti(rs.getInt(2));</span>
+<span class="nc" id="L69">                categoriaDAO = new CategoriaDAO();</span>
+<span class="nc" id="L70">                Categoria categoria = categoriaDAO.doRetrieveById(rs.getInt(3));</span>
+<span class="nc" id="L71">                discussione.setCategoria(categoria);</span>
+
+<span class="nc" id="L73">                discussione.setTitolo(rs.getString(4));</span>
+<span class="nc" id="L74">                lettoreDAO = new LettoreDAO();</span>
+
+<span class="nc" id="L76">                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));</span>
+<span class="nc" id="L77">                discussione.setLettore(lettore);</span>
+
+<span class="nc" id="L79">                discussioneList.add(discussione);</span>
+
+<span class="nc" id="L81">            }</span>
+<span class="nc" id="L82">            return discussioneList;</span>
+
+<span class="nc" id="L84">        } catch (SQLException e) {</span>
+<span class="nc" id="L85">            throw new RuntimeException(e);</span>
+        }
+
+    }
+
+    /**
+     * Metodo per recuperare tutte le discussioni contenute in una categoria
+     * @param idCategoria identificativo della categoria
+     * @return la lista delle discussioni, la lista sarà vuota se non esistono discussioni
+     */
+    public List&lt;Discussione&gt; doRetrieveByCategoria(int idCategoria) {
+<span class="nc" id="L96">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L97">            PreparedStatement ps =</span>
+<span class="nc" id="L98">                    con.prepareStatement(&quot;SELECT idDiscussione, numeroCommenti, categoria, titolo, autore&quot; +</span>
+                            &quot;  FROM formulaonlinedb.discussione d&quot; +
+                            &quot; WHERE d.categoria = ?&quot;);
+
+<span class="nc" id="L102">            ps.setInt(1,idCategoria);</span>
+<span class="nc" id="L103">            ResultSet rs = ps.executeQuery();</span>
+
+<span class="nc" id="L105">            List&lt;Discussione&gt; discussioneList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L107">                Discussione discussione = new Discussione();</span>
+<span class="nc" id="L108">                discussione.setIdDiscussione(rs.getInt(1));</span>
+<span class="nc" id="L109">                discussione.setNumeroCommenti(rs.getInt(2));</span>
+<span class="nc" id="L110">                categoriaDAO = new CategoriaDAO();</span>
+
+<span class="nc" id="L112">                Categoria categoria  = categoriaDAO.doRetrieveById(rs.getInt(3));</span>
+<span class="nc" id="L113">                discussione.setCategoria(categoria);</span>
+
+<span class="nc" id="L115">                discussione.setTitolo(rs.getString(4));</span>
+<span class="nc" id="L116">                lettoreDAO = new LettoreDAO();</span>
+
+<span class="nc" id="L118">                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));</span>
+<span class="nc" id="L119">                discussione.setLettore(lettore);</span>
+
+<span class="nc" id="L121">                discussioneList.add(discussione);</span>
+
+<span class="nc" id="L123">            }</span>
+<span class="nc" id="L124">            return discussioneList;</span>
+
+<span class="nc" id="L126">        } catch (SQLException e) {</span>
+<span class="nc" id="L127">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Salva una nuova discussione
+     * @param discussione
+     * @return
+     */
+    public Discussione doSave(Discussione discussione) {
+<span class="nc" id="L137">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L138">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;INSERT INTO formulaonlinedb.discussione (numeroCommenti, categoria, titolo, autore)&quot; +
+                            &quot;  VALUES(?,?,?,?)&quot;, Statement.RETURN_GENERATED_KEYS);
+
+<span class="nc" id="L142">            ps.setInt(1, discussione.getNumeroCommenti());</span>
+<span class="nc" id="L143">            ps.setInt(2, discussione.getCategoria().getIdCategoria());</span>
+<span class="nc" id="L144">            ps.setString(3,discussione.getTitolo());</span>
+<span class="nc" id="L145">            ps.setInt(4, discussione.getLettore().getIdLettore());</span>
+
+<span class="nc bnc" id="L147" title="All 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L148">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+<span class="nc" id="L150">            ResultSet rs = ps.getResultSet();</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">            if(rs.next()){</span>
+<span class="nc" id="L152">                discussione.setIdDiscussione(rs.getInt(&quot;idDiscussione&quot;));</span>
+<span class="nc" id="L153">                return discussione;</span>
+            }
+<span class="nc" id="L155">            return null;</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L157">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Salva una nuova discussione ed il suo primo commento
+     * @param discussione
+     * @param commento
+     * @return
+     */
+    public Discussione doSave(Discussione discussione, Commento commento) {
+<span class="nc" id="L168">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L169">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;INSERT INTO formulaonlinedb.commento (corpo, discussione, dataCommento, autore)&quot; +
+                            &quot;  VALUES(?,?,?,?)&quot;, Statement.RETURN_GENERATED_KEYS);
+
+<span class="nc" id="L173">            ps.setString(1, commento.getCorpo());</span>
+<span class="nc" id="L174">            ps.setInt(2, commento.getDiscussione().getIdDiscussione());</span>
+<span class="nc" id="L175">            ps.setDate(3, (Date) commento.getDataCommento());</span>
+<span class="nc" id="L176">            ps.setInt(4, commento.getAutore().getIdLettore());</span>
+
+<span class="nc bnc" id="L178" title="All 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L179">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+
+<span class="nc" id="L182">            ps = con.prepareStatement(</span>
+                    &quot;INSERT INTO formulaonlinedb.discussione (numeroCommenti, categoria, titolo, autore)&quot; +
+                            &quot;  VALUES(?,?,?,?)&quot;, Statement.RETURN_GENERATED_KEYS);
+
+<span class="nc" id="L186">            ps.setInt(1, discussione.getNumeroCommenti());</span>
+<span class="nc" id="L187">            ps.setInt(2, discussione.getCategoria().getIdCategoria());</span>
+<span class="nc" id="L188">            ps.setString(3,discussione.getTitolo());</span>
+<span class="nc" id="L189">            ps.setInt(4, discussione.getLettore().getIdLettore());</span>
+
+<span class="nc bnc" id="L191" title="All 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L192">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+<span class="nc" id="L194">            ResultSet rs = ps.getResultSet();</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">            if(rs.next()){</span>
+<span class="nc" id="L196">                discussione.setIdDiscussione(rs.getInt(&quot;idDiscussione&quot;));</span>
+<span class="nc" id="L197">                return discussione;</span>
+            }
+<span class="nc" id="L199">            return null;</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L201">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Salva una nuova discussione
+     * @param titolo titolo della nuova discussione
+     * @param idLettore id del lettore che l'ha creata
+     * @param idCategoria id della categoria in cui deve essere inserita
+     * @return l'oggetto discussione relativa se l'aggiunta è andata a buon fine, null altrimenti
+     */
+    public Discussione doSave(String titolo, int idLettore, int idCategoria){
+<span class="fc" id="L213">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="fc" id="L214">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;INSERT INTO formulaonlinedb.discussione (categoria, titolo, autore)&quot; +
+                            &quot;  VALUES(?,?,?)&quot;, Statement.RETURN_GENERATED_KEYS);
+
+<span class="fc" id="L218">            ps.setInt(1, idCategoria);</span>
+<span class="fc" id="L219">            ps.setString(2, titolo);</span>
+<span class="fc" id="L220">            ps.setInt(3, idLettore);</span>
+
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L223">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+<span class="fc" id="L225">            ResultSet rs = ps.getGeneratedKeys();</span>
+<span class="fc" id="L226">            rs.next();</span>
+<span class="fc" id="L227">            CategoriaDAO cd = new CategoriaDAO();</span>
+<span class="fc" id="L228">            LettoreDAO ld = new LettoreDAO();</span>
+<span class="fc" id="L229">            Discussione discussione= new Discussione(rs.getInt(1), 0,</span>
+<span class="fc" id="L230">                    cd.doRetrieveById(idCategoria),  titolo, ld.doRetrieveById(idLettore));</span>
+<span class="fc" id="L231">            return discussione;</span>
+<span class="nc" id="L232">        } catch (SQLException e) {</span>
+<span class="nc" id="L233">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Metodo per modificare le informazioni di una discussione
+     * @param idDiscussione id della discussione da modificare
+     * @param titolo nuovo titolo della discussione
+     * @param nuovaCategoria la categoria in cui spostarla
+     * @return la discussione con i campi aggiornati
+     */
+    public Discussione doUpdate(int idDiscussione, String titolo, int nuovaCategoria) {
+<span class="nc" id="L245">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L246">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot; UPDATE formulaonlinedb.discussione &quot;+
+                            &quot; SET categoria = ?, titolo = ?&quot; +
+                            &quot;  WHERE idDiscussione=? &quot;);
+
+<span class="nc" id="L251">            ps.setInt(1, nuovaCategoria);</span>
+<span class="nc" id="L252">            ps.setString(2, titolo);</span>
+<span class="nc" id="L253">            ps.setInt(3, idDiscussione);</span>
+<span class="nc" id="L254">            ps.executeUpdate();</span>
+<span class="nc" id="L255">            return doRetrieveById(idDiscussione);</span>
+<span class="nc" id="L256">        }catch (SQLException e) {</span>
+<span class="nc" id="L257">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Metodo per eliminare una discussione
+     * @param idDiscussione id della discussione da eliminare
+     */
+    public void doDelete(int idDiscussione) {
+<span class="fc" id="L266">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="fc" id="L267">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;DELETE FROM formulaonlinedb.discussione WHERE idDiscussione=?&quot;);
+<span class="fc" id="L269">            ps.setInt(1, idDiscussione);</span>
+<span class="fc" id="L270">            ps.executeUpdate();</span>
+<span class="nc" id="L271">        } catch (SQLException e) {</span>
+<span class="nc" id="L272">            throw new RuntimeException(e);</span>
+<span class="fc" id="L273">        }</span>
+<span class="fc" id="L274">    }</span>
+
+    /**
+     * Metodo che resituisce una lista di discussioni con titolo simile alla stringa inviata
+     * @param titolo titolo della discussione da ricercare
+     * @return la lista delle discussioni, la lista sarà vuota se non esistono discussioni con titoli simili
+     */
+    public List&lt;Discussione&gt; doRetrieveByTitolo(String titolo) {
+<span class="nc" id="L282">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L283">            titolo = &quot;%&quot; + titolo +&quot;%&quot;;</span>
+<span class="nc" id="L284">            PreparedStatement ps =</span>
+<span class="nc" id="L285">                    con.prepareStatement(&quot;SELECT idDiscussione, numeroCommenti, categoria, titolo, autore&quot; +</span>
+                            &quot;  FROM formulaonlinedb.discussione d  &quot; +
+                            &quot; WHERE d.titolo LIKE ?&quot;);
+<span class="nc" id="L288">            ps.setString(1, titolo);</span>
+<span class="nc" id="L289">            ResultSet rs = ps.executeQuery();</span>
+<span class="nc" id="L290">            List&lt;Discussione&gt; lista = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L292">                rs.getInt(1);</span>
+<span class="nc" id="L293">                Discussione discussione = new Discussione();</span>
+<span class="nc" id="L294">                discussione.setIdDiscussione(rs.getInt(1));</span>
+<span class="nc" id="L295">                discussione.setNumeroCommenti(rs.getInt(2));</span>
+<span class="nc" id="L296">                categoriaDAO = new CategoriaDAO();</span>
+<span class="nc" id="L297">                Categoria categoria = categoriaDAO.doRetrieveById(rs.getInt(3));</span>
+<span class="nc" id="L298">                discussione.setCategoria(categoria);</span>
+<span class="nc" id="L299">                discussione.setTitolo(rs.getString(4));</span>
+<span class="nc" id="L300">                lettoreDAO = new LettoreDAO();</span>
+<span class="nc" id="L301">                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));</span>
+<span class="nc" id="L302">                discussione.setLettore(lettore);</span>
+<span class="nc" id="L303">                lista.add(discussione);</span>
+<span class="nc" id="L304">            }</span>
+<span class="nc" id="L305">            return lista;</span>
+
+<span class="nc" id="L307">        } catch (SQLException e) {</span>
+<span class="nc" id="L308">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Restitutisce la lista delle ultime 5 discussioni che hanno ricevuto di commenti di recente
+     * @return la lista delle ultime 5 discussioni, dalla risposta più recente
+     */
+    public List&lt;Discussione&gt; doRetrieveRecenti() {
+<span class="nc" id="L317">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L318">            PreparedStatement ps =</span>
+<span class="nc" id="L319">                    con.prepareStatement(&quot;SELECT distinct d.idDiscussione, d.numeroCommenti, d.categoria, d.titolo, d.autore &quot; +</span>
+                            &quot;FROM formulaonlinedb.discussione d, formulaonlinedb.commento c &quot; +
+                            &quot;WHERE c.discussione = d.idDiscussione ORDER BY c.dataCommento LIMIT 5;&quot;);
+<span class="nc" id="L322">            ResultSet rs = ps.executeQuery();</span>
+<span class="nc" id="L323">            List&lt;Discussione&gt; lista = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L325">                rs.getInt(1);</span>
+<span class="nc" id="L326">                Discussione discussione = new Discussione();</span>
+<span class="nc" id="L327">                discussione.setIdDiscussione(rs.getInt(1));</span>
+<span class="nc" id="L328">                discussione.setNumeroCommenti(rs.getInt(2));</span>
+<span class="nc" id="L329">                categoriaDAO = new CategoriaDAO();</span>
+<span class="nc" id="L330">                Categoria categoria = categoriaDAO.doRetrieveById(rs.getInt(3));</span>
+<span class="nc" id="L331">                discussione.setCategoria(categoria);</span>
+<span class="nc" id="L332">                discussione.setTitolo(rs.getString(4));</span>
+<span class="nc" id="L333">                lettoreDAO = new LettoreDAO();</span>
+<span class="nc" id="L334">                Lettore lettore = lettoreDAO.doRetrieveById(rs.getInt(5));</span>
+<span class="nc" id="L335">                discussione.setLettore(lettore);</span>
+<span class="nc" id="L336">                lista.add(discussione);</span>
+<span class="nc" id="L337">            }</span>
+<span class="nc" id="L338">            return lista;</span>
+
+<span class="nc" id="L340">        } catch (SQLException e) {</span>
+<span class="nc" id="L341">            throw new RuntimeException(e);</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

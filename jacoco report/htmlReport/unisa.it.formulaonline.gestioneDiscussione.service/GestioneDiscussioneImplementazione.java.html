@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestioneDiscussioneImplementazione.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.gestioneDiscussione.service</a> &gt; <span class="el_source">GestioneDiscussioneImplementazione.java</span></div><h1>GestioneDiscussioneImplementazione.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.gestioneDiscussione.service;
+
+import unisa.it.formulaonline.model.dao.CategoriaDAO;
+import unisa.it.formulaonline.model.dao.CommentoDAO;
+import unisa.it.formulaonline.model.dao.DiscussioneDAO;
+import unisa.it.formulaonline.model.entity.Categoria;
+import unisa.it.formulaonline.model.entity.Commento;
+import unisa.it.formulaonline.model.entity.Discussione;
+
+import java.util.List;
+
+<span class="fc" id="L12">public class GestioneDiscussioneImplementazione implements GestioneDiscussioneService {</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Discussione creaDiscussione(String titolo, int idCategoria, int idLettore, String commento) {
+<span class="fc" id="L19">        DiscussioneDAO discussioneDAO = new DiscussioneDAO();</span>
+<span class="fc" id="L20">        Discussione discussione = null ;</span>
+
+<span class="pc bpc" id="L22" title="2 of 8 branches missed.">        if(commento != null &amp;&amp; titolo != null &amp;&amp; !commento.isEmpty() &amp;&amp; commento.length() &lt;= 500 &amp;&amp;</span>
+<span class="fc bfc" id="L23" title="All 6 branches covered.">                !titolo.isEmpty() &amp;&amp; titolo.length() &lt;= 50 &amp;&amp; idCategoria != 0 ) {</span>
+<span class="fc" id="L24">            discussione = discussioneDAO.doSave(titolo, idLettore, idCategoria);</span>
+<span class="fc" id="L25">            aggiungiCommento(discussione.getIdDiscussione(), commento, idLettore);</span>
+
+        }
+
+<span class="fc" id="L29">        return discussione;</span>
+
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Discussione modificaDiscussione(String titolo, int nuovaCategoria, int idDiscussione) {
+<span class="nc" id="L39">        DiscussioneDAO discussioneDAO = new DiscussioneDAO();</span>
+<span class="nc" id="L40">        return discussioneDAO.doUpdate(idDiscussione, titolo, nuovaCategoria);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void eliminaDiscussione(int idDiscussione) {
+<span class="nc" id="L48">        DiscussioneDAO discussioneDAO = new DiscussioneDAO();</span>
+<span class="nc" id="L49">        discussioneDAO.doDelete(idDiscussione);</span>
+<span class="nc" id="L50">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Discussione ottieniDiscussioneDaId(int idDiscussione) {
+
+<span class="nc" id="L58">        DiscussioneDAO discussioneDAO = new DiscussioneDAO();</span>
+<span class="nc" id="L59">        return discussioneDAO.doRetrieveById(idDiscussione) ;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List&lt;Discussione&gt; ottieniDiscussioniDaCategoria(int idCategoria) {
+<span class="nc" id="L67">        DiscussioneDAO discussioneDAO = new DiscussioneDAO();</span>
+<span class="nc" id="L68">        return discussioneDAO.doRetrieveByCategoria(idCategoria);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List&lt;Discussione&gt; ottieniDiscussioniPrincipali(){
+<span class="nc" id="L76">        DiscussioneDAO discussioneDAO = new DiscussioneDAO();</span>
+<span class="nc" id="L77">        return discussioneDAO.doRetrieveRecenti();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Commento aggiungiCommento(int idDiscussione, String corpo, int idAutore) {
+<span class="fc" id="L85">        CommentoDAO commentoDAO = new CommentoDAO();</span>
+<span class="fc" id="L86">        Commento commento = commentoDAO.doSave(idDiscussione, idAutore, corpo);</span>
+<span class="fc" id="L87">        return commento;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Commento modificaCommento(String corpo, int idCommento) {
+<span class="nc" id="L95">        CommentoDAO commentoDAO = new CommentoDAO();</span>
+
+<span class="nc" id="L97">        Commento commento = commentoDAO.doRetrieveById(idCommento);</span>
+<span class="nc" id="L98">        commento.setCorpo(corpo);</span>
+<span class="nc" id="L99">        return commentoDAO.doUpdate(commento, idCommento);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void rimuoviCommento(int idCommento, int idDiscussione) {
+<span class="nc" id="L107">        DiscussioneDAO discussioneDAO = new DiscussioneDAO();</span>
+<span class="nc" id="L108">        CommentoDAO commentoDAO = new CommentoDAO();</span>
+
+<span class="nc" id="L110">        Discussione discussione = discussioneDAO.doRetrieveById(idDiscussione);</span>
+<span class="nc" id="L111">        commentoDAO.doDelete(idCommento);</span>
+<span class="nc" id="L112">        discussione.setNumeroCommenti(discussione.getNumeroCommenti() - 1);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (discussione.getNumeroCommenti()&lt;=0){</span>
+<span class="nc" id="L114">            eliminaDiscussione(discussione.getIdDiscussione());</span>
+        }
+<span class="nc" id="L116">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    public Commento ottieniCommentoDaId(int idCommento){
+<span class="nc" id="L122">        CommentoDAO commentoDAO = new CommentoDAO();</span>
+<span class="nc" id="L123">        Commento commento = commentoDAO.doRetrieveById(idCommento);</span>
+<span class="nc" id="L124">        return commento;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public List&lt;Commento&gt; ottieniCommentiDaDiscussione(int idDiscussione){
+        List&lt;Commento&gt; commenti;
+<span class="nc" id="L132">        CommentoDAO commentoDAO = new CommentoDAO();</span>
+<span class="nc" id="L133">        commenti = commentoDAO.doRetrieveByDiscussione(idDiscussione);</span>
+<span class="nc" id="L134">        return commenti;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

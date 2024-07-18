@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SegnalazioneDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.model.dao</a> &gt; <span class="el_source">SegnalazioneDAO.java</span></div><h1>SegnalazioneDAO.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.model.dao;
+
+import unisa.it.formulaonline.model.entity.Lettore;
+import unisa.it.formulaonline.model.entity.Segnalazione;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Classe per la gestione delle segnalazioni nel database.
+ */
+<span class="nc" id="L13">public class SegnalazioneDAO {</span>
+    private LettoreDAO ld;
+    private CommentoDAO cd;
+
+    public List&lt;Segnalazione&gt; doRetrieveByLettore(int id){
+<span class="nc" id="L18">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L19">            ld = new LettoreDAO();</span>
+<span class="nc" id="L20">            cd = new CommentoDAO();</span>
+<span class="nc" id="L21">            PreparedStatement ps =</span>
+<span class="nc" id="L22">                    con.prepareStatement(&quot;SELECT idSegnalazione, lettore, commento, corpo &quot; +</span>
+                            &quot;FROM formulaonlinedb.segnalazione &quot; +
+                            &quot;WHERE lettore=?&quot;);
+<span class="nc" id="L25">            ps.setInt(1, id);</span>
+<span class="nc" id="L26">            ResultSet rs = ps.executeQuery();</span>
+<span class="nc" id="L27">            List&lt;Segnalazione&gt; listaS = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L29">                Segnalazione s = new Segnalazione();</span>
+<span class="nc" id="L30">                s.setIdSegnalazione(rs.getInt(1));</span>
+<span class="nc" id="L31">                s.setAutore(ld.doRetrieveById(rs.getInt(2)));</span>
+<span class="nc" id="L32">                s.setCommento(cd.doRetrieveById(rs.getInt(3)));</span>
+<span class="nc" id="L33">                s.setCorpo(rs.getString(4));</span>
+<span class="nc" id="L34">                listaS.add(s);</span>
+<span class="nc" id="L35">            }</span>
+<span class="nc" id="L36">            return listaS;</span>
+<span class="nc" id="L37">        } catch (SQLException e) {</span>
+<span class="nc" id="L38">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Metodo per recuperare una segnalazione partendo da suo identificativo
+     * @param id della segnalazione
+     * @return la segnalazione completa se è stata trovata, null altrimenti
+     */
+    public Segnalazione doRetrieveById(int id){
+<span class="nc" id="L48">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L49">            PreparedStatement ps =</span>
+<span class="nc" id="L50">                    con.prepareStatement(&quot;SELECT idSegnalazione, lettore, commento, corpo &quot; +</span>
+                            &quot;FROM formulaonlinedb.segnalazione &quot; +
+                            &quot;WHERE idSegnalazione=?&quot;);
+<span class="nc" id="L53">            ps.setInt(1, id);</span>
+<span class="nc" id="L54">            ResultSet rs = ps.executeQuery();</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">            if (rs.next()) {</span>
+<span class="nc" id="L56">                Segnalazione s = new Segnalazione();</span>
+<span class="nc" id="L57">                ld = new LettoreDAO();</span>
+<span class="nc" id="L58">                cd = new CommentoDAO();</span>
+<span class="nc" id="L59">                s.setIdSegnalazione(rs.getInt(1));</span>
+<span class="nc" id="L60">                s.setAutore(ld.doRetrieveById(rs.getInt(2)));</span>
+<span class="nc" id="L61">                s.setCommento(cd.doRetrieveById(rs.getInt(3)));</span>
+<span class="nc" id="L62">                s.setCorpo(rs.getString(4));</span>
+<span class="nc" id="L63">                return s;</span>
+            }
+<span class="nc" id="L65">            return null;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L67">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Metodo per recuperare tutte le segnalazioni presenti nel database
+     * @return la lista di tutte le segnalazioni, la lista sarà vuota se non ne esistono
+     */
+    public ArrayList&lt;Segnalazione&gt; doRetrieveAll(){
+<span class="nc" id="L76">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L77">            PreparedStatement ps =</span>
+<span class="nc" id="L78">                    con.prepareStatement(&quot;SELECT idSegnalazione, lettore, commento, corpo &quot; +</span>
+                            &quot;FROM formulaonlinedb.segnalazione&quot;);
+<span class="nc" id="L80">            ld = new LettoreDAO();</span>
+<span class="nc" id="L81">            cd = new CommentoDAO();</span>
+<span class="nc" id="L82">            ArrayList&lt;Segnalazione&gt; segnalazioni = new ArrayList&lt;&gt;();</span>
+            Segnalazione s;
+<span class="nc" id="L84">            ResultSet rs = ps.executeQuery();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L86">                s = new Segnalazione();</span>
+<span class="nc" id="L87">                s.setIdSegnalazione(rs.getInt(1));</span>
+<span class="nc" id="L88">                s.setAutore(ld.doRetrieveById(rs.getInt(2)));</span>
+<span class="nc" id="L89">                s.setCommento(cd.doRetrieveById(rs.getInt(3)));</span>
+<span class="nc" id="L90">                s.setCorpo(rs.getString(4));</span>
+<span class="nc" id="L91">                segnalazioni.add(s);</span>
+            }
+<span class="nc" id="L93">            return segnalazioni;</span>
+<span class="nc" id="L94">        } catch (SQLException e) {</span>
+<span class="nc" id="L95">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    public Segnalazione doSave(Segnalazione s){
+<span class="nc" id="L100">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L101">            PreparedStatement ps =</span>
+<span class="nc" id="L102">                    con.prepareStatement(&quot;INSERT INTO formulaonlinedb.segnalazione &quot; +</span>
+                            &quot;(idSegnalazione, lettore, commento, corpo) value(?,?,?,?)&quot;);
+<span class="nc bnc" id="L104" title="All 2 branches missed.">            if (ps.executeUpdate()!=1) {</span>
+<span class="nc" id="L105">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+<span class="nc" id="L107">        } catch (SQLException e) {</span>
+<span class="nc" id="L108">            throw new RuntimeException(e);</span>
+<span class="nc" id="L109">        }</span>
+<span class="nc" id="L110">        return s;</span>
+    }
+
+    /**
+     * Metodo per salvare una nuova segnalazione nel database
+     * @param idLettore che ha inviato la segnalazione
+     * @param idCommento del commento segnalato
+     * @param corpo della segnalazione
+     * @return la segnalazione se la creazione è andata a buon fine
+     */
+    public Segnalazione doSave(int idLettore, int idCommento, String corpo){
+<span class="nc" id="L121">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L122">            PreparedStatement ps =</span>
+<span class="nc" id="L123">                    con.prepareStatement(&quot;INSERT INTO formulaonlinedb.segnalazione &quot; +</span>
+                            &quot;(lettore, commento, corpo) values (?,?,?)&quot;,Statement.RETURN_GENERATED_KEYS);
+
+<span class="nc" id="L126">            ps.setInt(1, idLettore);</span>
+<span class="nc" id="L127">            ps.setInt(2, idCommento);</span>
+<span class="nc" id="L128">            ps.setString(  3, corpo);</span>
+
+<span class="nc bnc" id="L130" title="All 2 branches missed.">            if (ps.executeUpdate()!=1) {</span>
+<span class="nc" id="L131">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+
+<span class="nc" id="L134">            ResultSet rs = ps.getGeneratedKeys();</span>
+<span class="nc" id="L135">            Segnalazione s = new Segnalazione();</span>
+<span class="nc" id="L136">            rs.next();</span>
+<span class="nc" id="L137">            s.setIdSegnalazione(rs.getInt(1));</span>
+
+<span class="nc" id="L139">            return s;</span>
+<span class="nc" id="L140">        } catch (SQLException e) {</span>
+<span class="nc" id="L141">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Metodo per eliminare una segnalazione
+     * @param idSegnalazione della segnalazione da eliminare
+     */
+    public void doDelete(int idSegnalazione){
+<span class="nc" id="L150">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L151">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;DELETE FROM formulaonlinedb.segnalazione WHERE idSegnalazione=?&quot;);
+<span class="nc" id="L153">            ps.setInt(1, idSegnalazione);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L155">                throw new RuntimeException(&quot;DELETE error.&quot;);</span>
+            }
+<span class="nc" id="L157">        } catch (SQLException e) {</span>
+<span class="nc" id="L158">            throw new RuntimeException(e);</span>
+<span class="nc" id="L159">        }</span>
+
+<span class="nc" id="L161">    }</span>
+
+    public void doUpdate(Segnalazione s){
+<span class="nc" id="L164">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L165">            Statement st = con.createStatement();</span>
+<span class="nc" id="L166">            String query = &quot;update formulaonlinedb.segnalazione &quot; +</span>
+<span class="nc" id="L167">                    &quot;where idSegnalazione=&quot; + s.getIdSegnalazione() +</span>
+<span class="nc" id="L168">                    &quot; set lettore=&quot; + s.getAutore().getIdLettore() +</span>
+<span class="nc" id="L169">                    &quot;, commento=&quot; + s.getCommento().getIdCommento() + &quot;, corpo='&quot; + s.getCorpo() + &quot;'&quot;;</span>
+<span class="nc" id="L170">            st.executeUpdate(query);</span>
+<span class="nc" id="L171">        } catch (SQLException e) {</span>
+<span class="nc" id="L172">            throw new RuntimeException(e);</span>
+<span class="nc" id="L173">        }</span>
+<span class="nc" id="L174">    }</span>
+/*
+    public Boolean doExists(int lettore, int commento){
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement(&quot;SELECT lettore, commento FROM formulaonlinedb.segnalazione &quot; +
+                            &quot;WHERE lettore=? AND commento=?&quot;);
+            ps.setInt(1, lettore);
+            ps.setInt(2, commento);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return true;
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+*/
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

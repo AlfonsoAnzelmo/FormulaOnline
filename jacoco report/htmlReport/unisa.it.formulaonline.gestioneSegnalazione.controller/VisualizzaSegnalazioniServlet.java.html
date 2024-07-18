@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisualizzaSegnalazioniServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.gestioneSegnalazione.controller</a> &gt; <span class="el_source">VisualizzaSegnalazioniServlet.java</span></div><h1>VisualizzaSegnalazioniServlet.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.gestioneSegnalazione.controller;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import unisa.it.formulaonline.gestioneSegnalazione.service.GestioneSegnalazioneService;
+import unisa.it.formulaonline.gestioneSegnalazione.service.GestioneSegnalazioneServiceImpl;
+import unisa.it.formulaonline.model.entity.Lettore;
+import unisa.it.formulaonline.model.entity.Segnalazione;
+
+import java.io.IOException;
+import java.util.List;
+
+/**
+ * Servlet per permettere la visualizzazione delle segnalazioni per i moderatori
+ */
+//TODO link
+@WebServlet(&quot;/segnalazioni&quot;)
+<span class="nc" id="L21">public class VisualizzaSegnalazioniServlet extends HttpServlet {</span>
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L24">        doPost(req, resp);</span>
+<span class="nc" id="L25">    }</span>
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L29">        Lettore l= (Lettore) req.getSession().getAttribute(&quot;lettore&quot;);</span>
+<span class="nc" id="L30">        String destinazione = &quot;index.jsp&quot;;</span>
+<span class="nc bnc" id="L31" title="All 4 branches missed.">        if (l!=null &amp;&amp; l.getModeratore()){</span>
+<span class="nc" id="L32">            GestioneSegnalazioneService gs=new GestioneSegnalazioneServiceImpl();</span>
+<span class="nc" id="L33">            List&lt;Segnalazione&gt; segnalazioni = gs.ottieniSegnalazioni();</span>
+<span class="nc" id="L34">            destinazione = &quot;/WEB-INF/moderazione/segnalazioni.jsp&quot;;</span>
+<span class="nc" id="L35">            req.setAttribute(&quot;segnalazioni&quot;, segnalazioni);</span>
+<span class="nc" id="L36">            req.getRequestDispatcher(destinazione).forward(req, resp);</span>
+<span class="nc" id="L37">        }</span>
+        else{
+<span class="nc" id="L39">            resp.sendRedirect(destinazione);</span>
+        }
+<span class="nc" id="L41">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,108 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > GestioneSegnalazioneService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.gestioneSegnalazione.service</a>
+</div>
+
+<h1>Coverage Summary for Class: GestioneSegnalazioneService (unisa.it.formulaonline.gestioneSegnalazione.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">GestioneSegnalazioneService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.gestioneSegnalazione.service;
+&nbsp;
+&nbsp;import unisa.it.formulaonline.model.entity.Segnalazione;
+&nbsp;
+&nbsp;import java.sql.Date;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * Interfaccià che espone i metodi per gestire le segnalazioni, crearle, risolverle e sospendere gli utenti
+&nbsp; */
+&nbsp;public interface GestioneSegnalazioneService {
+&nbsp;    /**
+&nbsp;     * Salva una nuova segnalazione
+&nbsp;     * @return la segnalazione se creata con successo, null altrimenti
+&nbsp;     */
+&nbsp;    public Segnalazione creaSegnalazione(int idCommento, int idAutore, String corpo);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * risolve una segnalazione e sospende il lettore fino alla data decisa
+&nbsp;     */
+&nbsp;    public void sospendiLettore(int idSegnalazione, Date dataFineSospensione);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * elimina la segnalazione dal sistema
+&nbsp;     */
+&nbsp;    public void eliminaSegnalazione(int idSegnalazione);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * restituisce la lista di tutte le segnalazioni
+&nbsp;     * @return la lista delle segnalazioni, null se è vuota
+&nbsp;     */
+&nbsp;    public List&lt;Segnalazione&gt; ottieniSegnalazioni();
+&nbsp;
+&nbsp;    /**
+&nbsp;     * restituisce la segnalazione indicata da id
+&nbsp;     * @return la segnalazione correlata, null se non esiste
+&nbsp;     */
+&nbsp;    public Segnalazione ottieniSegnalazioneDaId(int idSegnalazione);
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

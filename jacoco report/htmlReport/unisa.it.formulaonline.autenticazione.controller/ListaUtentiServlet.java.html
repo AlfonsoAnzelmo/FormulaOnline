@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ListaUtentiServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.autenticazione.controller</a> &gt; <span class="el_source">ListaUtentiServlet.java</span></div><h1>ListaUtentiServlet.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.autenticazione.controller;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import unisa.it.formulaonline.autenticazione.service.LettoreService;
+import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
+import unisa.it.formulaonline.model.entity.Lettore;
+
+import java.io.IOException;
+import java.util.List;
+
+/**
+ * Servlet per viusualizzare la lista dei lettori non moderatori registrati
+ */
+@WebServlet(&quot;/listaUtenti&quot;)
+<span class="nc" id="L19">public class ListaUtentiServlet extends HttpServlet {</span>
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L22">        LettoreService lettoreService = new LettoreServiceImpl();</span>
+<span class="nc" id="L23">        List&lt;Lettore&gt; lettoreListNonModeratori = lettoreService.ottieniLettoriNonModeratori() ;</span>
+<span class="nc" id="L24">        req.setAttribute(&quot;lettoriNonModeratori&quot;, lettoreListNonModeratori);</span>
+<span class="nc" id="L25">        req.getRequestDispatcher(&quot;/WEB-INF/moderazione/listaLettori.jsp&quot;).forward(req, resp);</span>
+<span class="nc" id="L26">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,106 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > GestioneDiscussioneService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.gestioneDiscussione.service</a>
+</div>
+
+<h1>Coverage Summary for Class: GestioneDiscussioneService (unisa.it.formulaonline.gestioneDiscussione.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">GestioneDiscussioneService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.gestioneDiscussione.service;
+&nbsp;
+&nbsp;import unisa.it.formulaonline.model.entity.Categoria;
+&nbsp;import unisa.it.formulaonline.model.entity.Commento;
+&nbsp;import unisa.it.formulaonline.model.entity.Discussione;
+&nbsp;import unisa.it.formulaonline.model.entity.Lettore;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public interface GestioneDiscussioneService {
+&nbsp;    /**
+&nbsp;     * Crea una nuova discussione se i parametri inseriti sono validi
+&nbsp;     * @param titolo
+&nbsp;     * @param idCategoria
+&nbsp;     * @param idAutore
+&nbsp;     * @param commento
+&nbsp;     * @return la discussione creata
+&nbsp;     */
+&nbsp;    Discussione creaDiscussione(String titolo, int idCategoria, int idAutore, String commento) ;
+&nbsp;    Discussione modificaDiscussione(String titolo, int nuovaCategoria, int idDiscussione) ;
+&nbsp;    void eliminaDiscussione(int idDiscussione) ;
+&nbsp;    List&lt;Discussione&gt; ottieniDiscussioniDaCategoria(int idCategoria);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Restituisce la lista delle discussioni con le risposte più recenti
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    List&lt;Discussione&gt; ottieniDiscussioniPrincipali();
+&nbsp;    Commento aggiungiCommento(int idDiscussione, String corpo, int idAutore);
+&nbsp;    Commento modificaCommento(String corpo, int idCommento);
+&nbsp;    void rimuoviCommento(int idCommento, int idDiscussione);
+&nbsp;
+&nbsp;    Discussione ottieniDiscussioneDaId(int idDiscussione);
+&nbsp;
+&nbsp;    Commento ottieniCommentoDaId(int idCommento);
+&nbsp;
+&nbsp;    List &lt;Commento&gt; ottieniCommentiDaDiscussione(int idDiscussione);
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

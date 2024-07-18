@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SalvaCategoriaServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.gestioneCategoriaDiscussione.controller</a> &gt; <span class="el_source">SalvaCategoriaServlet.java</span></div><h1>SalvaCategoriaServlet.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.gestioneCategoriaDiscussione.controller;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneImplementazione;
+import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneService;
+import unisa.it.formulaonline.model.entity.Categoria;
+import unisa.it.formulaonline.model.entity.Lettore;
+
+import java.io.IOException;
+
+/**
+ * Servlet per salvare una nuova categoria
+ */
+@WebServlet(&quot;/salvaCategoria&quot;)
+<span class="nc" id="L19">public class SalvaCategoriaServlet extends HttpServlet {</span>
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L22">        super.doGet(req, resp);</span>
+<span class="nc" id="L23">    }</span>
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L27">        Lettore lettore = (Lettore) req.getSession().getAttribute(&quot;lettore&quot;);</span>
+<span class="nc" id="L28">        String nome = req.getParameter(&quot;nome&quot;);</span>
+<span class="nc" id="L29">        String descrizione = req.getParameter(&quot;descrizione&quot;);</span>
+<span class="nc" id="L30">        String idPadreStr = req.getParameter(&quot;categoria&quot;);</span>
+<span class="nc" id="L31">        String destinazione = &quot;home&quot;;</span>
+<span class="nc bnc" id="L32" title="All 8 branches missed.">        if (lettore != null &amp;&amp; nome != null &amp;&amp; descrizione != null</span>
+                &amp;&amp; idPadreStr != null) {
+<span class="nc bnc" id="L34" title="All 6 branches missed.">            if (nome.length() &gt;= 5 &amp;&amp; nome.length() &lt;= 50 &amp;&amp; descrizione.length() &lt;= 300) {</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">                if (lettore.getModeratore()) {</span>
+<span class="nc" id="L36">                    int categoriaPadreID = Integer.parseInt(idPadreStr);</span>
+<span class="nc" id="L37">                    GestioneCategoriaDiscussioneService gs = new GestioneCategoriaDiscussioneImplementazione();</span>
+<span class="nc" id="L38">                    Categoria categoria =</span>
+<span class="nc" id="L39">                            gs.creaCategoriaDiscussione(nome, descrizione, categoriaPadreID, lettore.getIdLettore());</span>
+<span class="nc" id="L40">                    destinazione =  getServletContext().getContextPath() + &quot;/categoria?idCategoria=&quot; +</span>
+<span class="nc" id="L41">                            categoria.getIdCategoria();</span>
+                }
+            }
+        }
+<span class="nc" id="L45">        resp.sendRedirect(destinazione);</span>
+<span class="nc" id="L46">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Discussione.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.model.entity</a> &gt; <span class="el_source">Discussione.java</span></div><h1>Discussione.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.model.entity;
+
+import java.util.Objects;
+
+/**
+ * Questa classe rappresenta una categoria di discussione. Contiene l'identificativo, un titolo,
+ * il numero di commenti che ha ricevuto, il lettore che l'ha creata e la categoria a cui appartiene
+ */
+public class Discussione {
+    private int idDiscussione, numeroCommenti;
+
+    private Categoria categoria;
+    private String titolo;
+    private Lettore lettore;
+
+<span class="fc" id="L16">    public Discussione() {</span>
+<span class="fc" id="L17">    }</span>
+
+    public Discussione(int numeroCommenti, Categoria categoria,
+<span class="nc" id="L20">                       String titolo, Lettore lettore) {</span>
+<span class="nc" id="L21">        this.numeroCommenti = numeroCommenti;</span>
+<span class="nc" id="L22">        this.categoria = categoria;</span>
+<span class="nc" id="L23">        this.titolo = titolo;</span>
+<span class="nc" id="L24">        this.lettore = lettore;</span>
+<span class="nc" id="L25">    }</span>
+
+<span class="fc" id="L27">    public Discussione(int idDiscussione, int numeroCommenti, Categoria categoria, String titolo, Lettore lettore) {</span>
+<span class="fc" id="L28">        this.idDiscussione = idDiscussione;</span>
+<span class="fc" id="L29">        this.numeroCommenti = numeroCommenti;</span>
+<span class="fc" id="L30">        this.categoria = categoria;</span>
+<span class="fc" id="L31">        this.titolo = titolo;</span>
+<span class="fc" id="L32">        this.lettore = lettore;</span>
+<span class="fc" id="L33">    }</span>
+
+    public int getIdDiscussione() {
+<span class="fc" id="L36">        return idDiscussione;</span>
+    }
+
+    public void setIdDiscussione(int idDiscussione) {
+<span class="fc" id="L40">        this.idDiscussione = idDiscussione;</span>
+<span class="fc" id="L41">    }</span>
+
+    public int getNumeroCommenti() {
+<span class="nc" id="L44">        return numeroCommenti;</span>
+    }
+
+    public void setNumeroCommenti(int numeroCommenti) {
+<span class="fc" id="L48">        this.numeroCommenti = numeroCommenti;</span>
+<span class="fc" id="L49">    }</span>
+
+    public Categoria getCategoria() {
+<span class="nc" id="L52">        return categoria;</span>
+    }
+
+    public void setCategoria(Categoria categoria) {
+<span class="fc" id="L56">        this.categoria = categoria;</span>
+<span class="fc" id="L57">    }</span>
+
+    public String getTitolo() {
+<span class="nc" id="L60">        return titolo;</span>
+    }
+
+    public void setTitolo(String titolo) {
+<span class="fc" id="L64">        this.titolo = titolo;</span>
+<span class="fc" id="L65">    }</span>
+
+    public Lettore getLettore() {
+<span class="nc" id="L68">        return lettore;</span>
+    }
+
+    public void setLettore(Lettore lettore) {
+<span class="fc" id="L72">        this.lettore = lettore;</span>
+<span class="fc" id="L73">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L77">        return &quot;Discussione{&quot; +</span>
+                &quot;idDiscussione=&quot; + idDiscussione +
+                &quot;, numeroCommenti=&quot; + numeroCommenti +
+                &quot;, categoria=&quot; + categoria +
+                &quot;, titolo='&quot; + titolo + '\'' +
+                &quot;, lettore=&quot; + lettore +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L89" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L90">        Discussione that = (Discussione) o;</span>
+<span class="nc bnc" id="L91" title="All 10 branches missed.">        return idDiscussione == that.idDiscussione &amp;&amp; numeroCommenti == that.numeroCommenti &amp;&amp; Objects.equals(categoria, that.categoria) &amp;&amp; Objects.equals(titolo, that.titolo) &amp;&amp; Objects.equals(lettore, that.lettore);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L96">        return Objects.hash(idDiscussione, numeroCommenti, categoria, titolo, lettore);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

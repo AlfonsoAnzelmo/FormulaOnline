@@ -1,0 +1,189 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > GestioneCategoriaDiscussioneImplementazione</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.gestioneCategoriaDiscussione.service</a>
+</div>
+
+<h1>Coverage Summary for Class: GestioneCategoriaDiscussioneImplementazione (unisa.it.formulaonline.gestioneCategoriaDiscussione.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GestioneCategoriaDiscussioneImplementazione</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.gestioneCategoriaDiscussione.service;
+&nbsp;
+&nbsp;import unisa.it.formulaonline.autenticazione.service.LettoreService;
+&nbsp;import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
+&nbsp;import unisa.it.formulaonline.model.dao.CategoriaDAO;
+&nbsp;import unisa.it.formulaonline.model.entity.Categoria;
+&nbsp;import unisa.it.formulaonline.model.entity.Lettore;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="nc">&nbsp;public class GestioneCategoriaDiscussioneImplementazione implements GestioneCategoriaDiscussioneService {</b>
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Categoria creaCategoriaDiscussione(String nome, String descrizione, int categoriaPadreId, int creatore) {
+<b class="nc">&nbsp;        CategoriaDAO categoriaDAO = new CategoriaDAO();</b>
+<b class="nc">&nbsp;        return categoriaDAO.doSave(nome, descrizione, categoriaPadreId, creatore);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Categoria modificaCategoriaDiscussione(int idCategoria, String nome, String descrizione, int categoriaPadreId) {
+<b class="nc">&nbsp;        CategoriaDAO categoriaDAO = new CategoriaDAO();</b>
+&nbsp;
+<b class="nc">&nbsp;        Categoria categoria = categoriaDAO.doRetrieveById(idCategoria) ;</b>
+<b class="nc">&nbsp;        categoria.setNome(nome);</b>
+<b class="nc">&nbsp;        categoria.setDescrizione(descrizione);</b>
+&nbsp;        /*Se è maggiore di 0 allora è relativa ad una categoria esistente*/
+<b class="nc">&nbsp;        if(categoriaPadreId&gt;0){</b>
+<b class="nc">&nbsp;            Categoria categoriaPadre = categoriaDAO.doRetrieveById(categoriaPadreId) ;</b>
+<b class="nc">&nbsp;            categoria.setCategoriaPadre(categoriaPadre);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;        else {
+<b class="nc">&nbsp;            categoria.setCategoriaPadre(null);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return categoriaDAO.doUpdate(categoria, idCategoria);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void eliminaCategoria(int idCategoria) {
+&nbsp;
+<b class="nc">&nbsp;        CategoriaDAO categoriaDAO = new CategoriaDAO();</b>
+<b class="nc">&nbsp;        categoriaDAO.doDeleteAlternativo(idCategoria);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Categoria ottieniCategoriaDaId(int idCategoria) {
+<b class="nc">&nbsp;        CategoriaDAO categoriaDAO = new CategoriaDAO();</b>
+<b class="nc">&nbsp;        return categoriaDAO.doRetrieveById(idCategoria);}</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public List&lt;Categoria&gt; ottieniCategoriePrincipali() {
+<b class="nc">&nbsp;        CategoriaDAO categoriaDAO = new CategoriaDAO();</b>
+<b class="nc">&nbsp;        return categoriaDAO.doRetrievePrincipali();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public List&lt;Categoria&gt; ottieniSottocategorie(int idCategoria) {
+<b class="nc">&nbsp;        CategoriaDAO categoriaDAO = new CategoriaDAO();</b>
+<b class="nc">&nbsp;        return categoriaDAO.doRetrieveByPadre(idCategoria);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public List&lt;Categoria&gt; ottieniTutteCategorie() {
+<b class="nc">&nbsp;        CategoriaDAO cd = new CategoriaDAO();</b>
+<b class="nc">&nbsp;        return cd.doRetrieveAll();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

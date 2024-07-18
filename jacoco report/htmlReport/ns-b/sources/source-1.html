@@ -1,0 +1,190 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Categoria</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.model.entity</a>
+</div>
+
+<h1>Coverage Summary for Class: Categoria (unisa.it.formulaonline.model.entity)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Categoria</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.model.entity;
+&nbsp;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;public class Categoria {
+&nbsp;
+<b class="nc">&nbsp;    public Categoria(){</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public Categoria(String nome, String descrizione, Categoria padre, Lettore creatore){</b>
+<b class="nc">&nbsp;        this.nome = nome;</b>
+<b class="nc">&nbsp;        this.descrizione = descrizione;</b>
+<b class="nc">&nbsp;        this.categoriaPadre =  padre;</b>
+<b class="nc">&nbsp;        this.creatore = creatore;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private int idCategoria;
+&nbsp;    private String nome, descrizione;
+&nbsp;    private Categoria categoriaPadre;
+&nbsp;    private Lettore creatore;
+&nbsp;
+&nbsp;    public int getIdCategoria() {
+<b class="nc">&nbsp;        return idCategoria;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setIdCategoria(int idCategoria) {
+<b class="nc">&nbsp;        this.idCategoria = idCategoria;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getNome() {
+<b class="nc">&nbsp;        return nome;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNome(String nome) {
+<b class="nc">&nbsp;        this.nome = nome;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getDescrizione() {
+<b class="nc">&nbsp;        return descrizione;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setDescrizione(String descrizione) {
+<b class="nc">&nbsp;        this.descrizione = descrizione;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Categoria getCategoriaPadre() {
+<b class="nc">&nbsp;        return categoriaPadre;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCategoriaPadre(Categoria categoriaPadre) {
+<b class="nc">&nbsp;        this.categoriaPadre = categoriaPadre;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Lettore getCreatore() {
+<b class="nc">&nbsp;        return creatore;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCreatore(Lettore creatore) {
+<b class="nc">&nbsp;        this.creatore = creatore;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        return &quot;Categoria{&quot; +</b>
+&nbsp;                &quot;idCategoria=&quot; + idCategoria +
+&nbsp;                &quot;, nome=&#39;&quot; + nome + &#39;\&#39;&#39; +
+&nbsp;                &quot;, descrizione=&#39;&quot; + descrizione + &#39;\&#39;&#39; +
+&nbsp;                &quot;, categoriaPadre=&quot; + categoriaPadre +
+&nbsp;                &quot;, creatore=&quot; + creatore +
+&nbsp;                &#39;}&#39;;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o) {
+<b class="nc">&nbsp;        if (this == o) return true;</b>
+<b class="nc">&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+<b class="nc">&nbsp;        Categoria categoria = (Categoria) o;</b>
+<b class="nc">&nbsp;        return idCategoria == categoria.idCategoria &amp;&amp; Objects.equals(nome, categoria.nome) &amp;&amp; Objects.equals(descrizione, categoria.descrizione) &amp;&amp; Objects.equals(categoriaPadre, categoria.categoriaPadre) &amp;&amp; Objects.equals(creatore, categoria.creatore);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode() {
+<b class="nc">&nbsp;        return Objects.hash(idCategoria, nome, descrizione, categoriaPadre, creatore);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

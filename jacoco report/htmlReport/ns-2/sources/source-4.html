@@ -1,0 +1,154 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > LoginServlet</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.autenticazione.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: LoginServlet (unisa.it.formulaonline.autenticazione.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginServlet</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.autenticazione.controller;
+&nbsp;
+&nbsp;import jakarta.servlet.ServletException;
+&nbsp;import jakarta.servlet.annotation.WebServlet;
+&nbsp;import jakarta.servlet.http.HttpServlet;
+&nbsp;import jakarta.servlet.http.HttpServletRequest;
+&nbsp;import jakarta.servlet.http.HttpServletResponse;
+&nbsp;import jakarta.servlet.http.HttpSession;
+&nbsp;import unisa.it.formulaonline.autenticazione.service.AutenticazioneService;
+&nbsp;import unisa.it.formulaonline.autenticazione.service.AutenticazioneServiceImpl;
+&nbsp;import unisa.it.formulaonline.model.entity.Lettore;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;
+&nbsp;/**
+&nbsp; * servlet per effettuare l&#39;accesso da parte di lettori e moderatori
+&nbsp; */
+&nbsp;@WebServlet(&quot;/login&quot;)
+<b class="nc">&nbsp;public class LoginServlet extends HttpServlet {</b>
+&nbsp;    @Override
+&nbsp;    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+&nbsp;
+<b class="nc">&nbsp;        String email = req.getParameter(&quot;email&quot;);</b>
+&nbsp;//        String hash = PasswordHasher(req.getParameter(&quot;password&quot;)); //se utilizziamo gli hash
+<b class="nc">&nbsp;        String password = req.getParameter(&quot;password&quot;);</b>
+<b class="nc">&nbsp;        AutenticazioneService as = new AutenticazioneServiceImpl();</b>
+&nbsp;        Lettore l;
+&nbsp;//        l=ld.doRetrieveByEmailPassword(email, hash);
+<b class="nc">&nbsp;        l = as.login(email, password);</b>
+&nbsp;        String dest;
+&nbsp;
+&nbsp;        //se l&#39;utente esiste ed è valido
+<b class="nc">&nbsp;        if (l != null) {</b>
+<b class="nc">&nbsp;            HttpSession session = req.getSession();</b>
+<b class="nc">&nbsp;            session.setAttribute(&quot;lettore&quot;, l);</b>
+<b class="nc">&nbsp;            dest = &quot;home&quot;;</b>
+<b class="nc">&nbsp;            resp.sendRedirect(dest);</b>
+<b class="nc">&nbsp;        } else {</b>
+&nbsp;//        se le credenziali non sono valide, ritorna alla pagina di login
+<b class="nc">&nbsp;            dest = &quot;login.jsp&quot;;</b>
+<b class="nc">&nbsp;            req.setAttribute(&quot;loginErr&quot;, &quot;Credenziali non valide&quot;);//metti caso</b>
+<b class="nc">&nbsp;            req.getRequestDispatcher(dest).forward(req, resp);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<b class="nc">&nbsp;        super.doPost(req, resp);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

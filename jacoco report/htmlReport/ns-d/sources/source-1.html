@@ -1,0 +1,139 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RegistrazioneServiceImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.registrazione.service</a>
+</div>
+
+<h1>Coverage Summary for Class: RegistrazioneServiceImpl (unisa.it.formulaonline.registrazione.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RegistrazioneServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86,7%
+  </span>
+  <span class="absValue">
+    (13/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.registrazione.service;
+&nbsp;
+&nbsp;import unisa.it.formulaonline.model.dao.LettoreDAO;
+&nbsp;import unisa.it.formulaonline.model.entity.Lettore;
+&nbsp;import java.util.regex.Matcher;
+&nbsp;import java.util.regex.Pattern;
+&nbsp;
+&nbsp;import static unisa.it.formulaonline.utility.PassHash.PasswordHasher;
+&nbsp;
+<b class="fc">&nbsp;public class RegistrazioneServiceImpl implements RegistrazioneService{</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * {@inheritDoc}
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Lettore registraLettore(String email, String password, String nickname, String scuderiaPreferita) {
+<b class="fc">&nbsp;        LettoreDAO ld = new LettoreDAO();</b>
+<b class="fc">&nbsp;        Lettore lettore = null;</b>
+<b class="fc">&nbsp;        Pattern emailPattern = Pattern.compile(&quot;^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$&quot;, Pattern.CASE_INSENSITIVE);</b>
+<b class="fc">&nbsp;        if(email!=null &amp;&amp; password!=null &amp;&amp; nickname!=null &amp;&amp; scuderiaPreferita!=null){</b>
+<b class="fc">&nbsp;            Matcher matcher = emailPattern.matcher(email);</b>
+<b class="fc">&nbsp;            boolean emailValida = matcher.matches();</b>
+<b class="fc">&nbsp;            if (!ld.checkExists(email, nickname) &amp;&amp; emailValida &amp;&amp;</b>
+<b class="fc">&nbsp;                    (5&lt;=email.length() &amp;&amp; (email.length()) &lt;= 50)</b>
+<b class="fc">&nbsp;                    &amp;&amp; ((8 &lt;= password.length())) &amp;&amp; (password.length() &lt;= 32)</b>
+<b class="fc">&nbsp;                    &amp;&amp; (5 &lt;= nickname.length() &amp;&amp; nickname.length() &lt;= 30)</b>
+<b class="fc">&nbsp;                    &amp;&amp; scuderiaPreferita.length()&lt;=30){</b>
+<b class="nc">&nbsp;                password = PasswordHasher(password);</b>
+<b class="nc">&nbsp;                lettore = ld.doSave(email, password, nickname, scuderiaPreferita);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return lettore;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

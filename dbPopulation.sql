@@ -1,26 +1,24 @@
 use formulaonlinedb;
 INSERT INTO lettore values
-(null, 'admin@email.com', sha1('password'), 'admin', 'Ferrari', null, true),
 (null, 'moderatore@email.com', sha1('password'), 'mod', 'Mercedes', null, true),
 (null, 'user@gmail.com', sha1('user1234'), 'utente1', null, null, false),
     (null, 'utente2@koala.org', sha1('koalalove'), 'koala', null, date('2024-07-07'), false);
 select * from lettore;
 
 INSERT INTO categoria values
-(1, 'Nessuna', 'Discussioni senza una categoria', null, 1),
-(null, 'gp 2024', 'tutte le discussioni riguardo il gran premio 2024', null, 1),
-(null, 'gp 2023', 'tutte le discussioni riguardo il gran premio 2023', null, 2),
+(null, 'GP 2024', 'tutte le discussioni riguardo il gran premio 2024', null, 1),
+(null, 'GP 2023', 'tutte le discussioni riguardo il gran premio 2023', null, 2),
 (null, 'Ferrari', 'tutte le discussioni riguardo la ferrari nel gran premio 2024', 2, 1),
 (null, 'LeClerc', 'tutte le discussioni leclerc', 4, 1);
 select * from categoria;
 
 INSERT into discussione values
-(null, 0, 2, 'gara 1', 1),
-(null, 0, 2, 'gara 2', 2),
-(null, 0, 2, 'gara 3', 2),
-(null, 0, 3, 'gara finale', 3),
-(null, 0, 1, 'ruote di scorta', 3),
-(null, 0, 4, 'calzini', 1);
+(null, 0, 2, 'Gara 1', 1),
+(null, 0, 2, 'Gara 2', 2),
+(null, 0, 2, 'Gara 3', 2),
+(null, 0, 3, 'Gara finale', 3),
+(null, 0, 1, 'Ruote di scorta', 3),
+(null, 0, 4, 'Calzini', 1);
 select * from discussione;
 
 insert into commento values

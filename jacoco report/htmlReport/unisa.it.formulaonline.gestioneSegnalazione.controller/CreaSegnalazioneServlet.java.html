@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreaSegnalazioneServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.gestioneSegnalazione.controller</a> &gt; <span class="el_source">CreaSegnalazioneServlet.java</span></div><h1>CreaSegnalazioneServlet.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.gestioneSegnalazione.controller;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import unisa.it.formulaonline.gestioneSegnalazione.service.GestioneSegnalazioneService;
+import unisa.it.formulaonline.gestioneSegnalazione.service.GestioneSegnalazioneServiceImpl;
+import unisa.it.formulaonline.model.entity.Commento;
+import unisa.it.formulaonline.model.entity.Lettore;
+import unisa.it.formulaonline.model.entity.Segnalazione;
+
+import java.io.IOException;
+
+/**
+ * Servlet che si occupa della creazione della funzione
+ */
+@WebServlet(&quot;/segnalaCommento&quot;)
+<span class="nc" id="L20">public class CreaSegnalazioneServlet extends HttpServlet {</span>
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L23">        super.doPost(req, resp);</span>
+<span class="nc" id="L24">    }</span>
+
+    /**
+     * Riceve l'id del commento, prende l'utente dalla sessione ed il messaggio della segnalazione
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L35">        Lettore l = (Lettore) req.getSession().getAttribute(&quot;lettore&quot;);</span>
+<span class="nc" id="L36">        String idCommentoStr = req.getParameter(&quot;idCommento&quot;);</span>
+<span class="nc" id="L37">        int idDiscussione = Integer.parseInt(req.getParameter(&quot;idDiscussione&quot;));</span>
+<span class="nc" id="L38">        String corpo = req.getParameter(&quot;motivazione&quot;);</span>
+<span class="nc" id="L39">        String indirizzo = &quot;WEB-INF/error_page.jsp&quot;;</span>
+
+
+<span class="nc bnc" id="L42" title="All 8 branches missed.">        if(corpo.length()&gt;5 &amp;&amp; corpo.length()&lt;=250 &amp;&amp; idCommentoStr!=null &amp;&amp; l!=null){</span>
+<span class="nc" id="L43">            int idCommento = Integer.parseInt(idCommentoStr);</span>
+<span class="nc" id="L44">            GestioneSegnalazioneService gs = new GestioneSegnalazioneServiceImpl();</span>
+<span class="nc" id="L45">            Segnalazione s = gs.creaSegnalazione(idCommento, l.getIdLettore(), corpo);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            if(s!=null){</span>
+<span class="nc" id="L47">                indirizzo = getServletContext().getContextPath()+&quot;/discussione?idDiscussione=&quot;+idDiscussione;</span>
+            }
+        }
+<span class="nc" id="L50">        resp.sendRedirect(indirizzo);</span>
+<span class="nc" id="L51">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

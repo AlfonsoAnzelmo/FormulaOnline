@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ModificaCategoriaPageServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.gestioneCategoriaDiscussione.controller</a> &gt; <span class="el_source">ModificaCategoriaPageServlet.java</span></div><h1>ModificaCategoriaPageServlet.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.gestioneCategoriaDiscussione.controller;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneImplementazione;
+import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneService;
+import unisa.it.formulaonline.model.entity.Categoria;
+import unisa.it.formulaonline.model.entity.Lettore;
+
+import java.io.IOException;
+import java.util.List;
+
+/**
+ * Servlet che riporta alla pagina di modifica di una categoria
+ */
+@WebServlet(&quot;/modificaCategoria&quot;)
+<span class="nc" id="L21">public class ModificaCategoriaPageServlet extends HttpServlet {</span>
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L24">        super.doGet(req, resp);</span>
+<span class="nc" id="L25">    }</span>
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L29">        String destinazione = &quot;index.jsp&quot;;</span>
+<span class="nc" id="L30">        Lettore l = (Lettore) req.getSession().getAttribute(&quot;lettore&quot;);</span>
+<span class="nc" id="L31">        String categoria = req.getParameter(&quot;idCategoria&quot;);</span>
+<span class="nc bnc" id="L32" title="All 6 branches missed.">        if(l!=null &amp;&amp; l.getModeratore() &amp;&amp; categoria!=null){</span>
+<span class="nc" id="L33">            destinazione =&quot;WEB-INF/moderazione/modificacategoria.jsp&quot;;</span>
+<span class="nc" id="L34">            GestioneCategoriaDiscussioneService cs = new GestioneCategoriaDiscussioneImplementazione();</span>
+<span class="nc" id="L35">            int idCat = Integer.parseInt(categoria);</span>
+<span class="nc" id="L36">            Categoria cat = cs.ottieniCategoriaDaId(idCat);</span>
+<span class="nc" id="L37">            List&lt;Categoria&gt; categorie = cs.ottieniTutteCategorie();</span>
+<span class="nc" id="L38">            categorie.remove(cat);</span>
+<span class="nc" id="L39">            req.setAttribute(&quot;categoria&quot;, cat);</span>
+<span class="nc" id="L40">            req.setAttribute(&quot;categorie&quot;, categorie);</span>
+<span class="nc" id="L41">            RequestDispatcher rd = req.getRequestDispatcher(destinazione);</span>
+<span class="nc" id="L42">            rd.forward(req, resp);</span>
+<span class="nc" id="L43">        }else{</span>
+<span class="nc" id="L44">            resp.sendRedirect(destinazione);</span>
+        }
+<span class="nc" id="L46">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

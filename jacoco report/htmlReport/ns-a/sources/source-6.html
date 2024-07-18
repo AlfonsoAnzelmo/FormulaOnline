@@ -1,0 +1,273 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > SegnalazioneDAO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.model.dao</a>
+</div>
+
+<h1>Coverage Summary for Class: SegnalazioneDAO (unisa.it.formulaonline.model.dao)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SegnalazioneDAO</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/96)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.model.dao;
+&nbsp;
+&nbsp;import unisa.it.formulaonline.model.entity.Lettore;
+&nbsp;import unisa.it.formulaonline.model.entity.Segnalazione;
+&nbsp;
+&nbsp;import java.sql.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="nc">&nbsp;public class SegnalazioneDAO {</b>
+&nbsp;    private LettoreDAO ld;
+&nbsp;    private CommentoDAO cd;
+&nbsp;
+&nbsp;    public List&lt;Segnalazione&gt; doRetrieveByLettore(int id){
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            ld = new LettoreDAO();</b>
+<b class="nc">&nbsp;            cd = new CommentoDAO();</b>
+<b class="nc">&nbsp;            PreparedStatement ps =</b>
+<b class="nc">&nbsp;                    con.prepareStatement(&quot;SELECT idSegnalazione, lettore, commento, corpo &quot; +</b>
+&nbsp;                            &quot;FROM formulaonlinedb.segnalazione &quot; +
+&nbsp;                            &quot;WHERE lettore=?&quot;);
+<b class="nc">&nbsp;            ps.setInt(1, id);</b>
+<b class="nc">&nbsp;            ResultSet rs = ps.executeQuery();</b>
+<b class="nc">&nbsp;            List&lt;Segnalazione&gt; listaS = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            while (rs.next()) {</b>
+<b class="nc">&nbsp;                Segnalazione s = new Segnalazione();</b>
+<b class="nc">&nbsp;                s.setIdSegnalazione(rs.getInt(1));</b>
+<b class="nc">&nbsp;                s.setAutore(ld.doRetrieveById(rs.getInt(2)));</b>
+<b class="nc">&nbsp;                s.setCommento(cd.doRetrieveById(rs.getInt(3)));</b>
+<b class="nc">&nbsp;                s.setCorpo(rs.getString(4));</b>
+<b class="nc">&nbsp;                listaS.add(s);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            return listaS;</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public Segnalazione doRetrieveById(int id){
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps =</b>
+<b class="nc">&nbsp;                    con.prepareStatement(&quot;SELECT idSegnalazione, lettore, commento, corpo &quot; +</b>
+&nbsp;                            &quot;FROM formulaonlinedb.segnalazione &quot; +
+&nbsp;                            &quot;WHERE idSegnalazione=?&quot;);
+<b class="nc">&nbsp;            ps.setInt(1, id);</b>
+<b class="nc">&nbsp;            ResultSet rs = ps.executeQuery();</b>
+<b class="nc">&nbsp;            if (rs.next()) {</b>
+<b class="nc">&nbsp;                Segnalazione s = new Segnalazione();</b>
+<b class="nc">&nbsp;                ld = new LettoreDAO();</b>
+<b class="nc">&nbsp;                cd = new CommentoDAO();</b>
+<b class="nc">&nbsp;                s.setIdSegnalazione(rs.getInt(1));</b>
+<b class="nc">&nbsp;                s.setAutore(ld.doRetrieveById(rs.getInt(2)));</b>
+<b class="nc">&nbsp;                s.setCommento(cd.doRetrieveById(rs.getInt(3)));</b>
+<b class="nc">&nbsp;                s.setCorpo(rs.getString(4));</b>
+<b class="nc">&nbsp;                return s;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return null;</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Segnalazione&gt; doRetrieveAll(){
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps =</b>
+<b class="nc">&nbsp;                    con.prepareStatement(&quot;SELECT idSegnalazione, lettore, commento, corpo &quot; +</b>
+&nbsp;                            &quot;FROM formulaonlinedb.segnalazione&quot;);
+<b class="nc">&nbsp;            ld = new LettoreDAO();</b>
+<b class="nc">&nbsp;            cd = new CommentoDAO();</b>
+<b class="nc">&nbsp;            ArrayList&lt;Segnalazione&gt; segnalazioni = new ArrayList&lt;&gt;();</b>
+&nbsp;            Segnalazione s;
+<b class="nc">&nbsp;            ResultSet rs = ps.executeQuery();</b>
+<b class="nc">&nbsp;            while (rs.next()) {</b>
+<b class="nc">&nbsp;                s = new Segnalazione();</b>
+<b class="nc">&nbsp;                s.setIdSegnalazione(rs.getInt(1));</b>
+<b class="nc">&nbsp;                s.setAutore(ld.doRetrieveById(rs.getInt(2)));</b>
+<b class="nc">&nbsp;                s.setCommento(cd.doRetrieveById(rs.getInt(3)));</b>
+<b class="nc">&nbsp;                s.setCorpo(rs.getString(4));</b>
+<b class="nc">&nbsp;                segnalazioni.add(s);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return segnalazioni;</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public Segnalazione doSave(Segnalazione s){
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps =</b>
+<b class="nc">&nbsp;                    con.prepareStatement(&quot;INSERT INTO formulaonlinedb.segnalazione &quot; +</b>
+&nbsp;                            &quot;(idSegnalazione, lettore, commento, corpo) value(?,?,?,?)&quot;);
+<b class="nc">&nbsp;            if (ps.executeUpdate()!=1) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;INSERT error.&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return s;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Segnalazione doSave(int idLettore, int idCommento, String corpo){
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps =</b>
+<b class="nc">&nbsp;                    con.prepareStatement(&quot;INSERT INTO formulaonlinedb.segnalazione &quot; +</b>
+&nbsp;                            &quot;(lettore, commento, corpo) values (?,?,?)&quot;,Statement.RETURN_GENERATED_KEYS);
+&nbsp;
+<b class="nc">&nbsp;            ps.setInt(1, idLettore);</b>
+<b class="nc">&nbsp;            ps.setInt(2, idCommento);</b>
+<b class="nc">&nbsp;            ps.setString(  3, corpo);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (ps.executeUpdate()!=1) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;INSERT error.&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            ResultSet rs = ps.getGeneratedKeys();</b>
+<b class="nc">&nbsp;            Segnalazione s = new Segnalazione();</b>
+<b class="nc">&nbsp;            rs.next();</b>
+<b class="nc">&nbsp;            s.setIdSegnalazione(rs.getInt(1));</b>
+&nbsp;
+<b class="nc">&nbsp;            return s;</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void doDelete(int idSegnalazione){
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps = con.prepareStatement(</b>
+&nbsp;                    &quot;DELETE FROM formulaonlinedb.segnalazione WHERE idSegnalazione=?&quot;);
+<b class="nc">&nbsp;            ps.setInt(1, idSegnalazione);</b>
+<b class="nc">&nbsp;            if (ps.executeUpdate() != 1) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;DELETE error.&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public void doUpdate(Segnalazione s){
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            Statement st = con.createStatement();</b>
+<b class="nc">&nbsp;            String query = &quot;update formulaonlinedb.segnalazione &quot; +</b>
+<b class="nc">&nbsp;                    &quot;where idSegnalazione=&quot; + s.getIdSegnalazione() +</b>
+<b class="nc">&nbsp;                    &quot; set lettore=&quot; + s.getAutore().getIdLettore() +</b>
+<b class="nc">&nbsp;                    &quot;, commento=&quot; + s.getCommento().getIdCommento() + &quot;, corpo=&#39;&quot; + s.getCorpo() + &quot;&#39;&quot;;</b>
+<b class="nc">&nbsp;            st.executeUpdate(query);</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;/*
+&nbsp;    public Boolean doExists(int lettore, int commento){
+&nbsp;        try (Connection con = ConPool.getConnection()) {
+&nbsp;            PreparedStatement ps =
+&nbsp;                    con.prepareStatement(&quot;SELECT lettore, commento FROM formulaonlinedb.segnalazione &quot; +
+&nbsp;                            &quot;WHERE lettore=? AND commento=?&quot;);
+&nbsp;            ps.setInt(1, lettore);
+&nbsp;            ps.setInt(2, commento);
+&nbsp;            ResultSet rs = ps.executeQuery();
+&nbsp;            if (rs.next())
+&nbsp;                return true;
+&nbsp;            return false;
+&nbsp;        } catch (SQLException e) {
+&nbsp;            throw new RuntimeException(e);
+&nbsp;        }
+&nbsp;    }
+&nbsp;*/
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

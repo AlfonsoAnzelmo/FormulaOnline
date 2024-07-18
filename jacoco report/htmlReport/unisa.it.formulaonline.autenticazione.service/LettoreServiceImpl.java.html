@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LettoreServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.autenticazione.service</a> &gt; <span class="el_source">LettoreServiceImpl.java</span></div><h1>LettoreServiceImpl.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.autenticazione.service;
+
+import unisa.it.formulaonline.model.dao.LettoreDAO;
+import unisa.it.formulaonline.model.entity.Lettore;
+
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static unisa.it.formulaonline.utility.PassHash.PasswordHasher;
+
+<span class="nc" id="L13">public class LettoreServiceImpl implements LettoreService {</span>
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Lettore nominaModeratore(int idLettore) {
+<span class="nc" id="L21">        LettoreDAO lettoreDAO = new LettoreDAO();</span>
+
+<span class="nc" id="L23">        Lettore lettore = lettoreDAO.doRetrieveById(idLettore);</span>
+<span class="nc" id="L24">        lettoreDAO.doUpdate(lettore.getIdLettore(), lettore.getEmail(), lettore.getPassword(),</span>
+<span class="nc" id="L25">                lettore.getNickname(), lettore.getScuderiaPref(), Boolean.TRUE, lettore.getDataFineSospensione());</span>
+<span class="nc" id="L26">        lettore.setModeratore(Boolean.TRUE);</span>
+<span class="nc" id="L27">        return lettore;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,
+                                   String scuderiaPreferita, Boolean moderatore, Date dataFineSospensione) {
+
+<span class="nc" id="L37">        LettoreDAO ld = new LettoreDAO();</span>
+<span class="nc" id="L38">        Lettore lettore = null;</span>
+<span class="nc" id="L39">        password = PasswordHasher(password);</span>
+<span class="nc" id="L40">        Pattern emailPattern = Pattern.compile(&quot;^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$&quot;, Pattern.CASE_INSENSITIVE);</span>
+<span class="nc" id="L41">        Matcher matcher = emailPattern.matcher(email);</span>
+<span class="nc" id="L42">        boolean emailValida = matcher.matches();</span>
+<span class="nc bnc" id="L43" title="All 4 branches missed.">        if (!ld.checkExists(email, nickname) &amp;&amp; emailValida &amp;&amp;</span>
+<span class="nc bnc" id="L44" title="All 4 branches missed.">                (5 &lt;= email.length() &amp;&amp; (email.length()) &lt;= 50)</span>
+<span class="nc bnc" id="L45" title="All 4 branches missed.">                &amp;&amp; ((8 &lt;= password.length())) &amp;&amp; (password.length() &lt;= 32)</span>
+<span class="nc bnc" id="L46" title="All 4 branches missed.">                &amp;&amp; (5 &lt;= nickname.length() &amp;&amp; nickname.length() &lt;= 30)</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">                &amp;&amp; scuderiaPreferita.length() &lt;= 30) {</span>
+<span class="nc" id="L48">            password = PasswordHasher(password);</span>
+<span class="nc" id="L49">            ld.doUpdate(idLettore, email, password, nickname, scuderiaPreferita, moderatore, dataFineSospensione);</span>
+<span class="nc" id="L50">            lettore = new Lettore(idLettore, email, password, nickname, scuderiaPreferita, moderatore, dataFineSospensione);</span>
+        }
+<span class="nc" id="L52">        return lettore;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname, String
+            scuderiaPreferita) {
+
+<span class="nc" id="L62">        LettoreDAO lettoreDAO = new LettoreDAO();</span>
+<span class="nc" id="L63">        password = PasswordHasher(password);</span>
+<span class="nc" id="L64">        lettoreDAO.doUpdate(idLettore, email, password, nickname, scuderiaPreferita);</span>
+<span class="nc" id="L65">        Lettore lettore = new Lettore(idLettore, email, password, nickname, scuderiaPreferita);</span>
+<span class="nc" id="L66">        return lettore;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void eliminaLettore(int idLettore) {
+<span class="nc" id="L74">        LettoreDAO lettoreDAO = new LettoreDAO();</span>
+
+<span class="nc" id="L76">        lettoreDAO.doDelete(idLettore);</span>
+<span class="nc" id="L77">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Lettore ottieniLettoreDaId(int idLettore) {
+
+<span class="nc" id="L85">        LettoreDAO lettoreDAO = new LettoreDAO();</span>
+<span class="nc" id="L86">        return lettoreDAO.doRetrieveById(idLettore);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List&lt;Lettore&gt; ottieniLettoriNonModeratori() {
+<span class="nc" id="L94">        LettoreDAO lettoreDAO = new LettoreDAO();</span>
+<span class="nc" id="L95">        return lettoreDAO.doRetrieveAllNonModeratore();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

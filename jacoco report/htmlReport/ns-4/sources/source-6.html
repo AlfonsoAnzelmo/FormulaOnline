@@ -1,0 +1,152 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > VisualizzaCategoriaDiscussioneServlet</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.gestioneCategoriaDiscussione.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: VisualizzaCategoriaDiscussioneServlet (unisa.it.formulaonline.gestioneCategoriaDiscussione.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">VisualizzaCategoriaDiscussioneServlet</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.gestioneCategoriaDiscussione.controller;
+&nbsp;
+&nbsp;import jakarta.servlet.RequestDispatcher;
+&nbsp;import jakarta.servlet.ServletException;
+&nbsp;import jakarta.servlet.annotation.WebServlet;
+&nbsp;import jakarta.servlet.http.HttpServlet;
+&nbsp;import jakarta.servlet.http.HttpServletRequest;
+&nbsp;import jakarta.servlet.http.HttpServletResponse;
+&nbsp;import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneImplementazione;
+&nbsp;import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneService;
+&nbsp;import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneImplementazione;
+&nbsp;import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneService;
+&nbsp;import unisa.it.formulaonline.model.entity.Categoria;
+&nbsp;import unisa.it.formulaonline.model.entity.Discussione;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@WebServlet(&quot;/categoria&quot;)
+<b class="nc">&nbsp;public class VisualizzaCategoriaDiscussioneServlet extends HttpServlet {</b>
+&nbsp;    @Override
+&nbsp;    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<b class="nc">&nbsp;        String categoriaStr = req.getParameter(&quot;idCategoria&quot;);</b>
+<b class="nc">&nbsp;        String destinazione = &quot;/&quot;;</b>
+<b class="nc">&nbsp;        if(categoriaStr!=null){</b>
+<b class="nc">&nbsp;            int idCategoria = Integer.parseInt(categoriaStr);</b>
+<b class="nc">&nbsp;            GestioneCategoriaDiscussioneService cs = new GestioneCategoriaDiscussioneImplementazione();</b>
+<b class="nc">&nbsp;            GestioneDiscussioneService ds = new GestioneDiscussioneImplementazione();</b>
+<b class="nc">&nbsp;            Categoria categoria = cs.ottieniCategoriaDaId(idCategoria);</b>
+<b class="nc">&nbsp;            List&lt;Categoria&gt; sottocategorie = cs.ottieniSottocategorie(idCategoria);</b>
+<b class="nc">&nbsp;            List&lt;Discussione&gt; discussioni = ds.ottieniDiscussioniDaCategoria(idCategoria);</b>
+<b class="nc">&nbsp;            destinazione = &quot;categoria.jsp&quot;;</b>
+<b class="nc">&nbsp;            req.setAttribute(&quot;categoria&quot;, categoria);</b>
+<b class="nc">&nbsp;            req.setAttribute(&quot;sottocategorie&quot;, sottocategorie);</b>
+<b class="nc">&nbsp;            req.setAttribute(&quot;discussioni&quot;, discussioni);</b>
+<b class="nc">&nbsp;            RequestDispatcher rd = req.getRequestDispatcher(destinazione);</b>
+<b class="nc">&nbsp;            rd.forward(req, resp);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;        else{
+<b class="nc">&nbsp;            resp.sendRedirect(destinazione);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<b class="nc">&nbsp;        doGet(req, resp);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,393 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > CategoriaDAO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.model.dao</a>
+</div>
+
+<h1>Coverage Summary for Class: CategoriaDAO (unisa.it.formulaonline.model.dao)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CategoriaDAO</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/153)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.model.dao;
+&nbsp;
+&nbsp;import unisa.it.formulaonline.autenticazione.service.LettoreService;
+&nbsp;import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
+&nbsp;import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneImplementazione;
+&nbsp;import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneService;
+&nbsp;import unisa.it.formulaonline.model.entity.Categoria;
+&nbsp;import unisa.it.formulaonline.model.entity.Lettore;
+&nbsp;
+&nbsp;import java.sql.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="nc">&nbsp;public class CategoriaDAO {</b>
+&nbsp;
+<b class="nc">&nbsp;    private GestioneCategoriaDiscussioneService gestioneCategoriaDiscussioneService = new GestioneCategoriaDiscussioneImplementazione();</b>
+<b class="nc">&nbsp;    private LettoreService lettoreService = new LettoreServiceImpl();</b>
+&nbsp;
+&nbsp;    public Categoria doRetrieveById(int id) {
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps =</b>
+<b class="nc">&nbsp;                    con.prepareStatement(&quot;SELECT c.idCategoria, c.nome,c.descrizione, c.categoriaPadre, c.creatore&quot; +</b>
+&nbsp;                            &quot;  FROM formulaonlinedb.categoria c  &quot; +
+&nbsp;                            &quot; WHERE c.idCategoria=?&quot;);
+&nbsp;
+<b class="nc">&nbsp;            ps.setInt(1, id);</b>
+<b class="nc">&nbsp;            ResultSet rs = ps.executeQuery();</b>
+<b class="nc">&nbsp;            if (rs.next()) {</b>
+<b class="nc">&nbsp;                rs.getInt(1);</b>
+<b class="nc">&nbsp;                Categoria categoria = new Categoria();</b>
+<b class="nc">&nbsp;                categoria.setIdCategoria(rs.getInt(1));</b>
+<b class="nc">&nbsp;                categoria.setNome(rs.getString(2));</b>
+<b class="nc">&nbsp;                categoria.setDescrizione(rs.getString(3));</b>
+&nbsp;
+<b class="nc">&nbsp;                Categoria categoriaPadre = doRetrieveById(rs.getInt(4));</b>
+<b class="nc">&nbsp;                categoria.setCategoriaPadre(categoriaPadre);</b>
+&nbsp;
+<b class="nc">&nbsp;                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));</b>
+<b class="nc">&nbsp;                categoria.setCreatore(lettore);</b>
+&nbsp;
+<b class="nc">&nbsp;                return categoria;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Categoria&gt; doRetrieveAll() {
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps =</b>
+<b class="nc">&nbsp;                    con.prepareStatement(&quot;SELECT c.idCategoria, c.nome,c.descrizione, c.categoriaPadre, c.creatore&quot; +</b>
+&nbsp;                            &quot;  FROM  formulaonlinedb.categoria c&quot;);
+&nbsp;
+<b class="nc">&nbsp;            ResultSet rs = ps.executeQuery();</b>
+<b class="nc">&nbsp;            List&lt;Categoria&gt; categoriaList = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            while (rs.next()) {</b>
+<b class="nc">&nbsp;                Categoria categoria = new Categoria();</b>
+<b class="nc">&nbsp;                categoria.setIdCategoria(rs.getInt(1));</b>
+<b class="nc">&nbsp;                categoria.setNome(rs.getString(2));</b>
+<b class="nc">&nbsp;                categoria.setDescrizione(rs.getString(3));</b>
+&nbsp;
+<b class="nc">&nbsp;                Categoria categoriaPadre = doRetrieveById(rs.getInt(4));</b>
+<b class="nc">&nbsp;                categoria.setCategoriaPadre(categoriaPadre);</b>
+&nbsp;
+<b class="nc">&nbsp;                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));</b>
+<b class="nc">&nbsp;                categoria.setCreatore(lettore);</b>
+<b class="nc">&nbsp;                categoriaList.add(categoria);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            return categoriaList;</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Resitituisce tutte le sottocategorie relative alla categoria padre
+&nbsp;     * @param idCategoria se 0 considera viene considerato null
+&nbsp;     * @return la lista delle sottocategorie
+&nbsp;     */
+&nbsp;    public List&lt;Categoria&gt; doRetrieveByPadre(int idCategoria) {
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps =</b>
+<b class="nc">&nbsp;                    con.prepareStatement(&quot;SELECT c.idCategoria, c.nome, c.descrizione, c.categoriaPadre, c.creatore&quot; +</b>
+&nbsp;                            &quot;  FROM  formulaonlinedb.categoria c WHERE categoriaPadre=?&quot;);
+<b class="nc">&nbsp;            ps.setInt(1, idCategoria);</b>
+<b class="nc">&nbsp;            ResultSet rs = ps.executeQuery();</b>
+<b class="nc">&nbsp;            List&lt;Categoria&gt; categoriaList = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            while (rs.next()) {</b>
+<b class="nc">&nbsp;                Categoria categoria = new Categoria();</b>
+<b class="nc">&nbsp;                categoria.setIdCategoria(rs.getInt(1));</b>
+<b class="nc">&nbsp;                categoria.setNome(rs.getString(2));</b>
+<b class="nc">&nbsp;                categoria.setDescrizione(rs.getString(3));</b>
+&nbsp;
+<b class="nc">&nbsp;                Categoria categoriaPadre = doRetrieveById(rs.getInt(4));</b>
+<b class="nc">&nbsp;                categoria.setCategoriaPadre(categoriaPadre);</b>
+&nbsp;
+<b class="nc">&nbsp;                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));</b>
+<b class="nc">&nbsp;                categoria.setCreatore(lettore);</b>
+<b class="nc">&nbsp;                categoriaList.add(categoria);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            return categoriaList;</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Resitituisce tutte le categorie principali
+&nbsp;     * @return la lista delle categorie senza una categoria padre
+&nbsp;     */
+&nbsp;    public List&lt;Categoria&gt; doRetrievePrincipali() {
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps =</b>
+<b class="nc">&nbsp;                    con.prepareStatement(&quot;SELECT c.idCategoria, c.nome, c.descrizione, c.categoriaPadre, c.creatore&quot; +</b>
+&nbsp;                            &quot;  FROM  formulaonlinedb.categoria c WHERE categoriaPadre is null&quot;);
+<b class="nc">&nbsp;            ResultSet rs = ps.executeQuery();</b>
+<b class="nc">&nbsp;            List&lt;Categoria&gt; categoriaList = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            while (rs.next()) {</b>
+<b class="nc">&nbsp;                Categoria categoria = new Categoria();</b>
+<b class="nc">&nbsp;                categoria.setIdCategoria(rs.getInt(1));</b>
+<b class="nc">&nbsp;                categoria.setNome(rs.getString(2));</b>
+<b class="nc">&nbsp;                categoria.setDescrizione(rs.getString(3));</b>
+&nbsp;
+<b class="nc">&nbsp;                Categoria categoriaPadre = doRetrieveById(rs.getInt(4));</b>
+<b class="nc">&nbsp;                categoria.setCategoriaPadre(categoriaPadre);</b>
+&nbsp;
+<b class="nc">&nbsp;                Lettore lettore = lettoreService.ottieniLettoreDaId(rs.getInt(5));</b>
+<b class="nc">&nbsp;                categoria.setCreatore(lettore);</b>
+<b class="nc">&nbsp;                categoriaList.add(categoria);</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            return categoriaList;</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public Categoria doSave(Categoria categoria) {
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps = con.prepareStatement(</b>
+&nbsp;                    &quot;INSERT INTO formulaonlinedb.categoria (nome,descrizione,categoriaPadre,creatore)&quot; +
+&nbsp;                            &quot;  VALUES(?,?,?,?)&quot;, Statement.RETURN_GENERATED_KEYS);
+&nbsp;
+<b class="nc">&nbsp;            ps.setString(1, categoria.getNome());</b>
+<b class="nc">&nbsp;            ps.setString(2, categoria.getDescrizione());</b>
+<b class="nc">&nbsp;            if(categoria.getCategoriaPadre()!=null) {</b>
+<b class="nc">&nbsp;                ps.setInt(3, categoria.getCategoriaPadre().getIdCategoria());</b>
+&nbsp;            }
+&nbsp;            else{
+<b class="nc">&nbsp;                ps.setNull(3, Types.INTEGER);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            ps.setInt(4, categoria.getCreatore().getIdLettore());</b>
+&nbsp;
+<b class="nc">&nbsp;            if (ps.executeUpdate() != 1) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;INSERT error.&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            ResultSet rs = ps.getGeneratedKeys();</b>
+<b class="nc">&nbsp;            categoria.setIdCategoria(rs.getInt(1));</b>
+<b class="nc">&nbsp;            return categoria;</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public Categoria doSave(String nome, String descrizione, int categoriaPadre, int creatore) {
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps = con.prepareStatement(</b>
+&nbsp;                    &quot;INSERT INTO formulaonlinedb.categoria (nome,descrizione,categoriaPadre,creatore)&quot; +
+&nbsp;                            &quot;  VALUES(?,?,?,?)&quot;, Statement.RETURN_GENERATED_KEYS);
+&nbsp;
+<b class="nc">&nbsp;            ps.setString(1, nome);</b>
+<b class="nc">&nbsp;            ps.setString(2, descrizione);</b>
+<b class="nc">&nbsp;            if(categoriaPadre!=0) {</b>
+<b class="nc">&nbsp;                ps.setInt(3, categoriaPadre);</b>
+&nbsp;            }
+&nbsp;            else{
+<b class="nc">&nbsp;                ps.setNull(3, Types.INTEGER);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            ps.setInt(4, creatore);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (ps.executeUpdate() != 1) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;INSERT error.&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            LettoreDAO ld = new LettoreDAO();</b>
+<b class="nc">&nbsp;            ResultSet rs = ps.getGeneratedKeys();</b>
+<b class="nc">&nbsp;            Categoria categoria = new Categoria();</b>
+<b class="nc">&nbsp;            categoria.setIdCategoria(rs.getInt(1));</b>
+<b class="nc">&nbsp;            categoria.setDescrizione(descrizione);</b>
+<b class="nc">&nbsp;            categoria.setCreatore(ld.doRetrieveById(creatore));</b>
+<b class="nc">&nbsp;            categoria.setCategoriaPadre(doRetrieveById(categoriaPadre));</b>
+<b class="nc">&nbsp;            return categoria;</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public Categoria doUpdate(Categoria categoria, int idCategoria) {
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps = con.prepareStatement(</b>
+&nbsp;                    &quot; UPDATE formulaonlinedb.categoria &quot;+
+&nbsp;                            &quot; SET creatore = ?, categoriaPadre = ? , nome = ? ,descrizione = ? &quot; +
+&nbsp;                            &quot;  WHERE idCategoria=? &quot;);
+&nbsp;
+<b class="nc">&nbsp;            ps.setInt(1, categoria.getCreatore().getIdLettore());</b>
+<b class="nc">&nbsp;            if(categoria.getCategoriaPadre()!=null) {</b>
+<b class="nc">&nbsp;                ps.setInt(2, categoria.getCategoriaPadre().getIdCategoria());</b>
+&nbsp;            }
+&nbsp;            else{
+<b class="nc">&nbsp;                ps.setNull(2, Types.INTEGER);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            ps.setString(3, categoria.getNome());</b>
+<b class="nc">&nbsp;            ps.setString(4, categoria.getDescrizione());</b>
+<b class="nc">&nbsp;            ps.setInt(5, idCategoria);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (ps.executeUpdate() != 1) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(&quot;INSERT error.&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            return categoria;</b>
+<b class="nc">&nbsp;        }catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * assegna alle categorie individuate da categoria padre la categoria &quot;senza categoria&quot;
+&nbsp;     * @param idCategoriaPadre
+&nbsp;     */
+&nbsp;    public void doSetDefaultCategoriaPadre(int idCategoriaPadre) {
+&nbsp;
+<b class="nc">&nbsp;        Categoria no_categoria = doRetrieveById(1) ;</b>
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps = con.prepareStatement(</b>
+&nbsp;                    &quot; UPDATE formulaonlinedb.categoria &quot;+
+&nbsp;                            &quot; SET categoriaPadre = ? &quot; +
+&nbsp;                            &quot;  WHERE categoriaPadre=? &quot;);
+&nbsp;
+<b class="nc">&nbsp;            ps.setInt(1, no_categoria.getIdCategoria());</b>
+<b class="nc">&nbsp;            ps.setInt(2, idCategoriaPadre);</b>
+<b class="nc">&nbsp;            ps.executeUpdate();</b>
+&nbsp;
+<b class="nc">&nbsp;        }catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *  elimina la categoira selezionata e le sottocategorie
+&nbsp;     * @param idCategoria
+&nbsp;     */
+&nbsp;    public void doDelete(int idCategoria){
+&nbsp;
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps = con.prepareStatement(</b>
+&nbsp;                    &quot;DELETE FROM formulaonlinedb.categoria WHERE idCategoria=?&quot;,
+&nbsp;                    Statement.RETURN_GENERATED_KEYS);
+<b class="nc">&nbsp;            ps.setInt(1, idCategoria);</b>
+<b class="nc">&nbsp;            ps.executeUpdate();</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * elimina la categoira selezionata e assegna alle sottocategorie &quot;senza categoria padre&quot;
+&nbsp;     * @param idCategoria
+&nbsp;     */
+&nbsp;    public void doDeleteAlternativo(int idCategoria){
+&nbsp;
+<b class="nc">&nbsp;        doSetDefaultCategoriaPadre(idCategoria);</b>
+<b class="nc">&nbsp;        try (Connection con = ConPool.getConnection()) {</b>
+<b class="nc">&nbsp;            PreparedStatement ps = con.prepareStatement(</b>
+&nbsp;                    &quot;DELETE FROM formulaonlinedb.categoria WHERE idCategoria=?&quot;);
+<b class="nc">&nbsp;            ps.setInt(1, idCategoria);</b>
+<b class="nc">&nbsp;            ps.executeUpdate();</b>
+<b class="nc">&nbsp;        } catch (SQLException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

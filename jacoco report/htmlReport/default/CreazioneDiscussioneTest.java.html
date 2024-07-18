@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreazioneDiscussioneTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">CreazioneDiscussioneTest.java</span></div><h1>CreazioneDiscussioneTest.java</h1><pre class="source lang-java linenums">import com.oracle.wls.shaded.org.apache.xml.utils.res.XResources_cy;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneImplementazione;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneService;
+import unisa.it.formulaonline.model.dao.DiscussioneDAO;
+import unisa.it.formulaonline.model.dao.LettoreDAO;
+import unisa.it.formulaonline.model.entity.Discussione;
+import unisa.it.formulaonline.model.entity.Lettore;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+<span class="fc" id="L16">public class CreazioneDiscussioneTest {</span>
+
+    private static LettoreDAO lettoreDAO;
+    private static DiscussioneDAO discussioneDAO;
+    private static GestioneDiscussioneService gestioneDiscussioneService;
+    private static Discussione discussione;
+
+    @BeforeAll
+    public static void init(){
+
+        //un lettore che ha effettuato il login
+<span class="fc" id="L27">        lettoreDAO = new LettoreDAO();</span>
+<span class="fc" id="L28">        Lettore lettore = lettoreDAO.doRetrieveById(1);</span>
+
+        //istanzianzione variabili necessarie
+<span class="fc" id="L31">        discussioneDAO = new DiscussioneDAO();</span>
+<span class="fc" id="L32">        gestioneDiscussioneService = new GestioneDiscussioneImplementazione();</span>
+<span class="fc" id="L33">    }</span>
+
+    @AfterEach
+    public void delete(){
+        //se viene erroneamente viene creata comunque una discussione, dopo ogni test viene eliminata
+        //ripristinando lo stato del DB
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if(discussione!=null)</span>
+<span class="fc" id="L40">            discussioneDAO.doDelete(discussione.getIdDiscussione());</span>
+<span class="fc" id="L41">    }</span>
+
+    @ParameterizedTest
+    @CsvSource({
+            &quot;Nuovo titolo,1,1,''&quot;,
+            &quot;Nuovo titolo, 1, 1,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries but also the leap into electronic typesetting remaining essentially unchanged. it was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages and more recently with desktop publishing&quot;,
+            &quot;'',1,1,commento&quot;,
+            &quot;Lorem Ipsum is simply dummy text of the printing and typesetting industry.,1,1,commento&quot;,
+            &quot;Nuovo titolo,0,1,commento&quot;
+    })
+    public void creaDiscussioneFailTest(String titolo, int idCategoria, int idAutore, String commento){
+<span class="fc" id="L52">        discussione = gestioneDiscussioneService.creaDiscussione(titolo, idCategoria, idAutore, commento);</span>
+<span class="fc" id="L53">        assertNull(discussione);</span>
+<span class="fc" id="L54">    }</span>
+
+    @ParameterizedTest
+    @CsvSource({
+            &quot;Nuovo titolo, 1, 1, commento&quot;})
+    public void creaDiscussioneSuccessTest(String titolo, int idCategoria, int idAutore, String commento){
+<span class="fc" id="L60">        discussione = gestioneDiscussioneService.creaDiscussione(titolo, idCategoria, idAutore, commento);</span>
+<span class="fc" id="L61">        assertNotNull(discussione);</span>
+<span class="fc" id="L62">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

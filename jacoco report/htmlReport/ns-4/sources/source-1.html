@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > AggiornaCategoriaDiscussioneServlet</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.gestioneCategoriaDiscussione.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: AggiornaCategoriaDiscussioneServlet (unisa.it.formulaonline.gestioneCategoriaDiscussione.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AggiornaCategoriaDiscussioneServlet</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.gestioneCategoriaDiscussione.controller;
+&nbsp;
+&nbsp;import jakarta.servlet.ServletException;
+&nbsp;import jakarta.servlet.annotation.WebServlet;
+&nbsp;import jakarta.servlet.http.HttpServlet;
+&nbsp;import jakarta.servlet.http.HttpServletRequest;
+&nbsp;import jakarta.servlet.http.HttpServletResponse;
+&nbsp;import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneImplementazione;
+&nbsp;import unisa.it.formulaonline.gestioneCategoriaDiscussione.service.GestioneCategoriaDiscussioneService;
+&nbsp;import unisa.it.formulaonline.model.entity.Lettore;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;
+&nbsp;@WebServlet(&quot;/aggiornaCategoria&quot;)
+<b class="nc">&nbsp;public class AggiornaCategoriaDiscussioneServlet extends HttpServlet {</b>
+&nbsp;    @Override
+&nbsp;    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<b class="nc">&nbsp;        super.doGet(req, resp);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * modifica una categoria
+&nbsp;     * @param req
+&nbsp;     * @param resp
+&nbsp;     * @throws ServletException
+&nbsp;     * @throws IOException
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<b class="nc">&nbsp;        Lettore lettore = (Lettore) req.getSession().getAttribute(&quot;lettore&quot;);</b>
+<b class="nc">&nbsp;        String nome = req.getParameter(&quot;nome&quot;);</b>
+<b class="nc">&nbsp;        String descrizione = req.getParameter(&quot;descrizione&quot;);</b>
+<b class="nc">&nbsp;        String categoriaPadre = req.getParameter(&quot;categoriaPadre&quot;);</b>
+<b class="nc">&nbsp;        String categoria = req.getParameter(&quot;categoria&quot;);</b>
+<b class="nc">&nbsp;        String destinazione = &quot;home&quot;;</b>
+<b class="nc">&nbsp;        if (lettore != null &amp;&amp; nome.length() &gt;= 5 &amp;&amp; nome.length() &lt;= 50 &amp;&amp;</b>
+<b class="nc">&nbsp;                descrizione.length()&lt;=300 &amp;&amp; !categoria.isEmpty()) {</b>
+<b class="nc">&nbsp;            int idCategoriaPadre = 0;</b>
+<b class="nc">&nbsp;            if(!categoriaPadre.isEmpty()) {</b>
+<b class="nc">&nbsp;                idCategoriaPadre = Integer.parseInt(categoriaPadre);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            int idCategoria = Integer.parseInt(categoria);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (lettore.getModeratore()) {</b>
+<b class="nc">&nbsp;                GestioneCategoriaDiscussioneService gs = new GestioneCategoriaDiscussioneImplementazione();</b>
+<b class="nc">&nbsp;                gs.modificaCategoriaDiscussione(idCategoria, nome, descrizione, idCategoriaPadre);</b>
+<b class="nc">&nbsp;                destinazione=getServletContext().getContextPath()+&quot;/categoria?idCategoria=&quot;+idCategoria;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        resp.sendRedirect(destinazione);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

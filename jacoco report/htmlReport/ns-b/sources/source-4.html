@@ -1,0 +1,238 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Lettore</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.model.entity</a>
+</div>
+
+<h1>Coverage Summary for Class: Lettore (unisa.it.formulaonline.model.entity)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Lettore</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/50)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.model.entity;
+&nbsp;
+&nbsp;import java.util.Date;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;public class Lettore {
+&nbsp;    private Integer idLettore;
+&nbsp;    private String email;
+&nbsp;    private String password;
+&nbsp;    private String nickname;
+&nbsp;    private String scuderiaPref;
+&nbsp;    private Boolean moderatore;
+&nbsp;    private Date dataFineSospensione;
+&nbsp;
+<b class="nc">&nbsp;    public Lettore(Integer idLettore, String email, String password, String nickname, String scuderiaPref, Boolean moderatore, Date dataFineSospensione) {</b>
+<b class="nc">&nbsp;        this.idLettore = idLettore;</b>
+<b class="nc">&nbsp;        this.email = email;</b>
+<b class="nc">&nbsp;        this.password = password;</b>
+<b class="nc">&nbsp;        this.nickname = nickname;</b>
+<b class="nc">&nbsp;        this.scuderiaPref = scuderiaPref;</b>
+<b class="nc">&nbsp;        this.moderatore = moderatore;</b>
+<b class="nc">&nbsp;        this.dataFineSospensione = dataFineSospensione;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public Lettore(Integer idLettore, String email, String password, String nickname, String scuderiaPref, Boolean moderatore) {</b>
+<b class="nc">&nbsp;        this.idLettore = idLettore;</b>
+<b class="nc">&nbsp;        this.email = email;</b>
+<b class="nc">&nbsp;        this.password = password;</b>
+<b class="nc">&nbsp;        this.nickname = nickname;</b>
+<b class="nc">&nbsp;        this.scuderiaPref = scuderiaPref;</b>
+<b class="nc">&nbsp;        this.moderatore = moderatore;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public Lettore(Integer idLettore, String email, String password, String nickname, String scuderiaPref) {</b>
+<b class="nc">&nbsp;        this.idLettore = idLettore;</b>
+<b class="nc">&nbsp;        this.email = email;</b>
+<b class="nc">&nbsp;        this.password = password;</b>
+<b class="nc">&nbsp;        this.nickname = nickname;</b>
+<b class="nc">&nbsp;        this.scuderiaPref = scuderiaPref;</b>
+<b class="nc">&nbsp;        this.moderatore = moderatore;</b>
+&nbsp;    }
+<b class="nc">&nbsp;    public Lettore(String email, String password, String nickname, String scuderiaPref) {</b>
+<b class="nc">&nbsp;        this.idLettore = idLettore;</b>
+<b class="nc">&nbsp;        this.email = email;</b>
+<b class="nc">&nbsp;        this.password = password;</b>
+<b class="nc">&nbsp;        this.nickname = nickname;</b>
+<b class="nc">&nbsp;        this.scuderiaPref = scuderiaPref;</b>
+<b class="nc">&nbsp;        this.moderatore = moderatore;</b>
+&nbsp;    }
+<b class="nc">&nbsp;    public Lettore() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Date getDataFineSospensione() {
+<b class="nc">&nbsp;        return dataFineSospensione;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setDataFineSospensione(Date dataFineSospensione) {
+<b class="nc">&nbsp;        this.dataFineSospensione = dataFineSospensione;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public Integer getIdLettore() {
+<b class="nc">&nbsp;        return idLettore;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setIdLettore(Integer idLettore) {
+<b class="nc">&nbsp;        this.idLettore = idLettore;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getEmail() {
+<b class="nc">&nbsp;        return email;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEmail(String email) {
+<b class="nc">&nbsp;        this.email = email;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getPassword() {
+<b class="nc">&nbsp;        return password;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPassword(String password) {
+<b class="nc">&nbsp;        this.password = password;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getNickname() {
+<b class="nc">&nbsp;        return nickname;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNickname(String nickname) {
+<b class="nc">&nbsp;        this.nickname = nickname;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getScuderiaPref() {
+<b class="nc">&nbsp;        return scuderiaPref;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setScuderiaPref(String scuderiaPref) {
+<b class="nc">&nbsp;        this.scuderiaPref = scuderiaPref;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Boolean getModeratore() {
+<b class="nc">&nbsp;        return moderatore;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setModeratore(Boolean moderatore) {
+<b class="nc">&nbsp;        this.moderatore = moderatore;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        return &quot;Lettore{&quot; +</b>
+&nbsp;                &quot;idLettore=&quot; + idLettore +
+&nbsp;                &quot;, email=&#39;&quot; + email + &#39;\&#39;&#39; +
+&nbsp;                &quot;, password=&#39;&quot; + password + &#39;\&#39;&#39; +
+&nbsp;                &quot;, nickname=&#39;&quot; + nickname + &#39;\&#39;&#39; +
+&nbsp;                &quot;, scuderiaPref=&#39;&quot; + scuderiaPref + &#39;\&#39;&#39; +
+&nbsp;                &quot;, moderatore=&quot; + moderatore +
+&nbsp;                &#39;}&#39;;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o) {
+<b class="nc">&nbsp;        if (this == o) return true;</b>
+<b class="nc">&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+<b class="nc">&nbsp;        Lettore lettore = (Lettore) o;</b>
+<b class="nc">&nbsp;        return Objects.equals(idLettore, lettore.idLettore) &amp;&amp; Objects.equals(email, lettore.email) &amp;&amp; Objects.equals(password, lettore.password) &amp;&amp; Objects.equals(nickname, lettore.nickname) &amp;&amp; Objects.equals(scuderiaPref, lettore.scuderiaPref) &amp;&amp; Objects.equals(moderatore, lettore.moderatore);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode() {
+<b class="nc">&nbsp;        return Objects.hash(idLettore, email, password, nickname, scuderiaPref, moderatore);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

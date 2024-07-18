@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestioneSegnalazioneServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.gestioneSegnalazione.service</a> &gt; <span class="el_source">GestioneSegnalazioneServiceImpl.java</span></div><h1>GestioneSegnalazioneServiceImpl.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.gestioneSegnalazione.service;
+
+import unisa.it.formulaonline.autenticazione.service.LettoreService;
+import unisa.it.formulaonline.autenticazione.service.LettoreServiceImpl;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneImplementazione;
+import unisa.it.formulaonline.gestioneDiscussione.service.GestioneDiscussioneService;
+import unisa.it.formulaonline.model.dao.LettoreDAO;
+import unisa.it.formulaonline.model.dao.SegnalazioneDAO;
+import unisa.it.formulaonline.model.entity.Commento;
+import unisa.it.formulaonline.model.entity.Lettore;
+import unisa.it.formulaonline.model.entity.Segnalazione;
+
+import java.sql.Date;
+import java.util.List;
+
+<span class="nc" id="L16">public class GestioneSegnalazioneServiceImpl implements GestioneSegnalazioneService{</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Segnalazione creaSegnalazione(int idCommento, int idAutore, String corpo) {
+<span class="nc" id="L23">        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();</span>
+<span class="nc" id="L24">        GestioneDiscussioneService discussioneService = new GestioneDiscussioneImplementazione();</span>
+
+<span class="nc" id="L26">        Segnalazione s = segnalazioneDAO.doSave(idAutore, idCommento, corpo);</span>
+<span class="nc" id="L27">        Commento c = discussioneService.ottieniCommentoDaId(idCommento);</span>
+<span class="nc" id="L28">        s.setCommento(c);</span>
+<span class="nc" id="L29">        return s;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void sospendiLettore(int idSegnalazione, Date dataFineSospensione) {
+<span class="nc" id="L37">        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();</span>
+<span class="nc" id="L38">        LettoreDAO lettoreDAO = new LettoreDAO();</span>
+<span class="nc" id="L39">        GestioneDiscussioneService discussioneService = new GestioneDiscussioneImplementazione();</span>
+
+<span class="nc" id="L41">        Segnalazione segnalazione = segnalazioneDAO.doRetrieveById(idSegnalazione);</span>
+//        lettoreService.ottieniLettoreDaId(segnalazione.getAutore().getIdLettore());
+<span class="nc" id="L43">        Lettore lettore = segnalazione.getCommento().getAutore();</span>
+<span class="nc" id="L44">        lettore.setDataFineSospensione(dataFineSospensione);</span>
+//        lettoreService.aggiornaLettore(lettore.getIdLettore(), );
+<span class="nc" id="L46">        lettoreDAO.doUpdate(lettore.getIdLettore(), lettore.getEmail(), lettore.getPassword(),</span>
+<span class="nc" id="L47">                lettore.getNickname(), lettore.getScuderiaPref(), lettore.getModeratore(), dataFineSospensione);</span>
+<span class="nc" id="L48">        segnalazioneDAO.doDelete(segnalazione.getIdSegnalazione());</span>
+<span class="nc" id="L49">        discussioneService.rimuoviCommento(segnalazione.getCommento().getIdCommento(), segnalazione.getCommento().</span>
+<span class="nc" id="L50">                getDiscussione().getIdDiscussione());</span>
+        /*dovrebbe anche cancellare il commento mo che ci penso ed a cascata tutte le segnalazioni collegate
+        CommentoDAO cd = new CommentoDAO();
+        cd.doDelete(segnalazione.getCommento().getIdCommento());
+        */
+<span class="nc" id="L55">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void eliminaSegnalazione(int idSegnalazione) {
+<span class="nc" id="L62">        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();</span>
+
+<span class="nc" id="L64">        segnalazioneDAO.doDelete(idSegnalazione);</span>
+<span class="nc" id="L65">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List&lt;Segnalazione&gt; ottieniSegnalazioni() {
+<span class="nc" id="L72">        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();</span>
+
+<span class="nc" id="L74">        return segnalazioneDAO.doRetrieveAll();</span>
+    }
+
+    public Segnalazione ottieniSegnalazioneDaId(int idSegnalazione){
+<span class="nc" id="L78">        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();</span>
+
+<span class="nc" id="L80">        return segnalazioneDAO.doRetrieveById(idSegnalazione);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

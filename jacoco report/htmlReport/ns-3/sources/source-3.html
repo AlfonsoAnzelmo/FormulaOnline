@@ -1,0 +1,114 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > LettoreService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.autenticazione.service</a>
+</div>
+
+<h1>Coverage Summary for Class: LettoreService (unisa.it.formulaonline.autenticazione.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">LettoreService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.autenticazione.service;
+&nbsp;
+&nbsp;import unisa.it.formulaonline.model.entity.Lettore;
+&nbsp;
+&nbsp;import java.util.Date;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public interface LettoreService {
+&nbsp;    /**
+&nbsp;     * Preso un lettore già esistente lo elegge a moderatore
+&nbsp;     * @param idLettore
+&nbsp;     * @return il lettore eletto, il relativo parametro &quot;moderatore&quot; sarà vero se è l&#39;elezione è avvenuta con successo
+&nbsp;     * falso altrimenti
+&nbsp;     */
+&nbsp;    public Lettore nominaModeratore(int idLettore);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Modifica ed aggiorna i dati di un lettore già esistente
+&nbsp;     * @param idLettore relativo al lettore da modificare
+&nbsp;     * @return il lettore aggiornato oppure null se la modifica non è andata a buon fine
+&nbsp;     */
+&nbsp;    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,
+&nbsp;                                   String scuderiaPreferita, Boolean moderatore, Date dataFineSospensione);
+&nbsp;
+&nbsp;    public Lettore aggiornaLettore(int idLettore, String email, String password, String nickname,String scuderiaPreferita);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Elimina un lettore partendo dal suo codice
+&nbsp;      * @param idLettore
+&nbsp;     */
+&nbsp;    public void eliminaLettore(int idLettore);
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * ottiene un lettore partendo dall&#39;id
+&nbsp;     * @param idLettore
+&nbsp;     * @return il lettore richesto, null se non esiste
+&nbsp;     */
+&nbsp;    public Lettore ottieniLettoreDaId(int idLettore);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * restituisce una lista dei lettori non moderatori
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public List&lt;Lettore&gt; ottieniLettoriNonModeratori();
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LettoreDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.model.dao</a> &gt; <span class="el_source">LettoreDAO.java</span></div><h1>LettoreDAO.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.model.dao;
+
+import unisa.it.formulaonline.model.entity.Lettore;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Classe per la gestione dei lettori nel database.
+ */
+<span class="fc" id="L12">public class LettoreDAO {</span>
+    /**
+     * Metodo che restituisce un lettore partendo dal suo identificativo
+     * @param id relativo al lettore da recuperare
+     * @return il lettore se esiste, null altrimenti
+     */
+    public Lettore doRetrieveById(int id) {
+<span class="fc" id="L19">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="fc" id="L20">            PreparedStatement ps =</span>
+<span class="fc" id="L21">                    con.prepareStatement(&quot;SELECT l.idLettore, l.email,l.pass, l.nickname, l.scuderiaPreferita, l.moderatore, l.dataFineSospensione&quot; +</span>
+                            &quot;  FROM formulaonlinedb.lettore l  &quot; +
+                            &quot; WHERE l.idLettore=?&quot;);
+
+<span class="fc" id="L25">            ps.setInt(1, id);</span>
+<span class="fc" id="L26">            ResultSet rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">            if (rs.next()) {</span>
+<span class="fc" id="L28">                Lettore lettore = new Lettore();</span>
+<span class="fc" id="L29">                lettore.setIdLettore(rs.getInt(1));</span>
+<span class="fc" id="L30">                lettore.setEmail(rs.getString(2));</span>
+<span class="fc" id="L31">                lettore.setPassword(rs.getString(3));</span>
+<span class="fc" id="L32">                lettore.setNickname(rs.getString(4));</span>
+<span class="fc" id="L33">                lettore.setScuderiaPref(rs.getString(5));</span>
+<span class="fc" id="L34">                lettore.setModeratore(rs.getBoolean(6));</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">                if(rs.getDate(7) == null)</span>
+<span class="fc" id="L36">                    lettore.setDataFineSospensione(null);</span>
+                else
+<span class="nc" id="L38">                    lettore.setDataFineSospensione(new java.util.Date(rs.getDate(7).getTime()));</span>
+
+
+<span class="fc" id="L41">                return lettore;</span>
+            }
+<span class="nc" id="L43">            return null;</span>
+
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L46">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Metodo per recuperare un lettore partendo da email e password, usato per il login
+     * @param email relativo al lettore
+     * @param password dell'account
+     * @return il lettore se le credenziali sono corrette, null altrimenti
+     */
+    public Lettore doRetrieveByEmailPassword(String email, String password) {
+<span class="nc" id="L57">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L58">            PreparedStatement ps =</span>
+<span class="nc" id="L59">                    con.prepareStatement(&quot;SELECT l.idLettore, l.email,l.pass, l.nickname, l.scuderiaPreferita, l.moderatore, l.dataFineSospensione&quot; +</span>
+                            &quot;  FROM formulaonlinedb.lettore l  &quot; +
+                            &quot; WHERE l.email=? AND BINARY l.pass=?&quot;);
+
+<span class="nc" id="L63">            ps.setString(1, email);</span>
+<span class="nc" id="L64">            ps.setString(2, password);</span>
+<span class="nc" id="L65">            ResultSet rs = ps.executeQuery();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (rs.next()) {</span>
+<span class="nc" id="L67">                rs.getInt(1);</span>
+<span class="nc" id="L68">                Lettore lettore = new Lettore();</span>
+<span class="nc" id="L69">                lettore.setIdLettore(rs.getInt(1));</span>
+<span class="nc" id="L70">                lettore.setEmail(rs.getString(2));</span>
+<span class="nc" id="L71">                lettore.setPassword(rs.getString(3));</span>
+<span class="nc" id="L72">                lettore.setNickname(rs.getString(4));</span>
+<span class="nc" id="L73">                lettore.setScuderiaPref(rs.getString(5));</span>
+<span class="nc" id="L74">                lettore.setModeratore(rs.getBoolean(6));</span>
+<span class="nc" id="L75">                Date dataFine = rs.getDate(7);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                if(dataFine!=null){</span>
+<span class="nc" id="L77">                    lettore.setDataFineSospensione(new java.util.Date(dataFine.getTime()));</span>
+                }
+
+<span class="nc" id="L80">                return lettore;</span>
+            }
+<span class="nc" id="L82">            return null;</span>
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L85">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Resituisce tutti i lettori
+     * @return la lista di tutti i lettori, la lista sarà vuota se non esistono lettori
+     */
+    public List&lt;Lettore&gt; doRetrieveAll() {
+<span class="nc" id="L94">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L95">            PreparedStatement ps =</span>
+<span class="nc" id="L96">                    con.prepareStatement(&quot;SELECT l.idLettore, l.email,l.pass, l.nickname, l.scuderiaPreferita, l.moderatore, l.dataFineSospensione&quot; +</span>
+                            &quot;  FROM formulaonlinedb.lettore l&quot;);
+
+<span class="nc" id="L99">            ResultSet rs = ps.executeQuery();</span>
+<span class="nc" id="L100">            List&lt;Lettore&gt; lettoreList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">            while (rs.next()){</span>
+<span class="nc" id="L102">                Lettore lettore = new Lettore();</span>
+<span class="nc" id="L103">                lettore.setIdLettore(rs.getInt(1));</span>
+<span class="nc" id="L104">                lettore.setEmail(rs.getString(2));</span>
+<span class="nc" id="L105">                lettore.setPassword(rs.getString(3));</span>
+<span class="nc" id="L106">                lettore.setNickname(rs.getString(4));</span>
+<span class="nc" id="L107">                lettore.setScuderiaPref(rs.getString(5));</span>
+<span class="nc" id="L108">                lettore.setModeratore(rs.getBoolean(6));</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                if(rs.getDate(7) == null)</span>
+<span class="nc" id="L110">                    lettore.setDataFineSospensione(null);</span>
+                else
+<span class="nc" id="L112">                    lettore.setDataFineSospensione(new java.util.Date(rs.getDate(7).getTime()));</span>
+<span class="nc" id="L113">                lettoreList.add(lettore);</span>
+<span class="nc" id="L114">            }</span>
+<span class="nc" id="L115">            return lettoreList;</span>
+
+<span class="nc" id="L117">        } catch (SQLException e) {</span>
+<span class="nc" id="L118">            throw new RuntimeException(e);</span>
+        }
+
+    }
+
+    /**
+     * Resituisce tutti i lettori che non sono moderatori
+     * @return la lista di tutti i lettori che non sono moderatori, la lista sarà vuota se non esistono lettori
+     */
+    public List&lt;Lettore&gt; doRetrieveAllNonModeratore() {
+<span class="nc" id="L128">        List&lt;Lettore&gt; lettoreList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L129">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L130">            PreparedStatement ps =</span>
+<span class="nc" id="L131">                    con.prepareStatement(&quot;SELECT l.idLettore, l.email,l.pass, l.nickname, &quot; +</span>
+                            &quot;l.scuderiaPreferita, l.moderatore, l.dataFineSospensione&quot; +
+                            &quot;  FROM formulaonlinedb.lettore l&quot; +
+                            &quot; WHERE l.moderatore = 0&quot;);
+
+<span class="nc" id="L136">            ResultSet rs = ps.executeQuery();</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L138">                Lettore lettore = new Lettore();</span>
+<span class="nc" id="L139">                lettore.setIdLettore(rs.getInt(1));</span>
+<span class="nc" id="L140">                lettore.setEmail(rs.getString(2));</span>
+<span class="nc" id="L141">                lettore.setPassword(rs.getString(3));</span>
+<span class="nc" id="L142">                lettore.setNickname(rs.getString(4));</span>
+<span class="nc" id="L143">                lettore.setScuderiaPref(rs.getString(5));</span>
+<span class="nc" id="L144">                lettore.setModeratore(rs.getBoolean(6));</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">                if(rs.getDate(7) == null)</span>
+<span class="nc" id="L146">                    lettore.setDataFineSospensione(null);</span>
+                else
+<span class="nc" id="L148">                    lettore.setDataFineSospensione(new java.util.Date(rs.getDate(7).getTime()));</span>
+
+<span class="nc" id="L150">                lettoreList.add(lettore);</span>
+<span class="nc" id="L151">            }</span>
+<span class="nc" id="L152">            return lettoreList;</span>
+
+<span class="nc" id="L154">        } catch (SQLException e) {</span>
+<span class="nc" id="L155">            throw new RuntimeException(e);</span>
+        }
+
+    }
+
+
+    public Lettore doSave(Lettore lettore) {
+<span class="nc" id="L162">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L163">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;INSERT INTO formulaonlinedb.lettore (email, pass, nickname, scuderiaPreferita, moderatore, dataFineSospensione)&quot; +
+                            &quot;  VALUES(?,?,?,?,?,?)&quot;, Statement.RETURN_GENERATED_KEYS);
+
+<span class="nc" id="L167">            ps.setString(1, lettore.getEmail());</span>
+<span class="nc" id="L168">            ps.setString(2, lettore.getPassword());</span>
+<span class="nc" id="L169">            ps.setString(3, lettore.getNickname());</span>
+<span class="nc" id="L170">            ps.setString(4, lettore.getScuderiaPref());</span>
+<span class="nc" id="L171">            ps.setBoolean(5, lettore.getModeratore());</span>
+<span class="nc" id="L172">            ps.setDate(6, (Date) lettore.getDataFineSospensione());</span>
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L175">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+<span class="nc" id="L177">            ResultSet rs = ps.getGeneratedKeys();</span>
+<span class="nc" id="L178">            rs.next();</span>
+<span class="nc" id="L179">            int id = rs.getInt(1);</span>
+<span class="nc" id="L180">            lettore.setIdLettore(id);</span>
+<span class="nc" id="L181">            return lettore;</span>
+<span class="nc" id="L182">        } catch (SQLException e) {</span>
+<span class="nc" id="L183">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Salva un nuovo lettore nel database
+     * @param email del nuovo lettore
+     * @param password
+     * @param nickname
+     * @param scuderiaPreferita
+     * @return il lettore se l'inserimento è andato a buon fine
+     */
+    public Lettore doSave(String email, String password, String nickname, String scuderiaPreferita) {
+<span class="fc" id="L196">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="fc" id="L197">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;INSERT INTO formulaonlinedb.lettore (email, pass, nickname, scuderiaPreferita)&quot; +
+                            &quot;  VALUES(?,?,?,?)&quot;, Statement.RETURN_GENERATED_KEYS);
+
+<span class="fc" id="L201">            ps.setString(1, email);</span>
+<span class="fc" id="L202">            ps.setString(2, password);</span>
+<span class="fc" id="L203">            ps.setString(3, nickname);</span>
+<span class="fc" id="L204">            ps.setString(4, scuderiaPreferita);</span>
+
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L207">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+<span class="fc" id="L209">            ResultSet rs = ps.getGeneratedKeys();</span>
+<span class="fc" id="L210">            rs.next();</span>
+<span class="fc" id="L211">            int id = rs.getInt(1);</span>
+<span class="fc" id="L212">            Lettore lettore = new Lettore(id, email, password, nickname, scuderiaPreferita, false);</span>
+<span class="fc" id="L213">            lettore.setIdLettore(id);</span>
+<span class="fc" id="L214">            return lettore;</span>
+<span class="nc" id="L215">        } catch (SQLException e) {</span>
+<span class="nc" id="L216">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    /**
+     * Metodo per poter aggiornare tutti i parametri di un lettore
+     * @param idLettore
+     * @param email
+     * @param password
+     * @param nickname
+     * @param scuderiaPreferita
+     * @param moderatore
+     * @param dataFineSospensione
+     */
+    public void doUpdate(int idLettore, String email, String password, String nickname, String scuderiaPreferita,
+                         Boolean moderatore, java.util.Date dataFineSospensione) {
+<span class="nc" id="L232">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L233">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot; UPDATE formulaonlinedb.lettore &quot; +
+                            &quot; SET email = ?, pass = ?, nickname = ?, scuderiaPreferita = ?,&quot; +
+                            &quot; dataFineSospensione = ?, moderatore = ? &quot; +
+                            &quot;  WHERE idLettore=? &quot;);
+
+<span class="nc" id="L239">            ps.setString(1, email);</span>
+<span class="nc" id="L240">            ps.setString(2, password);</span>
+<span class="nc" id="L241">            ps.setString(3, nickname);</span>
+<span class="nc" id="L242">            ps.setString(4, scuderiaPreferita);</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">            if(dataFineSospensione == null)</span>
+<span class="nc" id="L244">                ps.setDate(5,null);</span>
+<span class="nc" id="L245">            else ps.setDate(5, new Date(dataFineSospensione.getTime()));</span>
+
+<span class="nc" id="L247">            ps.setBoolean(6, moderatore);</span>
+<span class="nc" id="L248">            ps.setInt(7, idLettore);</span>
+
+<span class="nc bnc" id="L250" title="All 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L251">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+
+
+<span class="nc" id="L255">        } catch (SQLException e) {</span>
+<span class="nc" id="L256">            throw new RuntimeException(e);</span>
+<span class="nc" id="L257">        }</span>
+<span class="nc" id="L258">    }</span>
+
+    /**
+     * metodo per aggiornare un lettore, limitato ai parametri che il lettore può modificare in autonomia
+     * @param idLettore
+     * @param email
+     * @param password
+     * @param nickname
+     * @param scuderiaPreferita
+     */
+    public void doUpdate(int idLettore, String email, String password, String nickname, String scuderiaPreferita) {
+<span class="nc" id="L269">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="nc" id="L270">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot; UPDATE formulaonlinedb.lettore &quot; +
+                            &quot; SET email = ?, pass = ?, nickname = ?, scuderiaPreferita = ? &quot; +
+                            &quot; WHERE idLettore=? &quot;);
+
+<span class="nc" id="L275">            ps.setString(1, email);</span>
+<span class="nc" id="L276">            ps.setString(2, password);</span>
+<span class="nc" id="L277">            ps.setString(3, nickname);</span>
+<span class="nc" id="L278">            ps.setString(4, scuderiaPreferita);</span>
+<span class="nc" id="L279">            ps.setInt(5, idLettore);</span>
+
+<span class="nc bnc" id="L281" title="All 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L282">                throw new RuntimeException(&quot;UPDATE error.&quot;);</span>
+            }
+
+<span class="nc" id="L285">        } catch (SQLException e) {</span>
+<span class="nc" id="L286">            throw new RuntimeException(e);</span>
+<span class="nc" id="L287">        }</span>
+<span class="nc" id="L288">    }</span>
+
+    /**
+     * Metodo per eliminare un lettore partendo dal suo id
+     * @param idLettore da eliminare
+     */
+    public void doDelete(int idLettore) {
+<span class="fc" id="L295">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="fc" id="L296">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;DELETE FROM formulaonlinedb.lettore WHERE idLettore=?&quot;);
+<span class="fc" id="L298">            ps.setInt(1, idLettore);</span>
+<span class="fc" id="L299">            CommentoDAO commentoDAO = new CommentoDAO();</span>
+<span class="fc" id="L300">            commentoDAO.doUpdateAutore(idLettore, 1);</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L302">                throw new RuntimeException(&quot;DELETE error.&quot;);</span>
+            }
+<span class="nc" id="L304">        } catch (SQLException e) {</span>
+<span class="nc" id="L305">            throw new RuntimeException(e);</span>
+<span class="fc" id="L306">        }</span>
+<span class="fc" id="L307">    }</span>
+
+    /**
+     * Controlla che l'email ed il nickname non siano già utilizzati
+     * @param email
+     * @param nickname
+     * @return true se almeno uno dei due parametri è già in uso da un lettore, false altrimenti
+     */
+    public boolean checkExists(String email, String nickname) {
+<span class="fc" id="L316">        try (Connection con = ConPool.getConnection()) {</span>
+<span class="fc" id="L317">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;SELECT * FROM formulaonlinedb.lettore WHERE email=? OR nickname=?&quot;);
+<span class="fc" id="L319">            ps.setString(1, email);</span>
+<span class="fc" id="L320">            ps.setString(2, nickname);</span>
+
+<span class="fc" id="L322">            ResultSet rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">            if (rs.next()) {</span>
+<span class="nc" id="L324">                return true;</span>
+            }
+<span class="fc" id="L326">            return false;</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">        } catch (SQLException e) {</span>
+<span class="nc" id="L328">            throw new RuntimeException(e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

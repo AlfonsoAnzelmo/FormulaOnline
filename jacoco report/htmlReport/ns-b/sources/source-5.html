@@ -1,0 +1,164 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Segnalazione</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">unisa.it.formulaonline.model.entity</a>
+</div>
+
+<h1>Coverage Summary for Class: Segnalazione (unisa.it.formulaonline.model.entity)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Segnalazione</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package unisa.it.formulaonline.model.entity;
+&nbsp;
+&nbsp;public class Segnalazione {
+&nbsp;    private int idSegnalazione;
+&nbsp;    private Commento commento;
+&nbsp;    private Lettore autore;
+&nbsp;    private String corpo;
+&nbsp;
+<b class="nc">&nbsp;    public Segnalazione() {</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public Segnalazione(int idSegnalazione) {</b>
+<b class="nc">&nbsp;        this.idSegnalazione = idSegnalazione;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public Segnalazione(Commento commento, Lettore autore, String corpo) {</b>
+<b class="nc">&nbsp;        this.commento = commento;</b>
+<b class="nc">&nbsp;        this.autore = autore;</b>
+<b class="nc">&nbsp;        this.corpo = corpo;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public Segnalazione(int idSegnalazione, Commento commento, Lettore autore, String corpo) {</b>
+<b class="nc">&nbsp;        this.idSegnalazione = idSegnalazione;</b>
+<b class="nc">&nbsp;        this.commento = commento;</b>
+<b class="nc">&nbsp;        this.autore = autore;</b>
+<b class="nc">&nbsp;        this.corpo = corpo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Commento getCommento() {
+<b class="nc">&nbsp;        return commento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCommento(Commento commento) {
+<b class="nc">&nbsp;        this.commento = commento;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Lettore getAutore() {
+<b class="nc">&nbsp;        return autore;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setAutore(Lettore autore) {
+<b class="nc">&nbsp;        this.autore = autore;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getCorpo() {
+<b class="nc">&nbsp;        return corpo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setCorpo(String corpo) {
+<b class="nc">&nbsp;        this.corpo = corpo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getIdSegnalazione() {
+<b class="nc">&nbsp;        return idSegnalazione;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setIdSegnalazione(int idSegnalazione) {
+<b class="nc">&nbsp;        this.idSegnalazione = idSegnalazione;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-13 00:10</div>
+</div>
+</body>
+</html>

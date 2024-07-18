@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Lettore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">All in FormulaOnline Coverage Results</a> &gt; <a href="index.source.html" class="el_package">unisa.it.formulaonline.model.entity</a> &gt; <span class="el_source">Lettore.java</span></div><h1>Lettore.java</h1><pre class="source lang-java linenums">package unisa.it.formulaonline.model.entity;
+
+import java.util.Date;
+import java.util.Objects;
+
+/**
+ * Classe che rappresenta un lettore, l'utente di base del sistema. Contiene un identificativo,
+ * l'email, la password per accedere, un nickname unico, la scuderia preferita, se è un moderatore
+ * e la data di fine sospensione, nel caso ne abbia ricevuta una
+ */
+public class Lettore {
+    private Integer idLettore;
+    private String email;
+    private String password;
+    private String nickname;
+    private String scuderiaPref;
+    private Boolean moderatore;
+    private Date dataFineSospensione;
+
+<span class="nc" id="L20">    public Lettore(Integer idLettore, String email, String password, String nickname, String scuderiaPref, Boolean moderatore, Date dataFineSospensione) {</span>
+<span class="nc" id="L21">        this.idLettore = idLettore;</span>
+<span class="nc" id="L22">        this.email = email;</span>
+<span class="nc" id="L23">        this.password = password;</span>
+<span class="nc" id="L24">        this.nickname = nickname;</span>
+<span class="nc" id="L25">        this.scuderiaPref = scuderiaPref;</span>
+<span class="nc" id="L26">        this.moderatore = moderatore;</span>
+<span class="nc" id="L27">        this.dataFineSospensione = dataFineSospensione;</span>
+<span class="nc" id="L28">    }</span>
+
+<span class="fc" id="L30">    public Lettore(Integer idLettore, String email, String password, String nickname, String scuderiaPref, Boolean moderatore) {</span>
+<span class="fc" id="L31">        this.idLettore = idLettore;</span>
+<span class="fc" id="L32">        this.email = email;</span>
+<span class="fc" id="L33">        this.password = password;</span>
+<span class="fc" id="L34">        this.nickname = nickname;</span>
+<span class="fc" id="L35">        this.scuderiaPref = scuderiaPref;</span>
+<span class="fc" id="L36">        this.moderatore = moderatore;</span>
+<span class="fc" id="L37">    }</span>
+
+<span class="nc" id="L39">    public Lettore(Integer idLettore, String email, String password, String nickname, String scuderiaPref) {</span>
+<span class="nc" id="L40">        this.idLettore = idLettore;</span>
+<span class="nc" id="L41">        this.email = email;</span>
+<span class="nc" id="L42">        this.password = password;</span>
+<span class="nc" id="L43">        this.nickname = nickname;</span>
+<span class="nc" id="L44">        this.scuderiaPref = scuderiaPref;</span>
+<span class="nc" id="L45">        this.moderatore = moderatore;</span>
+<span class="nc" id="L46">    }</span>
+
+<span class="nc" id="L48">    public Lettore(String email, String password, String nickname, String scuderiaPref) {</span>
+<span class="nc" id="L49">        this.idLettore = idLettore;</span>
+<span class="nc" id="L50">        this.email = email;</span>
+<span class="nc" id="L51">        this.password = password;</span>
+<span class="nc" id="L52">        this.nickname = nickname;</span>
+<span class="nc" id="L53">        this.scuderiaPref = scuderiaPref;</span>
+<span class="nc" id="L54">        this.moderatore = moderatore;</span>
+<span class="nc" id="L55">    }</span>
+
+<span class="fc" id="L57">    public Lettore() {</span>
+<span class="fc" id="L58">    }</span>
+
+    public Integer getIdLettore() {
+<span class="fc" id="L61">        return idLettore;</span>
+    }
+
+    public void setIdLettore(Integer idLettore) {
+<span class="fc" id="L65">        this.idLettore = idLettore;</span>
+<span class="fc" id="L66">    }</span>
+
+    public String getEmail() {
+<span class="nc" id="L69">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="fc" id="L73">        this.email = email;</span>
+<span class="fc" id="L74">    }</span>
+
+    public String getPassword() {
+<span class="nc" id="L77">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="fc" id="L81">        this.password = password;</span>
+<span class="fc" id="L82">    }</span>
+
+    public String getNickname() {
+<span class="nc" id="L85">        return nickname;</span>
+    }
+
+    public void setNickname(String nickname) {
+<span class="fc" id="L89">        this.nickname = nickname;</span>
+<span class="fc" id="L90">    }</span>
+
+    public String getScuderiaPref() {
+<span class="nc" id="L93">        return scuderiaPref;</span>
+    }
+
+    public void setScuderiaPref(String scuderiaPref) {
+<span class="fc" id="L97">        this.scuderiaPref = scuderiaPref;</span>
+<span class="fc" id="L98">    }</span>
+
+    public Boolean getModeratore() {
+<span class="nc" id="L101">        return moderatore;</span>
+    }
+
+    public void setModeratore(Boolean moderatore) {
+<span class="fc" id="L105">        this.moderatore = moderatore;</span>
+<span class="fc" id="L106">    }</span>
+
+    public Date getDataFineSospensione() {
+<span class="nc" id="L109">        return dataFineSospensione;</span>
+    }
+
+    public void setDataFineSospensione(Date dataFineSospensione) {
+<span class="fc" id="L113">        this.dataFineSospensione = dataFineSospensione;</span>
+<span class="fc" id="L114">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L118">        return &quot;Lettore{&quot; +</span>
+                &quot;idLettore=&quot; + idLettore +
+                &quot;, email='&quot; + email + '\'' +
+                &quot;, password='&quot; + password + '\'' +
+                &quot;, nickname='&quot; + nickname + '\'' +
+                &quot;, scuderiaPref='&quot; + scuderiaPref + '\'' +
+                &quot;, moderatore=&quot; + moderatore +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L131" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L132">        Lettore lettore = (Lettore) o;</span>
+<span class="nc bnc" id="L133" title="All 12 branches missed.">        return Objects.equals(idLettore, lettore.idLettore) &amp;&amp; Objects.equals(email, lettore.email) &amp;&amp; Objects.equals(password, lettore.password) &amp;&amp; Objects.equals(nickname, lettore.nickname) &amp;&amp; Objects.equals(scuderiaPref, lettore.scuderiaPref) &amp;&amp; Objects.equals(moderatore, lettore.moderatore);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L138">        return Objects.hash(idLettore, email, password, nickname, scuderiaPref, moderatore);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
